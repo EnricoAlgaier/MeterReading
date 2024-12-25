@@ -1,9 +1,6 @@
 package com.algaier.MeterReading;
 
-
 import com.algaier.MeterReading.Controller.DBConnect;
-import org.hibernate.type.LocalDateTimeType;
-
 import java.time.LocalDateTime;
 
 public class Main {
@@ -13,9 +10,8 @@ public class Main {
 		LocalDateTime today = LocalDateTime.now();
 
 		System.out.println(today);
-		db.createSf();
-		db.create();
-		db.cancelSf();
+		db.createDbConnection();
+		db.createDbInput();
+		db.closeDbConneciton();
 	}
-
 }
