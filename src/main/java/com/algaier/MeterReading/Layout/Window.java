@@ -1,5 +1,6 @@
 package com.algaier.MeterReading.Layout;
 
+import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.Components.MenuBar;
 
 import javax.swing.*;
@@ -23,5 +24,10 @@ public class Window extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setBackground(BACKGROUNDCOLOR);
         setIconImage(iconPath.getImage());
+    }
+
+    public static void closeWindow(DBConnect dbConnection){
+        dbConnection.closeDbConneciton();
+        System.exit(0);
     }
 }

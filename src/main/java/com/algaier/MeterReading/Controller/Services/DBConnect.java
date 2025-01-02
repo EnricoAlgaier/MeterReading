@@ -1,5 +1,4 @@
-package com.algaier.MeterReading.Controller;
-
+package com.algaier.MeterReading.Controller.Services;
 
 import com.algaier.MeterReading.Model.Gas;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -8,14 +7,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class DBConnect {
 	private LocalDateTime today = LocalDateTime.now();
-
 
 	protected SessionFactory sessionFactory;
 

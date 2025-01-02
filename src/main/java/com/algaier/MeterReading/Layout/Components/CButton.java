@@ -11,8 +11,8 @@ public class CButton {
     private final String buttonFont = "Arial";
     private final int fontSize = 15;
 
-    private CustomButtonRect[] buttons;
-    private DashboardListener dashboardListener;
+    private final CustomButtonRect[] buttons;
+    private final DashboardListener dashboardListener;
     private int buttonCount;
 
     //Dashboard Button
@@ -37,7 +37,6 @@ public class CButton {
 
             } else if (position.equals("posY")) {
                 posY += distance;
-
             }
         }
     }

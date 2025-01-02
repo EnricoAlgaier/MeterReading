@@ -13,11 +13,7 @@ import java.util.ResourceBundle;
 
 public class LanguageManager {
     private Locale localeLanguage;
-    private ResourceBundle messages;
     private ErrorLog errorLog;
-
-    private BufferedWriter languageFileWriter;
-    private BufferedReader languageReader;
 
     public LanguageManager() {
         readLanguage();
@@ -25,7 +21,7 @@ public class LanguageManager {
 
     public void setLanguage(String language) {
         try {
-            languageFileWriter = new BufferedWriter(new FileWriter("src/main/resources/setLanguage.txt"));
+            BufferedWriter languageFileWriter = new BufferedWriter(new FileWriter("src/main/resources/setLanguage.txt"));
             languageFileWriter.write(language);
             languageFileWriter.flush();
             languageFileWriter.close();
@@ -38,10 +34,11 @@ public class LanguageManager {
 
     private void readLanguage() {
         try {
-            languageReader = new BufferedReader(new FileReader("src/main/resources/setLanguage.txt"));
+            BufferedReader languageReader = new BufferedReader(new FileReader("src/main/resources/setLanguage.txt"));
             String output = languageReader.readLine();
             languageReader.close();
 
+            ResourceBundle messages;
             if(output != null) {
                 localeLanguage = Locale.forLanguageTag(output);
                 messages = ResourceBundle.getBundle("messages", localeLanguage);

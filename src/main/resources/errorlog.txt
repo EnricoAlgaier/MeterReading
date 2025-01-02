@@ -19,3 +19,8 @@
 	at com.algaier.MeterReading.Layout.LanguageManager.<init>(LanguageManager.java:23)
 	at com.algaier.MeterReading.Main.main(Main.java:14)
 
+[2025-01-02T13:59:34.625474]	setLanguage.txt file is empty
+[2025-01-02T13:59:34.814430500]	setLanguage.txt file is empty
+[2025-01-02T13:59:53.969406600]	setLanguage.txt file is empty
+[2025-01-02T13:59:59.791730900]	setLanguage.txt file is empty
+[2025-01-02T14:00:11.916469100]	setLanguage.txt file is empty
