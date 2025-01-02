@@ -47,8 +47,8 @@ public class DBConnect {
 		System.out.println("sf geschlossen");
 	}
 
-	public void createDbInput(){
-		Gas gas = new Gas(10.55, 1, today);
+	public void saveDbTableInput(double cubic){
+		Gas gas = new Gas(cubic, 1, today);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -56,6 +56,5 @@ public class DBConnect {
 		session.getTransaction().commit();
 		System.out.println("Gas hinzugefügt");
 		session.close();
-
 	}
 }

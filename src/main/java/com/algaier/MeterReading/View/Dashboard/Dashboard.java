@@ -1,6 +1,6 @@
 package com.algaier.MeterReading.View.Dashboard;
 
-import com.algaier.MeterReading.Controller.DashboardListener;
+import com.algaier.MeterReading.Controller.DashboardController;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.Components.CButton;
 import com.algaier.MeterReading.Layout.Window;
@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 public class Dashboard extends Window {
     private static final int POS_X = 1500;
     private static final int POS_Y = 800;
-    private DashboardListener dashboardListener;
+    private DashboardController dashboardListener;
     private static DBConnect dbConnection;
 
     // Button properties
@@ -34,7 +34,7 @@ public class Dashboard extends Window {
                 messages.getString("setprice"),
                 messages.getString("close")};
 
-        dashboardListener = new DashboardListener(this, messages);
+        dashboardListener = new DashboardController(this, messages, dbConnection);
         CButton menuButton = new CButton(dashboardListener, 5);
 
         menuButton.createButtons(BUTTON_POS_X, BUTTON_POS_Y, WIDTH, HEIGHT, DISTANCE, BUTTON_NAMES, BUTTON_ID, POSITION);
@@ -42,10 +42,13 @@ public class Dashboard extends Window {
             add(button);
         }
 
+        setDbConnection(dbConnection);
+        close();
         setVisible(true);
     }
 
     public static void closeWindow() {
         Window.closeWindow(dbConnection);
     }
+
 }

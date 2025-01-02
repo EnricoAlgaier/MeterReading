@@ -1,6 +1,6 @@
 package com.algaier.MeterReading.View.Dashboard;
 
-import com.algaier.MeterReading.Controller.DashboardListener;
+import com.algaier.MeterReading.Controller.DashboardController;
 import com.algaier.MeterReading.Layout.Components.CButton;
 import com.algaier.MeterReading.Layout.Components.CLabel;
 import com.algaier.MeterReading.Layout.Components.CTextField;
@@ -38,11 +38,9 @@ public class PriceConfiguration extends Window {
     private static final String[] SAVE_CANCEL_BUTTON_IDS = {"save", "cancel"};
     private static final String SAVE_CANCEL_BUTTON_POSITION = "posX";
 
-    private final int counter = 3;
+    private static final int counter = 3;
 
-    private String[] inputLabelNames;
-
-    public PriceConfiguration(ResourceBundle messages, DashboardListener dashboardListener) {
+    public PriceConfiguration(ResourceBundle messages, DashboardController dashboardListener) {
         super(WINDOW_POS_X, WINDOW_POS_Y);
         CTextField inputFields = new CTextField(counter);
         CLabel inputLabel = new CLabel(counter);

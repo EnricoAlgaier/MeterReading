@@ -1,21 +1,24 @@
 package com.algaier.MeterReading.Controller;
 
-import com.algaier.MeterReading.Layout.Components.CTextField;
+import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
 import com.algaier.MeterReading.View.Dashboard.PriceConfiguration;
+import com.algaier.MeterReading.View.Gas.GasWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
-public class DashboardListener implements ActionListener {
+public class DashboardController implements ActionListener {
     private Dashboard dashboard;
     private ResourceBundle messages;
+    private DBConnect dbConnection;
 
-    public DashboardListener(Dashboard dashboard, ResourceBundle messages) {
+    public DashboardController(Dashboard dashboard, ResourceBundle messages, DBConnect dbConnection) {
         this.dashboard = dashboard;
         this.messages = messages;
+        this.dbConnection = dbConnection;
     }
 
     @Override
@@ -28,7 +31,9 @@ public class DashboardListener implements ActionListener {
                 break;
 
             case "gas":
-                System.out.println(buttonID);
+                dashboard.dispose();
+                new GasWindow(messages, dbConnection);
+
                 break;
 
             case "water":

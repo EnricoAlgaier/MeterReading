@@ -13,6 +13,8 @@ public class Main {
 	private static final Locale locale = languageManager.getLocaleLanguage();
 	private static final ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
 
+	// TODO add logfile to all try-catch
+
 	public static void main(String[] args) {
 		DBConnect dbConnection = new DBConnect();
 		dbConnection.createDbConnection();
