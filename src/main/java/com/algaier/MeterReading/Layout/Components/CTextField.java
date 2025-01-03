@@ -11,16 +11,16 @@ import javax.swing.event.DocumentListener;
 
 
 public class CTextField {
-    private String textColorCode = "#FFFFFF";
-    private int textSize = 20;
-    private Font textFont = new Font("Arial", Font.PLAIN, textSize);
+    private final String textColorCode = "#FFFFFF";
+    private final int textSize = 20;
+    private final Font textFont = new Font("Arial", Font.PLAIN, textSize);
 
-    private TextFieldCustom[] fields;
-    private PasswordFieldCustom[] passwords;
-    private int textFieldCount;
+    private final TextFieldCustom[] fields;
+    private final PasswordFieldCustom[] passwords;
+    private final int textFieldCount;
     private List<String> fieldValue;
     private List<String> passwordValue;
-    private Color textColor = Color.decode(textColorCode);
+    private final Color textColor = Color.decode(textColorCode);
 
     public CTextField(int textFieldCount) {
         this.textFieldCount = textFieldCount;

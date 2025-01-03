@@ -47,8 +47,8 @@ public class DBConnect {
 		System.out.println("sf geschlossen");
 	}
 
-	public void saveDbTableInput(double cubic){
-		Gas gas = new Gas(cubic, 1, today);
+	public void saveDbTableInput(double cubic, LocalDateTime dateTime){
+		Gas gas = new Gas(cubic, 1, dateTime);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();

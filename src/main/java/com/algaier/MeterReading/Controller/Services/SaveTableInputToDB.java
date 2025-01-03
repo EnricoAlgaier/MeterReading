@@ -2,29 +2,43 @@ package com.algaier.MeterReading.Controller.Services;
 
 import com.algaier.MeterReading.Layout.Components.CTextField;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SaveTableInputToDB {
-    private DBConnect dbConnection;
-    private CTextField gasField;
-    private List<String> gasFields;
+    private final DBConnect dbConnection;
+    private final CTextField gasField;
+    private final CTextField dateField;
+    private List<String> gasFields, dateFields;
+    private boolean dbInputState = false;
+    private boolean errorLogState = false;
 
-    public SaveTableInputToDB(DBConnect dbConnection, CTextField gasField){
+    public SaveTableInputToDB(DBConnect dbConnection, CTextField gasField, CTextField dateField) {
         this.dbConnection = dbConnection;
         this.gasField = gasField;
+        this.dateField = dateField;
     }
 
-    public void saveGas(){
-        System.out.println(gasFields.get(0));
-       // double t = gasFields(0); // Convert to Double
-
+    public void saveGas() {
 
         try {
-            //dbConnection.saveDbTableInput(cubic);
+            double cubic = Double.parseDouble(gasFields.get(0));
 
-        } catch (Exception ex){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
+            LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
 
+            dbConnection.saveDbTableInput(cubic, dateTime);
+
+            dbInputState = true;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            errorLogState = true;
         }
     }
 
@@ -32,5 +46,19 @@ public class SaveTableInputToDB {
         gasField.textInput(fieldCounter);
         gasFields = new ArrayList<>();
         gasFields = gasField.getText();
+    }
+
+    public void setGasDateTextInput(int fieldCounter) {
+        dateField.textInput(fieldCounter);
+        dateFields = new ArrayList<>();
+        dateFields = dateField.getText();
+    }
+
+    public boolean getDbInputState() {
+        return dbInputState;
+    }
+
+    public boolean getLookAtErrorLog() {
+        return errorLogState;
     }
 }

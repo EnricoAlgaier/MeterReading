@@ -14,6 +14,7 @@ public class Main {
 	private static final ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
 
 	// TODO add logfile to all try-catch
+	// TODO error Log visibilty for users in an extra menu in the head
 
 	public static void main(String[] args) {
 		DBConnect dbConnection = new DBConnect();
@@ -24,7 +25,5 @@ public class Main {
 
 		new Dashboard(messages, dbConnection);
 
-		//db.createDbInput();
-		//dbConnection.closeDbConneciton();
 	}
 }
