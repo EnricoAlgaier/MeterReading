@@ -15,6 +15,7 @@ public class Main {
 
 	// TODO add logfile to all try-catch
 	// TODO error Log visibilty for users in an extra menu in the head
+	// TODO implements a LogInWindow for DB, Username and Password
 
 	public static void main(String[] args) {
 		DBConnect dbConnection = new DBConnect();
