@@ -69,14 +69,10 @@ public class Consumption extends Window {
                 messages.getString("cancel")};
 
         cubicField.createTextFields(CUBIC_FIELD_POS_X, CUBIC_FIELD_POS_Y, CUBIC_FIELD_WIDTH, CUBIC_FIELD_HEIGHT, CUBIC_FIELD_DISTANCE, CUBIC_FIELD_POSITION);
-        for (JTextField field : cubicField.getFields()) {
-            add(field);
-        }
-
         cubicFieldLabel.createLabels(CUBIC_FIELD_LABEL_POS_X, CUBIC_FIELD_LABEL_POS_Y, CUBIC_FIELD_LABEL_WIDTH, CUBIC_FIELD_LABEL_HEIGHT, CUBIC_FIELD_LABEL_DISTANCE, CUBIC_FIELD_LABEL_POSITION, cubicLabelNames);
-        for (JLabel label : cubicFieldLabel.getLabels()) {
-            add(label);
-        }
+
+        addComponentsToWindow(cubicField.getFields());
+        addComponentsToWindow(cubicFieldLabel.getLabels());
 
         dateField.createTextFields(DATE_FIELD_POS_X, DATE_FIELD_POS_Y, DATE_FIELD_WIDTH, DATE_FIELD_HEIGHT, DATE_FIELD_DISTANCE, DATE_FIELD_POSITION);
         for (JTextField field : dateField.getFields()) {
@@ -88,11 +84,16 @@ public class Consumption extends Window {
         }
 
         saveCancelButton.createButtonsGas(SAVE_CANCEL_BUTTON_POS_X, SAVE_CANCEL_BUTTON_POS_Y, SAVE_CANCEL_BUTTON_WIDTH, SAVE_CANCEL_BUTTON_HEIGHT, SAVE_CANCEL_BUTTON_DISTANCE, saveCancelButtonNames, SAVE_CANCEL_BUTTON_IDS, SAVE_CANCEL_BUTTON_POSITION);
-        for (JButton button : saveCancelButton.getButtons()) {
-            add(button);
-        }
+
+        addComponentsToWindow(saveCancelButton.getButtons());
 
         setVisible(true);
+    }
+
+    private void addComponentsToWindow(JComponent... components) {
+        for (JComponent component : components) {
+            add(component);
+        }
     }
 
     public CTextField getCubicField(){
@@ -102,5 +103,4 @@ public class Consumption extends Window {
     public CTextField getDateField(){
         return dateField;
     }
-
 }

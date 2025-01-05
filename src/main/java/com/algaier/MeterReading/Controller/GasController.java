@@ -1,7 +1,7 @@
 package com.algaier.MeterReading.Controller;
 
 import com.algaier.MeterReading.Controller.Services.DBConnect;
-import com.algaier.MeterReading.Controller.Services.SaveTableInputToDB;
+import com.algaier.MeterReading.Controller.Services.SaveGasInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
 import com.algaier.MeterReading.View.Gas.Consumption;
@@ -52,9 +52,9 @@ public class GasController implements ActionListener {
                 break;
 
             case "save":
-                SaveTableInputToDB saveTableInputToDB = new SaveTableInputToDB(dbConnection, cubicField, dateField);
+                SaveGasInput saveTableInputToDB = new SaveGasInput(dbConnection, cubicField, dateField);
 
-                if (consumption.getCubicField() != null && consumption.getDateField() != null) {
+                if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
                     saveTableInputToDB.setGasTextInput(1);
                     saveTableInputToDB.setGasDateTextInput(1);
                     saveTableInputToDB.saveGas();
@@ -64,9 +64,14 @@ public class GasController implements ActionListener {
                                 null,
                                 "Erfolgreich eingetragen",
                                 "Erfolgreich",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
+                } else{
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Nicht alle Felder sind ausgefüllt",
+                            "Achtung",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
                 break;
 

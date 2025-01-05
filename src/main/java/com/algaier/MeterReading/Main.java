@@ -13,9 +13,14 @@ public class Main {
 	private static final Locale locale = languageManager.getLocaleLanguage();
 	private static final ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
 
+	// Window default size
+	private static final int WINDOW_POS_X = 500;
+	private static final int WINDOW_POS_Y = 600;
+
 	// TODO add logfile to all try-catch
 	// TODO error Log visibilty for users in an extra menu in the head
 	// TODO implements a LogInWindow for DB, Username and Password
+	// TODO Abschlags tabelle muss noch geändert werden, in strom wasser gas abschlag
 
 	public static void main(String[] args) {
 		DBConnect dbConnection = new DBConnect();

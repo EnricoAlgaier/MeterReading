@@ -1,78 +1,147 @@
 package com.algaier.MeterReading.View.Dashboard;
 
 import com.algaier.MeterReading.Controller.DashboardController;
+import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.Components.CButton;
 import com.algaier.MeterReading.Layout.Components.CLabel;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.Layout.Window;
+import com.algaier.MeterReading.Utils.ComponentBuilderDashboard;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
 
 public class PriceConfiguration extends Window {
 
-    private JRadioButton warmWaterSelection;
+    private static final int WINDOW_POS_X = 1500;
+    private static final int WINDOW_POS_Y = 800;
 
-    private static final int WINDOW_POS_X = 500;
-    private static final int WINDOW_POS_Y = 500;
+    private static final int buttonCounter = 4;
+    private static final int saveCancelButtonCount = 1;
+    private static final int inputFieldsCount = 3;
+    private static final int inputLabelCount = 3;
 
-    private static final int INPUT_FIELD_POS_X = 50;
-    private static final int INPUT_FIELD_POS_Y = 60;
-    private static final int INPUT_FIELD_WIDTH = 100;
-    private static final int INPUT_FIELD_HEIGHT = 40;
-    private static final int INPUT_FIELD_DISTANCE = 100;
-    private static final String INPUT_FIELD_POSITION = "posY";
+    private final CLabel inputFIeldLabel = new CLabel(inputLabelCount);
+    private String[] labelPriceConfig;
+    private boolean isSave = false;
+    private String productName;
+    private DBConnect dbConnection;
 
-    private static final int INPUT_FIELD_LABEL_POS_X = 50;
-    private static final int INPUT_FIELD_LABEL_POS_Y = 30;
-    private static final int INPUT_FIELD_LABEL_WIDTH = 200;
-    private static final int INPUT_FIELD_LABEL_HEIGHT = 40;
-    private static final int INPUT_FIELD_LABEL_DISTANCE = 100;
-    private static final String INPUT_FIELD_LABEL_POSITION = "posY";
-
-    private static final int SAVE_CANCEL_BUTTON_POS_X = 50;
-    private static final int SAVE_CANCEL_BUTTON_POS_Y = 380;
-    private static final int SAVE_CANCEL_BUTTON_WIDTH = 150;
-    private static final int SAVE_CANCEL_BUTTON_HEIGHT = 40;
-    private static final int SAVE_CANCEL_BUTTON_DISTANCE = 160;
-    private static final String[] SAVE_CANCEL_BUTTON_IDS = {"save", "cancel"};
-    private static final String SAVE_CANCEL_BUTTON_POSITION = "posX";
-
-    private static final int counter = 3;
-
-    public PriceConfiguration(ResourceBundle messages, DashboardController dashboardListener) {
+    public PriceConfiguration(ResourceBundle messages, DBConnect dbConnection) {
         super(WINDOW_POS_X, WINDOW_POS_Y);
-        CTextField inputFields = new CTextField(counter);
-        CLabel inputLabel = new CLabel(counter);
-        CButton saveCancelButton = new CButton(dashboardListener,2);
+        this.dbConnection = dbConnection;
+        CTextField inputFields = new CTextField(inputFieldsCount);
+        DashboardController dashboardListener = new DashboardController(this, messages, dbConnection, inputFields);
+        CButton menuButton = new CButton(dashboardListener, buttonCounter);
 
-        String[] labelNames = {
-                messages.getString("cost_electricity"),
-                messages.getString("cost_gas"),
-                messages.getString("cost_water")};
+        String[] menuButtonNames = {
+                messages.getString("gas_cost"),
+                messages.getString("water_cost"),
+                messages.getString("electricity_cost"),
+                messages.getString("back")};
+
+        menuButton.createButtons(ComponentBuilderDashboard.BUTTON_POS_X,
+                ComponentBuilderDashboard.BUTTON_POS_Y,
+                ComponentBuilderDashboard.BUTTON_WIDTH,
+                ComponentBuilderDashboard.BUTTON_HEIGHT,
+                ComponentBuilderDashboard.BUTTON_DISTANCE,
+                menuButtonNames,
+                ComponentBuilderDashboard.BUTTON_PRICE_CONFIGURATION_ID,
+                ComponentBuilderDashboard.BUTTON_POSITION);
+
+        addComponentsToWindow(menuButton.getButtons());
+
+        setDbConnection(dbConnection);
+        close();
+        setVisible(true);
+    }
+
+    public void createLabels(ResourceBundle messages) {
+
+
+        String[] inputLabelNames = {
+                messages.getString(labelPriceConfig[0]),
+                messages.getString(labelPriceConfig[1]),
+                messages.getString("abatement")
+        };
+
+        inputFIeldLabel.createLabels(ComponentBuilderDashboard.LABEL_POS_X,
+                ComponentBuilderDashboard.LABEL_POS_Y,
+                ComponentBuilderDashboard.LABEL_WIDTH,
+                ComponentBuilderDashboard.LABEL_HEIGHT,
+                ComponentBuilderDashboard.LABEL_DISTANCE,
+                ComponentBuilderDashboard.LABEL_POSITION, inputLabelNames
+        );
+
+        addComponentsToWindow(inputFIeldLabel.getLabels());
+    }
+
+    public void createFields(CTextField inputFields, ResourceBundle messages, String productName) {
+        inputFields.createTextFields(ComponentBuilderDashboard.FIELD_POS_X,
+                ComponentBuilderDashboard.FIELD_POS_Y,
+                ComponentBuilderDashboard.FIELD_WIDTH,
+                ComponentBuilderDashboard.FIELD_HEIGHT,
+                ComponentBuilderDashboard.FIELD_DISTANCE,
+                ComponentBuilderDashboard.FIELD_POSITION);
+
+        addComponentsToWindow(inputFields.getFields());
+        createSaveButton(inputFields, messages, productName);
+    }
+
+    private void createSaveButton(CTextField inputFields, ResourceBundle messages, String productName){
+        this.productName = productName;
+        DashboardController dashboardController = new DashboardController(this, inputFields, dbConnection);
+        CButton saveCancelButton = new CButton(dashboardController, saveCancelButtonCount);
 
         String[] saveCancelButtonNames = {
-                messages.getString("save"),
-                messages.getString("cancel")};
+                messages.getString("save")
+        };
 
-        inputFields.createTextFields(INPUT_FIELD_POS_X, INPUT_FIELD_POS_Y, INPUT_FIELD_WIDTH, INPUT_FIELD_HEIGHT, INPUT_FIELD_DISTANCE, INPUT_FIELD_POSITION);
-        for (JTextField field : inputFields.getFields()) {
-            add(field);
+        saveCancelButton.createButtons(ComponentBuilderDashboard.BUTTON_SAVE_POS_X,
+                ComponentBuilderDashboard.BUTTON_SAVE_POS_Y,
+                ComponentBuilderDashboard.BUTTON_SAVE_WIDTH,
+                ComponentBuilderDashboard.BUTTON_SAVE_HEIGHT,
+                ComponentBuilderDashboard.BUTTON_SAVE_DISTANCE,
+                saveCancelButtonNames,
+                ComponentBuilderDashboard.BUTTON_SAVE_PRICE_CONFIGURATION_ID,
+                ComponentBuilderDashboard.BUTTON_SAVE_POSITION);
+
+        addComponentsToWindow(saveCancelButton.getButtons());
+
+        System.out.println(productName);
+    }
+
+    public void removeComponentsToWindow() {
+        for (JLabel label : inputFIeldLabel.getLabels()) {
+            if (label != null) {
+                remove(label);
+            }
         }
+    }
 
-        inputLabel.createLabels(INPUT_FIELD_LABEL_POS_X, INPUT_FIELD_LABEL_POS_Y, INPUT_FIELD_LABEL_WIDTH, INPUT_FIELD_LABEL_HEIGHT, INPUT_FIELD_LABEL_DISTANCE, INPUT_FIELD_LABEL_POSITION, labelNames);
-        for(JLabel label : inputLabel.getLabels()){
-            add(label);
+    private void addComponentsToWindow(JComponent... components) {
+        for (JComponent component : components) {
+            add(component);
         }
+    }
 
-        saveCancelButton.createButtons(SAVE_CANCEL_BUTTON_POS_X, SAVE_CANCEL_BUTTON_POS_Y, SAVE_CANCEL_BUTTON_WIDTH, SAVE_CANCEL_BUTTON_HEIGHT, SAVE_CANCEL_BUTTON_DISTANCE, saveCancelButtonNames, SAVE_CANCEL_BUTTON_IDS, SAVE_CANCEL_BUTTON_POSITION);
-        for(JButton button : saveCancelButton.getButtons()){
-            add(button);
-        }
+    public void setLabelPriceConfig(String[] labelPriceConfig) {
+        this.labelPriceConfig = labelPriceConfig;
+    }
 
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setResizable(false);
+    public boolean getIsSave(){
+        return isSave;
+    }
 
-        setVisible(true);
+    public void setIsSave(boolean isSave){
+        this.isSave = isSave;
+    }
+
+    public String getProductName(){
+        return productName;
+    }
+
+    public int getInputFieldsCount(){
+        return inputFieldsCount;
     }
 }

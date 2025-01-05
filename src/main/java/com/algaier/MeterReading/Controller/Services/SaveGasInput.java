@@ -9,15 +9,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SaveTableInputToDB {
+public class SaveGasInput {
     private final DBConnect dbConnection;
     private final CTextField gasField;
     private final CTextField dateField;
     private List<String> gasFields, dateFields;
     private boolean dbInputState = false;
-    private boolean errorLogState = false;
 
-    public SaveTableInputToDB(DBConnect dbConnection, CTextField gasField, CTextField dateField) {
+    public SaveGasInput(DBConnect dbConnection, CTextField gasField, CTextField dateField) {
         this.dbConnection = dbConnection;
         this.gasField = gasField;
         this.dateField = dateField;
@@ -32,13 +31,12 @@ public class SaveTableInputToDB {
             LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
 
-            dbConnection.saveDbTableInput(cubic, dateTime);
+            dbConnection.saveGasTable(cubic, dateTime);
 
             dbInputState = true;
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            errorLogState = true;
         }
     }
 
@@ -56,9 +54,5 @@ public class SaveTableInputToDB {
 
     public boolean getDbInputState() {
         return dbInputState;
-    }
-
-    public boolean getLookAtErrorLog() {
-        return errorLogState;
     }
 }

@@ -1,6 +1,7 @@
 package com.algaier.MeterReading.Controller.Services;
 
 import com.algaier.MeterReading.Model.Gas;
+import com.algaier.MeterReading.Model.Price;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +9,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class DBConnect {
@@ -47,7 +49,7 @@ public class DBConnect {
 		System.out.println("sf geschlossen");
 	}
 
-	public void saveDbTableInput(double cubic, LocalDateTime dateTime){
+	public void saveGasTable(double cubic, LocalDateTime dateTime){
 		Gas gas = new Gas(cubic, 1, dateTime);
 
 		Session session = sessionFactory.openSession();
@@ -55,6 +57,18 @@ public class DBConnect {
 		session.save(gas);
 		session.getTransaction().commit();
 		System.out.println("Gas hinzugefügt");
+		session.close();
+	}
+
+	public void savePriceTable(BigDecimal productPrice, String product, BigDecimal basicCosts, BigDecimal abatement){
+		System.out.println("1." + productPrice + " 2." + product + " 3." + basicCosts + " 4." + abatement);
+		Price price = new Price(productPrice, product, basicCosts, abatement);
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(price);
+		session.getTransaction().commit();
+		System.out.println("Price hinzugefügt");
 		session.close();
 	}
 }
