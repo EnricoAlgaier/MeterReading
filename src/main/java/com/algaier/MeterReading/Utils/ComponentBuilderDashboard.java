@@ -1,5 +1,7 @@
 package com.algaier.MeterReading.Utils;
 
+import java.awt.event.ActionListener;
+
 public final class ComponentBuilderDashboard {
 
     private ComponentBuilderDashboard() {

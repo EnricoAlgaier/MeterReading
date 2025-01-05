@@ -1,7 +1,7 @@
-package com.algaier.MeterReading.View.Gas;
+package com.algaier.MeterReading.View.Water;
 
-import com.algaier.MeterReading.Controller.GasController;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
+import com.algaier.MeterReading.Controller.WaterController;
 import com.algaier.MeterReading.Layout.Components.CButton;
 import com.algaier.MeterReading.Layout.Components.CLabel;
 import com.algaier.MeterReading.Layout.Components.CTextField;
@@ -57,8 +57,8 @@ public class Consumption extends Window {
         cubicField = new CTextField(TEXT_FIELD_COUNT);
         dateField = new CTextField(TEXT_FIELD_COUNT);
         CLabel cubicFieldLabel = new CLabel(LABEL_COUNT);
-        GasController gasController = new GasController(messages, this, cubicField, dateField, dbConnection);
-        CButton saveCancelButton = new CButton(gasController, BUTTON_COUNT);
+        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection);
+        CButton saveCancelButton = new CButton(waterController, BUTTON_COUNT);
 
         String[] cubicLabelNames = {
                 messages.getString("cubic"),
@@ -83,7 +83,7 @@ public class Consumption extends Window {
             field.setText(formattedDate);
         }
 
-        saveCancelButton.createButtons(SAVE_CANCEL_BUTTON_POS_X, SAVE_CANCEL_BUTTON_POS_Y, SAVE_CANCEL_BUTTON_WIDTH, SAVE_CANCEL_BUTTON_HEIGHT, SAVE_CANCEL_BUTTON_DISTANCE, saveCancelButtonNames, SAVE_CANCEL_BUTTON_IDS, SAVE_CANCEL_BUTTON_POSITION, gasController);
+        saveCancelButton.createButtons(SAVE_CANCEL_BUTTON_POS_X, SAVE_CANCEL_BUTTON_POS_Y, SAVE_CANCEL_BUTTON_WIDTH, SAVE_CANCEL_BUTTON_HEIGHT, SAVE_CANCEL_BUTTON_DISTANCE, saveCancelButtonNames, SAVE_CANCEL_BUTTON_IDS, SAVE_CANCEL_BUTTON_POSITION, waterController);
 
         addComponentsToWindow(saveCancelButton.getButtons());
 

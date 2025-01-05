@@ -4,29 +4,30 @@ import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Controller.Services.SaveGasInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
-import com.algaier.MeterReading.View.Gas.Consumption;
-import com.algaier.MeterReading.View.Gas.GasWindow;
+
+import com.algaier.MeterReading.View.Water.Consumption;
+import com.algaier.MeterReading.View.Water.WaterWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
-public class GasController implements ActionListener {
+public class WaterController implements ActionListener {
     private final ResourceBundle messages;
-    private GasWindow gasWindow;
+    private WaterWindow waterWindow;
     private CTextField cubicField;
     private CTextField dateField;
     private final DBConnect dbConnection;
     private Consumption consumption;
 
-    public GasController(ResourceBundle messages, DBConnect dbConnection, GasWindow gasWindow) {
+    public WaterController(ResourceBundle messages, DBConnect dbConnection, WaterWindow waterWindow) {
         this.messages = messages;
         this.dbConnection = dbConnection;
-        this.gasWindow = gasWindow;
+        this.waterWindow = waterWindow;
     }
 
-    public GasController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection) {
+    public WaterController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection) {
         this.messages = messages;
         this.consumption = consumption;
         this.cubicField = cubicField;
@@ -47,7 +48,7 @@ public class GasController implements ActionListener {
                 break;
 
             case "back":
-                gasWindow.dispose();
+                waterWindow.dispose();
                 new Dashboard(messages, dbConnection);
                 break;
 

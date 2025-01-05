@@ -1,10 +1,13 @@
 package com.algaier.MeterReading.Layout.Components;
 
 import com.algaier.MeterReading.Controller.DashboardController;
+import com.algaier.MeterReading.Controller.ElectricityController;
 import com.algaier.MeterReading.Controller.GasController;
+import com.algaier.MeterReading.Controller.WaterController;
 import com.algaier.MeterReading.Layout.Design.CustomButtonRect;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class CButton {
     private String buttonColor1 = "#000000"; //default Color
@@ -15,6 +18,8 @@ public class CButton {
     // Controller
     private DashboardController dashboardListener;
     private GasController gasController;
+    private WaterController waterController;
+    private ElectricityController electricityController;
 
     private final CustomButtonRect[] buttons;
     private int buttonCount;
@@ -33,31 +38,26 @@ public class CButton {
         buttons = new CustomButtonRect[buttonCount];
     }
 
-    public void createButtons(int posX, int posY, int width, int height, int distance, String[] buttonNames,
-                              String[] buttonID, String position) {
-        for (int createButton = 0; createButton < buttonCount; createButton++) {
-            buttons[createButton] = new CustomButtonRect(buttonColor1, buttonColor2, buttonNames[createButton]);
-            buttons[createButton].setBounds(posX, posY, width, height);
-            buttons[createButton].addActionListener(dashboardListener);
-            buttons[createButton].setActionCommand(buttonID[createButton]);
-            buttons[createButton].setFocusable(false);
-            buttons[createButton].setFont(new Font(buttonFont, Font.PLAIN, fontSize));
-
-            if (position.equals("posX")) {
-                posX += distance;
-
-            } else if (position.equals("posY")) {
-                posY += distance;
-            }
-        }
+    // Water Button
+    public CButton(WaterController waterController, int buttonCount) {
+        this.waterController = waterController;
+        this.buttonCount = buttonCount;
+        buttons = new CustomButtonRect[buttonCount];
     }
 
-    public void createButtonsGas(int posX, int posY, int width, int height, int distance, String[] buttonNames,
-                              String[] buttonID, String position) {
+    // Electricity Button
+    public CButton(ElectricityController electricityController, int buttonCount) {
+        this.electricityController = electricityController;
+        this.buttonCount = buttonCount;
+        buttons = new CustomButtonRect[buttonCount];
+    }
+
+    public void createButtons(int posX, int posY, int width, int height, int distance, String[] buttonNames,
+                              String[] buttonID, String position, ActionListener listener) {
         for (int createButton = 0; createButton < buttonCount; createButton++) {
             buttons[createButton] = new CustomButtonRect(buttonColor1, buttonColor2, buttonNames[createButton]);
             buttons[createButton].setBounds(posX, posY, width, height);
-            buttons[createButton].addActionListener(gasController);
+            buttons[createButton].addActionListener(listener);
             buttons[createButton].setActionCommand(buttonID[createButton]);
             buttons[createButton].setFocusable(false);
             buttons[createButton].setFont(new Font(buttonFont, Font.PLAIN, fontSize));

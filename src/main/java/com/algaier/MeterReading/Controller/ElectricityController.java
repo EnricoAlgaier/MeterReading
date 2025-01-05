@@ -4,29 +4,29 @@ import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Controller.Services.SaveGasInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
-import com.algaier.MeterReading.View.Gas.Consumption;
-import com.algaier.MeterReading.View.Gas.GasWindow;
+import com.algaier.MeterReading.View.Electricity.Consumption;
+import com.algaier.MeterReading.View.Electricity.ElectricityWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
-public class GasController implements ActionListener {
+public class ElectricityController implements ActionListener {
     private final ResourceBundle messages;
-    private GasWindow gasWindow;
+    private ElectricityWindow electricityWindow;
     private CTextField cubicField;
     private CTextField dateField;
     private final DBConnect dbConnection;
     private Consumption consumption;
 
-    public GasController(ResourceBundle messages, DBConnect dbConnection, GasWindow gasWindow) {
+    public ElectricityController(ResourceBundle messages, DBConnect dbConnection, ElectricityWindow electricityWindow) {
         this.messages = messages;
         this.dbConnection = dbConnection;
-        this.gasWindow = gasWindow;
+        this.electricityWindow = electricityWindow;
     }
 
-    public GasController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection) {
+    public ElectricityController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection) {
         this.messages = messages;
         this.consumption = consumption;
         this.cubicField = cubicField;
@@ -47,7 +47,7 @@ public class GasController implements ActionListener {
                 break;
 
             case "back":
-                gasWindow.dispose();
+                electricityWindow.dispose();
                 new Dashboard(messages, dbConnection);
                 break;
 

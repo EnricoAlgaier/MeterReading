@@ -26,6 +26,7 @@ public class PriceConfiguration extends Window {
     private boolean isSave = false;
     private String productName;
     private DBConnect dbConnection;
+    private DashboardController dashboardListener;
 
     public PriceConfiguration(ResourceBundle messages, DBConnect dbConnection) {
         super(WINDOW_POS_X, WINDOW_POS_Y);
@@ -47,7 +48,8 @@ public class PriceConfiguration extends Window {
                 ComponentBuilderDashboard.BUTTON_DISTANCE,
                 menuButtonNames,
                 ComponentBuilderDashboard.BUTTON_PRICE_CONFIGURATION_ID,
-                ComponentBuilderDashboard.BUTTON_POSITION);
+                ComponentBuilderDashboard.BUTTON_POSITION,
+                dashboardListener);
 
         addComponentsToWindow(menuButton.getButtons());
 
@@ -104,7 +106,8 @@ public class PriceConfiguration extends Window {
                 ComponentBuilderDashboard.BUTTON_SAVE_DISTANCE,
                 saveCancelButtonNames,
                 ComponentBuilderDashboard.BUTTON_SAVE_PRICE_CONFIGURATION_ID,
-                ComponentBuilderDashboard.BUTTON_SAVE_POSITION);
+                ComponentBuilderDashboard.BUTTON_SAVE_POSITION,
+                dashboardListener);
 
         addComponentsToWindow(saveCancelButton.getButtons());
 

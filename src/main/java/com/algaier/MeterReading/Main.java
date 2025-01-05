@@ -20,7 +20,6 @@ public class Main {
 	// TODO add logfile to all try-catch
 	// TODO error Log visibilty for users in an extra menu in the head
 	// TODO implements a LogInWindow for DB, Username and Password
-	// TODO Abschlags tabelle muss noch geändert werden, in strom wasser gas abschlag
 
 	public static void main(String[] args) {
 		DBConnect dbConnection = new DBConnect();

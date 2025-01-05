@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 public class Dashboard extends Window {
     private static final int POS_X = 1500;
     private static final int POS_Y = 800;
-    private DashboardController dashboardListener;
     private static DBConnect dbConnection;
 
 
@@ -27,8 +26,8 @@ public class Dashboard extends Window {
                 messages.getString("setprice"),
                 messages.getString("close")};
 
-        dashboardListener = new DashboardController(this, messages, dbConnection);
-        CButton menuButton = new CButton(dashboardListener, 5);
+        DashboardController dashboardController = new DashboardController(this, messages, dbConnection);
+        CButton menuButton = new CButton(dashboardController, 5);
 
         menuButton.createButtons(ComponentBuilderDashboard.BUTTON_POS_X,
                 ComponentBuilderDashboard.BUTTON_POS_Y,
@@ -36,7 +35,8 @@ public class Dashboard extends Window {
                 ComponentBuilderDashboard.BUTTON_HEIGHT,
                 ComponentBuilderDashboard.BUTTON_DISTANCE,
                 BUTTON_NAMES, ComponentBuilderDashboard.BUTTON_DASHBOARD_ID,
-                ComponentBuilderDashboard.BUTTON_POSITION);
+                ComponentBuilderDashboard.BUTTON_POSITION,
+                dashboardController);
 
         addComponentsToWindow(menuButton.getButtons());
 

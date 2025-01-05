@@ -5,7 +5,9 @@ import com.algaier.MeterReading.Controller.Services.SavePriceInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
 import com.algaier.MeterReading.View.Dashboard.PriceConfiguration;
+import com.algaier.MeterReading.View.Electricity.ElectricityWindow;
 import com.algaier.MeterReading.View.Gas.GasWindow;
+import com.algaier.MeterReading.View.Water.WaterWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -46,7 +48,8 @@ public class DashboardController implements ActionListener {
 
         switch (buttonID) {
             case "electricity":
-                System.out.println(buttonID);
+                dashboard.dispose();
+                new ElectricityWindow(messages, dbConnection);
                 break;
 
             case "gas":
@@ -55,7 +58,8 @@ public class DashboardController implements ActionListener {
                 break;
 
             case "water":
-                System.out.println(buttonID);
+                dashboard.dispose();
+                new WaterWindow(messages, dbConnection);
                 break;
 
             case "setprice": // change to priceConfiguration

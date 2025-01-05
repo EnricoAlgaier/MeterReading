@@ -1,6 +1,7 @@
-package com.algaier.MeterReading.View.Gas;
+package com.algaier.MeterReading.View.Electricity;
 
 import com.algaier.MeterReading.Controller.DashboardController;
+import com.algaier.MeterReading.Controller.ElectricityController;
 import com.algaier.MeterReading.Controller.GasController;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.Components.CButton;
@@ -9,7 +10,7 @@ import com.algaier.MeterReading.Layout.Window;
 import javax.swing.*;
 import java.util.ResourceBundle;
 
-public class GasWindow extends Window {
+public class ElectricityWindow extends Window {
     private static final int POS_X = 1500;
     private static final int POS_Y = 800;
     private DashboardController dashboardListener;
@@ -25,10 +26,10 @@ public class GasWindow extends Window {
 
     private static final int BUTTON_COUNT = 4;
 
-    public GasWindow(ResourceBundle messages, DBConnect dbConnection) {
+    public ElectricityWindow(ResourceBundle messages, DBConnect dbConnection) {
         super(POS_X, POS_Y);
-        GasController gasController = new GasController(messages, dbConnection, this);
-        CButton menuButton = new CButton(gasController, BUTTON_COUNT);
+        ElectricityController electricityController = new ElectricityController(messages, dbConnection, this);
+        CButton menuButton = new CButton(electricityController, BUTTON_COUNT);
 
         String[] buttonNames = {
                 messages.getString("new_consumption"),
@@ -36,7 +37,7 @@ public class GasWindow extends Window {
                 messages.getString("statistics"),
                 messages.getString("back")};
 
-        menuButton.createButtons(MENU_BUTTON_POS_X, MENU_BUTTON_POS_Y, MENU_BUTTON_POS_WIDTH, MENU_BUTTON_POS_HEIGHT, MENU_BUTTON_POS_DISTANCE, buttonNames, MENU_BUTTON_IDS, MENU_BUTTON_POS_POSITION, gasController);
+        menuButton.createButtons(MENU_BUTTON_POS_X, MENU_BUTTON_POS_Y, MENU_BUTTON_POS_WIDTH, MENU_BUTTON_POS_HEIGHT, MENU_BUTTON_POS_DISTANCE, buttonNames, MENU_BUTTON_IDS, MENU_BUTTON_POS_POSITION, electricityController);
         for(JButton button : menuButton.getButtons()){
             add(button);
         }
