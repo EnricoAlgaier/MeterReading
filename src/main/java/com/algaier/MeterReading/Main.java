@@ -29,6 +29,5 @@ public class Main {
 		manager.setLanguage("GERMAN");
 
 		new Dashboard(messages, dbConnection);
-
 	}
 }

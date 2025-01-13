@@ -6,6 +6,7 @@ import com.algaier.MeterReading.Layout.Components.CButton;
 import com.algaier.MeterReading.Layout.Components.CLabel;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.Layout.Window;
+import com.algaier.MeterReading.Utils.ComponentBuilderWater;
 
 import javax.swing.*;
 import java.time.LocalDateTime;
@@ -19,62 +20,64 @@ public class Consumption extends Window {
     private static final int POS_X = 500;
     private static final int POS_Y = 500;
 
-    private static final int CUBIC_FIELD_POS_X = 50;
-    private static final int CUBIC_FIELD_POS_Y = 50;
-    private static final int CUBIC_FIELD_WIDTH = 30;
-    private static final int CUBIC_FIELD_HEIGHT = 40;
-    private static final int CUBIC_FIELD_DISTANCE = 0;
-    private static final String CUBIC_FIELD_POSITION = "";
-
-    private static final int CUBIC_FIELD_LABEL_POS_X = 50;
-    private static final int CUBIC_FIELD_LABEL_POS_Y = 30;
-    private static final int CUBIC_FIELD_LABEL_WIDTH = 100;
-    private static final int CUBIC_FIELD_LABEL_HEIGHT = 40;
-    private static final int CUBIC_FIELD_LABEL_DISTANCE = 70;
-    private static final String CUBIC_FIELD_LABEL_POSITION = "posY";
-
-    private static final int DATE_FIELD_POS_X = 50;
-    private static final int DATE_FIELD_POS_Y = 120;
-    private static final int DATE_FIELD_WIDTH = 120;
-    private static final int DATE_FIELD_HEIGHT = 40;
-    private static final int DATE_FIELD_DISTANCE = 0;
-    private static final String DATE_FIELD_POSITION = "";
-
-    private static final int SAVE_CANCEL_BUTTON_POS_X = 50;
-    private static final int SAVE_CANCEL_BUTTON_POS_Y = 380;
-    private static final int SAVE_CANCEL_BUTTON_WIDTH = 140;
-    private static final int SAVE_CANCEL_BUTTON_HEIGHT = 40;
-    private static final int SAVE_CANCEL_BUTTON_DISTANCE = 150;
-    private static final String SAVE_CANCEL_BUTTON_POSITION = "posX";
-    private static final String[] SAVE_CANCEL_BUTTON_IDS = {"save", "cancel"};
-
-    private static final int TEXT_FIELD_COUNT = 1;
-    private static final int LABEL_COUNT = 2;
+    private static final int TEXT_FIELD_COUNT = 2;
+    private static final int DATE_FIELD_COUNT = 1;
+    private static final int LABEL_COUNT = 3;
     private static final int BUTTON_COUNT = 2;
+
+    private DBConnect dbConnection;
+    private final CLabel cubicFieldLabel = new CLabel(LABEL_COUNT);
 
     public Consumption(ResourceBundle messages, DBConnect dbConnection) {
         super(POS_X, POS_Y);
-        cubicField = new CTextField(TEXT_FIELD_COUNT);
-        dateField = new CTextField(TEXT_FIELD_COUNT);
-        CLabel cubicFieldLabel = new CLabel(LABEL_COUNT);
-        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection);
-        CButton saveCancelButton = new CButton(waterController, BUTTON_COUNT);
+        this.dbConnection = dbConnection;
 
+        cubicField = new CTextField(TEXT_FIELD_COUNT);
+        dateField = new CTextField(DATE_FIELD_COUNT);
+
+        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection);
+
+
+        setVisible(true);
+    }
+
+    public void createLabels(ResourceBundle messages) {
         String[] cubicLabelNames = {
                 messages.getString("cubic"),
+                messages.getString("place"),
                 messages.getString("date")};
 
-        String[] saveCancelButtonNames = {
-                messages.getString("save"),
-                messages.getString("cancel")};
+        cubicFieldLabel.createLabels(
+                ComponentBuilderWater.LABEL_POS_X,
+                ComponentBuilderWater.LABEL_POS_Y,
+                ComponentBuilderWater.LABEL_WIDTH,
+                ComponentBuilderWater.LABEL_HEIGHT,
+                ComponentBuilderWater.LABEL_DISTANCE,
+                ComponentBuilderWater.LABEL_POSITION,
+                cubicLabelNames);
 
-        cubicField.createTextFields(CUBIC_FIELD_POS_X, CUBIC_FIELD_POS_Y, CUBIC_FIELD_WIDTH, CUBIC_FIELD_HEIGHT, CUBIC_FIELD_DISTANCE, CUBIC_FIELD_POSITION);
-        cubicFieldLabel.createLabels(CUBIC_FIELD_LABEL_POS_X, CUBIC_FIELD_LABEL_POS_Y, CUBIC_FIELD_LABEL_WIDTH, CUBIC_FIELD_LABEL_HEIGHT, CUBIC_FIELD_LABEL_DISTANCE, CUBIC_FIELD_LABEL_POSITION, cubicLabelNames);
+
+        addComponentsToWindow(cubicFieldLabel.getLabels());
+    }
+
+    public void createInputFields(CTextField inputFields, ResourceBundle messages, String waterType) {
+        cubicField.createTextFields(
+                ComponentBuilderWater.FIELD_POS_X,
+                ComponentBuilderWater.FIELD_POS_Y,
+                ComponentBuilderWater.FIELD_WIDTH,
+                ComponentBuilderWater.FIELD_HEIGHT,
+                ComponentBuilderWater.FIELD_DISTANCE,
+                ComponentBuilderWater.FIELD_POSITION);
+
+        dateField.createTextFields(
+                ComponentBuilderWater.DATE_FIELD_POS_X,
+                ComponentBuilderWater.DATE_FIELD_POS_Y,
+                ComponentBuilderWater.DATE_FIELD_WIDTH,
+                ComponentBuilderWater.DATE_FIELD_HEIGHT,
+                ComponentBuilderWater.DATE_FIELD_DISTANCE,
+                ComponentBuilderWater.DATE_FIELD_POSITION);
 
         addComponentsToWindow(cubicField.getFields());
-        addComponentsToWindow(cubicFieldLabel.getLabels());
-
-        dateField.createTextFields(DATE_FIELD_POS_X, DATE_FIELD_POS_Y, DATE_FIELD_WIDTH, DATE_FIELD_HEIGHT, DATE_FIELD_DISTANCE, DATE_FIELD_POSITION);
         for (JTextField field : dateField.getFields()) {
             add(field);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -83,11 +86,29 @@ public class Consumption extends Window {
             field.setText(formattedDate);
         }
 
-        saveCancelButton.createButtons(SAVE_CANCEL_BUTTON_POS_X, SAVE_CANCEL_BUTTON_POS_Y, SAVE_CANCEL_BUTTON_WIDTH, SAVE_CANCEL_BUTTON_HEIGHT, SAVE_CANCEL_BUTTON_DISTANCE, saveCancelButtonNames, SAVE_CANCEL_BUTTON_IDS, SAVE_CANCEL_BUTTON_POSITION, waterController);
+        createSaveButton(inputFields, messages, waterType);
+    }
+
+    private void createSaveButton(CTextField inputFields, ResourceBundle messages, String waterType){
+        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection);
+        CButton saveCancelButton = new CButton(waterController, BUTTON_COUNT);
+
+        String[] saveCancelButtonNames = {
+                messages.getString("save"),
+                messages.getString("cancel")};
+
+        saveCancelButton.createButtons(
+                ComponentBuilderWater.BUTTON_POS_X,
+                ComponentBuilderWater.BUTTON_POS_Y,
+                ComponentBuilderWater.BUTTON_WIDTH,
+                ComponentBuilderWater.BUTTON_HEIGHT,
+                ComponentBuilderWater.BUTTON_DISTANCE,
+                saveCancelButtonNames,
+                ComponentBuilderWater.SAVE_CANCEL_BUTTON_IDS,
+                ComponentBuilderWater.BUTTON_POSITION,
+                waterController);
 
         addComponentsToWindow(saveCancelButton.getButtons());
-
-        setVisible(true);
     }
 
     private void addComponentsToWindow(JComponent... components) {
@@ -96,11 +117,11 @@ public class Consumption extends Window {
         }
     }
 
-    public CTextField getCubicField(){
+    public CTextField getCubicField() {
         return cubicField;
     }
 
-    public CTextField getDateField(){
+    public CTextField getDateField() {
         return dateField;
     }
 }

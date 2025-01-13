@@ -18,17 +18,16 @@ public class WaterCold {
     @Column(name = "Place")
     private String place;
 
-    @ManyToOne
-    @JoinColumn(name = "PriceID", nullable = false)
-    private Price price;
+    @Column(name = "PriceId", nullable = false)
+    private int priceId;
 
     @Column(name = "Created_At")
     private LocalDateTime createdAt;
 
-    public WaterCold(double m3, String place, Price price, LocalDateTime createdAt) {
+    public WaterCold(double m3, String place, int priceId, LocalDateTime createdAt) {
         this.m3 = m3;
         this.place = place;
-        this.price = price;
+        this.priceId = priceId;
         this.createdAt = createdAt;
     }
 
@@ -44,8 +43,8 @@ public class WaterCold {
         return place;
     }
 
-    public Price getPrice() {
-        return price;
+    public int getPrice() {
+        return priceId;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -64,8 +63,8 @@ public class WaterCold {
         this.place = place;
     }
 
-    public void setPrice(Price price) {
-        this.price = price;
+    public void setPrice(int priceId) {
+        this.priceId = priceId;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {

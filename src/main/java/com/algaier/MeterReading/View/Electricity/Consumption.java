@@ -61,7 +61,7 @@ public class Consumption extends Window {
         CButton saveCancelButton = new CButton(electricityController, BUTTON_COUNT);
 
         String[] cubicLabelNames = {
-                messages.getString("cubic"),
+                messages.getString("kwh"),
                 messages.getString("date")};
 
         String[] saveCancelButtonNames = {

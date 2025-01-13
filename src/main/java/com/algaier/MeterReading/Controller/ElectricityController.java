@@ -1,6 +1,7 @@
 package com.algaier.MeterReading.Controller;
 
 import com.algaier.MeterReading.Controller.Services.DBConnect;
+import com.algaier.MeterReading.Controller.Services.SaveElectricityInput;
 import com.algaier.MeterReading.Controller.Services.SaveGasInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
@@ -52,14 +53,14 @@ public class ElectricityController implements ActionListener {
                 break;
 
             case "save":
-                SaveGasInput saveTableInputToDB = new SaveGasInput(dbConnection, cubicField, dateField);
+                SaveElectricityInput saveElectricityInput = new SaveElectricityInput(dbConnection, cubicField, dateField);
 
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
-                    saveTableInputToDB.setGasTextInput(1);
-                    saveTableInputToDB.setGasDateTextInput(1);
-                    saveTableInputToDB.saveGas();
+                    saveElectricityInput.setElectricityTextInput(1);
+                    saveElectricityInput.setElectricityDateTextInput(1);
+                    saveElectricityInput.saveElectricity();
 
-                    if (saveTableInputToDB.getDbInputState()) {
+                    if (saveElectricityInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(
                                 null,
                                 "Erfolgreich eingetragen",

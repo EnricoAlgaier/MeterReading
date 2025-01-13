@@ -18,14 +18,13 @@ public class WaterHot {
     @Column(name = "Place", nullable = false)
     private String place;
 
-    @ManyToOne
-    @JoinColumn(name = "PriceID", nullable = false)
-    private Price price;
+    @Column(name = "PriceID", nullable = false)
+    private int price;
 
     @Column(name = "Created_At", nullable = false)
     private LocalDateTime createdAt;
 
-    public WaterHot(double m3, String place, Price price, LocalDateTime createdAt) {
+    public WaterHot(double m3, String place, int price, LocalDateTime createdAt) {
         this.m3 = m3;
         this.place = place;
         this.price = price;
@@ -44,7 +43,7 @@ public class WaterHot {
         return place;
     }
 
-    public Price getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -64,7 +63,7 @@ public class WaterHot {
         this.place = place;
     }
 
-    public void setPrice(Price price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

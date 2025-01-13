@@ -1,7 +1,6 @@
 package com.algaier.MeterReading.Controller.Services;
 
-import com.algaier.MeterReading.Model.Gas;
-import com.algaier.MeterReading.Model.Price;
+import com.algaier.MeterReading.Model.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,10 +12,23 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class DBConnect {
-	private LocalDateTime today = LocalDateTime.now();
-
 	protected SessionFactory sessionFactory;
+	public enum PriceId {
+		ELECTRICITY_ID(4),
+		WATERCOLD_ID(2),
+		WATERHOT_ID(3),
+		GAS_ID(1);
 
+		private final int id;
+
+		PriceId(int id) {
+			this.id = id;
+		}
+
+		public int getId() {
+			return id;
+		}
+	}
 	public void createDbConnection() {
 		StandardServiceRegistry registry = null;
 
@@ -34,7 +46,7 @@ public class DBConnect {
 					.build();
 
 			sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-			System.out.println("SessionFactory successfully created.");
+			System.out.println("DbConnection successfully created.");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Error creating SessionFactory: " + e.getMessage());
@@ -46,29 +58,56 @@ public class DBConnect {
 	
 	public void closeDbConneciton() {
 		sessionFactory.close();
-		System.out.println("sf geschlossen");
+		System.out.println("dbConnection closed");
 	}
 
 	public void saveGasTable(double cubic, LocalDateTime dateTime){
-		Gas gas = new Gas(cubic, 1, dateTime);
+		Gas gas = new Gas(cubic, PriceId.GAS_ID.getId(), dateTime);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(gas);
 		session.getTransaction().commit();
-		System.out.println("Gas hinzugefügt");
+		session.close();
+	}
+// TODO Session Facotry in function auslagern
+	public void saveWaterTable(double cubic, String place, LocalDateTime dateTime, String waterType){
+		if(waterType.equals("cold")){
+			WaterCold waterCold = new WaterCold(cubic, place, PriceId.WATERCOLD_ID.getId(), dateTime);
+
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(waterCold);
+			session.getTransaction().commit();
+			session.close();
+		} else{
+			WaterHot waterHot = new WaterHot(cubic, place, PriceId.WATERHOT_ID.getId(), dateTime);
+
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(waterHot);
+			session.getTransaction().commit();
+			session.close();
+		}
+	}
+
+	public void saveElectricityTable(double cubic, LocalDateTime dateTime){
+		Electricity electricity = new Electricity(cubic, PriceId.ELECTRICITY_ID.getId(), dateTime);
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(electricity);
+		session.getTransaction().commit();
 		session.close();
 	}
 
 	public void savePriceTable(BigDecimal productPrice, String product, BigDecimal basicCosts, BigDecimal abatement){
-		System.out.println("1." + productPrice + " 2." + product + " 3." + basicCosts + " 4." + abatement);
 		Price price = new Price(productPrice, product, basicCosts, abatement);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(price);
 		session.getTransaction().commit();
-		System.out.println("Price hinzugefügt");
 		session.close();
 	}
 }

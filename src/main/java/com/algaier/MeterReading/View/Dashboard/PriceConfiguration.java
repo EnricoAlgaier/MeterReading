@@ -25,7 +25,7 @@ public class PriceConfiguration extends Window {
     private String[] labelPriceConfig;
     private boolean isSave = false;
     private String productName;
-    private DBConnect dbConnection;
+    private final DBConnect dbConnection;
     private DashboardController dashboardListener;
 
     public PriceConfiguration(ResourceBundle messages, DBConnect dbConnection) {
@@ -59,8 +59,6 @@ public class PriceConfiguration extends Window {
     }
 
     public void createLabels(ResourceBundle messages) {
-
-
         String[] inputLabelNames = {
                 messages.getString(labelPriceConfig[0]),
                 messages.getString(labelPriceConfig[1]),

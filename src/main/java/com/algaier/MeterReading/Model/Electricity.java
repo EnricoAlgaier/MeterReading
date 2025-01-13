@@ -15,14 +15,13 @@ public class Electricity {
     @Column(name = "KWh")
     private double kwh;
 
-    @ManyToOne
-    @JoinColumn(name = "PriceID", nullable = false)
-    private Price price;
+    @Column(name = "PriceID", nullable = false)
+    private int price;
 
     @Column(name = "Created_At")
     private LocalDateTime createdAt;
 
-    public Electricity(double kwh, Price price, LocalDateTime createdAt) {
+    public Electricity(double kwh, int price, LocalDateTime createdAt) {
         this.kwh = kwh;
         this.price = price;
         this.createdAt = createdAt;
@@ -36,7 +35,7 @@ public class Electricity {
         return kwh;
     }
 
-    public Price getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -52,7 +51,7 @@ public class Electricity {
         this.kwh = kwh;
     }
 
-    public void setPrice(Price price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
