@@ -45,7 +45,8 @@ public class LoginController implements ActionListener {
                     boolean loginCheck = checkLogin.checkPasswordAndEmail(passwordValue);
 
                     if(loginCheck){
-                        new Dashboard(messages, dbConnect);
+                        new Dashboard(messages, dbConnect, checkLogin.getuserEmail());
+                        login.dispose();
                     } else{
                         JOptionPane.showMessageDialog(
                                 null,

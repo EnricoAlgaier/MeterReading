@@ -26,9 +26,12 @@ public class WaterWindow extends Window {
 
     private static final int BUTTON_COUNT = 4;
 
-    public WaterWindow(ResourceBundle messages, DBConnect dbConnection) {
+    private final String userEmail;
+
+    public WaterWindow(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
-        WaterController waterController = new WaterController(messages, dbConnection, this);
+        this.userEmail = userEmail;
+        WaterController waterController = new WaterController(messages, dbConnection, this, userEmail);
         CButton menuButton = new CButton(waterController, BUTTON_COUNT);
 
         String[] buttonNames = {
@@ -49,5 +52,9 @@ public class WaterWindow extends Window {
 
     public static void closeWindow() {
         Window.closeWindow(dbConnection);
+    }
+
+    public String getUserEmail() {
+        return userEmail;
     }
 }

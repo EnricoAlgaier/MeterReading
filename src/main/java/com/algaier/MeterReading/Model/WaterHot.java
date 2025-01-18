@@ -7,29 +7,33 @@ import java.time.LocalDateTime;
 @Table(name = "WaterHot")
 public class WaterHot {
 
-    public WaterHot(double m3, String place, int price, LocalDateTime createdAt) {
-        this.m3 = m3;
-        this.place = place;
-        this.price = price;
-        this.createdAt = createdAt;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private int id;
 
-    @Column(name = "M³", nullable = false)
+    @Column(name = "M³")
     private double m3;
 
-    @Column(name = "Place", nullable = false)
+    @Column(name = "Place")
     private String place;
 
-    @Column(name = "PriceID", nullable = false)
+    @Column(name = "PriceID")
     private int price;
 
-    @Column(name = "Created_At", nullable = false)
+    @Column(name = "Created_At")
     private LocalDateTime createdAt;
+
+    @Column(name = "UserEmail")
+    private String userEmail;
+
+    public WaterHot(double m3, String place, int price, LocalDateTime createdAt, String userEmail) {
+        this.m3 = m3;
+        this.place = place;
+        this.price = price;
+        this.createdAt = createdAt;
+        this.userEmail = userEmail;
+    }
 
     public int getId() {
         return id;
@@ -51,6 +55,10 @@ public class WaterHot {
         return createdAt;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -69,5 +77,9 @@ public class WaterHot {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

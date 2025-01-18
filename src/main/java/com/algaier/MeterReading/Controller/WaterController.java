@@ -20,19 +20,21 @@ public class WaterController implements ActionListener {
     private CTextField dateField;
     private final DBConnect dbConnection;
     private Consumption consumption;
+    private String userEmail;
 
-    public WaterController(ResourceBundle messages, DBConnect dbConnection, WaterWindow waterWindow) {
+    public WaterController(ResourceBundle messages, DBConnect dbConnection, WaterWindow waterWindow, String userEmail) {
         this.messages = messages;
         this.dbConnection = dbConnection;
         this.waterWindow = waterWindow;
     }
 
-    public WaterController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection) {
+    public WaterController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection, String userEmail) {
         this.messages = messages;
         this.consumption = consumption;
         this.cubicField = cubicField;
         this.dateField = dateField;
         this.dbConnection = dbConnection;
+        this.userEmail = userEmail;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class WaterController implements ActionListener {
 
         switch (buttonID) {
             case "consumption":
-                new Consumption(messages, dbConnection);
+                new Consumption(messages, dbConnection, userEmail);
                 break;
 
             case "overview":
@@ -49,7 +51,7 @@ public class WaterController implements ActionListener {
 
             case "back":
                 waterWindow.dispose();
-                new Dashboard(messages, dbConnection);
+                new Dashboard(messages, dbConnection, userEmail);
                 break;
 
             case "save":
@@ -58,7 +60,7 @@ public class WaterController implements ActionListener {
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
                     saveTableInputToDB.setGasTextInput(1);
                     saveTableInputToDB.setGasDateTextInput(1);
-                    saveTableInputToDB.saveGas();
+                    saveTableInputToDB.saveGas(userEmail);
 
                     if (saveTableInputToDB.getDbInputState()) {
                         JOptionPane.showMessageDialog(

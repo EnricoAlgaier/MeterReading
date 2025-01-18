@@ -22,7 +22,7 @@ public class SaveElectricityInput {
         this.dateField = dateField;
     }
 
-    public void saveElectricity() {
+    public void saveElectricity(String userEmail) {
 
         try {
             double cubic = Double.parseDouble(eletricityFields.get(0));
@@ -31,9 +31,7 @@ public class SaveElectricityInput {
             LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
 
-            int userId = 0;
-
-            dbConnection.saveElectricityTable(cubic, dateTime, userId);
+            dbConnection.saveElectricityTable(cubic, dateTime, userEmail);
 
             dbInputState = true;
 

@@ -26,9 +26,12 @@ public class ElectricityWindow extends Window {
 
     private static final int BUTTON_COUNT = 4;
 
-    public ElectricityWindow(ResourceBundle messages, DBConnect dbConnection) {
+    private final String userEmail;
+
+    public ElectricityWindow(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
-        ElectricityController electricityController = new ElectricityController(messages, dbConnection, this);
+        this.userEmail = userEmail;
+        ElectricityController electricityController = new ElectricityController(messages, dbConnection, this, userEmail);
         CButton menuButton = new CButton(electricityController, BUTTON_COUNT);
 
         String[] buttonNames = {
@@ -50,4 +53,5 @@ public class ElectricityWindow extends Window {
     public static void closeWindow() {
         Window.closeWindow(dbConnection);
     }
+
 }

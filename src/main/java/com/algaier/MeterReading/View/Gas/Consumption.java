@@ -52,12 +52,15 @@ public class Consumption extends Window {
     private static final int LABEL_COUNT = 2;
     private static final int BUTTON_COUNT = 2;
 
-    public Consumption(ResourceBundle messages, DBConnect dbConnection) {
+    private final String userEmail;
+
+    public Consumption(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
+        this.userEmail = userEmail;
         cubicField = new CTextField(TEXT_FIELD_COUNT);
         dateField = new CTextField(TEXT_FIELD_COUNT);
         CLabel cubicFieldLabel = new CLabel(LABEL_COUNT);
-        GasController gasController = new GasController(messages, this, cubicField, dateField, dbConnection);
+        GasController gasController = new GasController(messages, this, cubicField, dateField, dbConnection, userEmail);
         CButton saveCancelButton = new CButton(gasController, BUTTON_COUNT);
 
         String[] cubicLabelNames = {

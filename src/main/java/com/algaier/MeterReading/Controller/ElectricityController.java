@@ -2,7 +2,6 @@ package com.algaier.MeterReading.Controller;
 
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Controller.Services.SaveElectricityInput;
-import com.algaier.MeterReading.Controller.Services.SaveGasInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
 import com.algaier.MeterReading.View.Electricity.Consumption;
@@ -20,19 +19,22 @@ public class ElectricityController implements ActionListener {
     private CTextField dateField;
     private final DBConnect dbConnection;
     private Consumption consumption;
+    private final String userEmail;
 
-    public ElectricityController(ResourceBundle messages, DBConnect dbConnection, ElectricityWindow electricityWindow) {
+    public ElectricityController(ResourceBundle messages, DBConnect dbConnection, ElectricityWindow electricityWindow, String userEmail) {
         this.messages = messages;
         this.dbConnection = dbConnection;
         this.electricityWindow = electricityWindow;
+        this.userEmail = userEmail;
     }
 
-    public ElectricityController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection) {
+    public ElectricityController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection, String userEmail) {
         this.messages = messages;
         this.consumption = consumption;
         this.cubicField = cubicField;
         this.dateField = dateField;
         this.dbConnection = dbConnection;
+        this.userEmail = userEmail;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class ElectricityController implements ActionListener {
 
         switch (buttonID) {
             case "consumption":
-                new Consumption(messages, dbConnection);
+                new Consumption(messages, dbConnection, userEmail);
                 break;
 
             case "overview":
@@ -49,7 +51,7 @@ public class ElectricityController implements ActionListener {
 
             case "back":
                 electricityWindow.dispose();
-                new Dashboard(messages, dbConnection);
+                new Dashboard(messages, dbConnection, userEmail);
                 break;
 
             case "save":
@@ -58,20 +60,22 @@ public class ElectricityController implements ActionListener {
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
                     saveElectricityInput.setElectricityTextInput(1);
                     saveElectricityInput.setElectricityDateTextInput(1);
-                    saveElectricityInput.saveElectricity();
+                    saveElectricityInput.saveElectricity(userEmail);
 
                     if (saveElectricityInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(
                                 null,
-                                "Erfolgreich eingetragen",
-                                "Erfolgreich",
+                                messages.getString("userSuccess"),
+                                messages.getString("success"),
                                 JOptionPane.INFORMATION_MESSAGE);
+
+                        consumption.dispose();
                     }
                 } else{
                     JOptionPane.showMessageDialog(
                             null,
-                            "Nicht alle Felder sind ausgefüllt",
-                            "Achtung",
+                            messages.getString("userAttention"),
+                            messages.getString("attention"),
                             JOptionPane.INFORMATION_MESSAGE);
                 }
                 break;

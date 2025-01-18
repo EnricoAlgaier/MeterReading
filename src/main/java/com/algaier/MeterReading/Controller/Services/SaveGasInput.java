@@ -22,7 +22,7 @@ public class SaveGasInput {
         this.dateField = dateField;
     }
 
-    public void saveGas() {
+    public void saveGas(String userEmail) {
 
         try {
             double cubic = Double.parseDouble(gasFields.get(0));
@@ -30,9 +30,8 @@ public class SaveGasInput {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
-            int userId = 0;
 
-            dbConnection.saveGasTable(cubic, dateTime, userId);
+            dbConnection.saveGasTable(cubic, dateTime, userEmail);
 
             dbInputState = true;
 

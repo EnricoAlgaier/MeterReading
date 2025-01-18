@@ -21,16 +21,15 @@ public class SavePriceInput {
         this.priceConfigurationFields = priceConfigurationFields;
     }
 
-    public void savePrice() {
+    public void savePrice(String userEmail) {
         try {
 
             BigDecimal price = new BigDecimal(priceFields.get(0));
             BigDecimal basiscCosts = new BigDecimal(priceFields.get(1));
             BigDecimal abatement = new BigDecimal(priceFields.get(2));
             String product = priceFields.get(3);
-            int userId = 0;
 
-            dbConnection.savePriceTable(price, product, basiscCosts, abatement, userId);
+            dbConnection.savePriceTable(price, product, basiscCosts, abatement, userEmail);
 
             dbInputState = true;
 

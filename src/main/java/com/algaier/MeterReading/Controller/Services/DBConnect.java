@@ -63,8 +63,8 @@ public class DBConnect {
 		System.out.println("dbConnection closed");
 	}
 
-	public void saveGasTable(double cubic, LocalDateTime dateTime, int userId){
-		Gas gas = new Gas(cubic, PriceId.GAS_ID.getId(), dateTime, userId);
+	public void saveGasTable(double cubic, LocalDateTime dateTime, String userEmail){
+		Gas gas = new Gas(cubic, PriceId.GAS_ID.getId(), dateTime, userEmail);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -73,9 +73,9 @@ public class DBConnect {
 		session.close();
 	}
 // TODO Session Facotry in function auslagern
-	public void saveWaterTable(double cubic, String place, LocalDateTime dateTime, String waterType){
+	public void saveWaterTable(double cubic, String place, LocalDateTime dateTime, String waterType, String userEmail){
 		if(waterType.equals("cold")){
-			WaterCold waterCold = new WaterCold(cubic, place, PriceId.WATERCOLD_ID.getId(), dateTime);
+			WaterCold waterCold = new WaterCold(cubic, place, PriceId.WATERCOLD_ID.getId(), dateTime, userEmail);
 
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
@@ -83,7 +83,7 @@ public class DBConnect {
 			session.getTransaction().commit();
 			session.close();
 		} else{
-			WaterHot waterHot = new WaterHot(cubic, place, PriceId.WATERHOT_ID.getId(), dateTime);
+			WaterHot waterHot = new WaterHot(cubic, place, PriceId.WATERHOT_ID.getId(), dateTime, userEmail);
 
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
@@ -93,8 +93,8 @@ public class DBConnect {
 		}
 	}
 
-	public void saveElectricityTable(double cubic, LocalDateTime dateTime, int userId){
-		Electricity electricity = new Electricity(cubic, PriceId.ELECTRICITY_ID.getId(), dateTime, userId);
+	public void saveElectricityTable(double cubic, LocalDateTime dateTime, String userEmail){
+		Electricity electricity = new Electricity(cubic, PriceId.ELECTRICITY_ID.getId(), dateTime, userEmail);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -103,8 +103,8 @@ public class DBConnect {
 		session.close();
 	}
 
-	public void savePriceTable(BigDecimal productPrice, String product, BigDecimal basicCosts, BigDecimal abatement, int userId){
-		Price price = new Price(productPrice, product, basicCosts, abatement, userId);
+	public void savePriceTable(BigDecimal productPrice, String product, BigDecimal basicCosts, BigDecimal abatement, String userEmail){
+		Price price = new Price(productPrice, product, basicCosts, abatement, userEmail);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();

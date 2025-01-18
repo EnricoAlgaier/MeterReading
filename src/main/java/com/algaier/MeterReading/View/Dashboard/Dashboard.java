@@ -12,10 +12,11 @@ public class Dashboard extends Window {
     private static final int POS_X = 1500;
     private static final int POS_Y = 800;
     private static DBConnect dbConnection;
+    private String userEmail;
 
-
-    public Dashboard(ResourceBundle messages, DBConnect dbConnection) {
+    public Dashboard(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
+        System.out.println(userEmail);
 
         Dashboard.dbConnection = dbConnection;
 
@@ -26,7 +27,7 @@ public class Dashboard extends Window {
                 messages.getString("setprice"),
                 messages.getString("close")};
 
-        DashboardController dashboardController = new DashboardController(this, messages, dbConnection);
+        DashboardController dashboardController = new DashboardController(this, messages, dbConnection, userEmail);
         CButton menuButton = new CButton(dashboardController, 5);
 
         menuButton.createButtons(ComponentBuilderDashboard.BUTTON_POS_X,
@@ -54,5 +55,4 @@ public class Dashboard extends Window {
             add(component);
         }
     }
-
 }

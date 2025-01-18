@@ -19,19 +19,22 @@ public class GasController implements ActionListener {
     private CTextField dateField;
     private final DBConnect dbConnection;
     private Consumption consumption;
+    private final String userEmail;
 
-    public GasController(ResourceBundle messages, DBConnect dbConnection, GasWindow gasWindow) {
+    public GasController(ResourceBundle messages, DBConnect dbConnection, GasWindow gasWindow, String userEmail) {
         this.messages = messages;
         this.dbConnection = dbConnection;
         this.gasWindow = gasWindow;
+        this.userEmail = userEmail;
     }
 
-    public GasController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection) {
+    public GasController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection, String userEmail) {
         this.messages = messages;
         this.consumption = consumption;
         this.cubicField = cubicField;
         this.dateField = dateField;
         this.dbConnection = dbConnection;
+        this.userEmail = userEmail;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class GasController implements ActionListener {
 
         switch (buttonID) {
             case "consumption":
-                new Consumption(messages, dbConnection);
+                new Consumption(messages, dbConnection, userEmail);
                 break;
 
             case "overview":
@@ -48,7 +51,7 @@ public class GasController implements ActionListener {
 
             case "back":
                 gasWindow.dispose();
-                new Dashboard(messages, dbConnection);
+                new Dashboard(messages, dbConnection, userEmail);
                 break;
 
             case "save":
@@ -57,7 +60,7 @@ public class GasController implements ActionListener {
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
                     saveTableInputToDB.setGasTextInput(1);
                     saveTableInputToDB.setGasDateTextInput(1);
-                    saveTableInputToDB.saveGas();
+                    saveTableInputToDB.saveGas(userEmail);
 
                     if (saveTableInputToDB.getDbInputState()) {
                         JOptionPane.showMessageDialog(
@@ -65,6 +68,7 @@ public class GasController implements ActionListener {
                                 "Erfolgreich eingetragen",
                                 "Erfolgreich",
                                 JOptionPane.INFORMATION_MESSAGE);
+                        consumption.dispose();
                     }
                 } else{
                     JOptionPane.showMessageDialog(

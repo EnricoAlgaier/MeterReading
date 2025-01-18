@@ -27,12 +27,15 @@ public class PriceConfiguration extends Window {
     private String productName;
     private final DBConnect dbConnection;
     private DashboardController dashboardListener;
+    private final String userEmail;
 
-    public PriceConfiguration(ResourceBundle messages, DBConnect dbConnection) {
+    public PriceConfiguration(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(WINDOW_POS_X, WINDOW_POS_Y);
         this.dbConnection = dbConnection;
+        this.userEmail = userEmail;
+
         CTextField inputFields = new CTextField(inputFieldsCount);
-        DashboardController dashboardListener = new DashboardController(this, messages, dbConnection, inputFields);
+        DashboardController dashboardListener = new DashboardController(this, messages, dbConnection, inputFields, userEmail);
         CButton menuButton = new CButton(dashboardListener, buttonCounter);
 
         String[] menuButtonNames = {
@@ -90,7 +93,7 @@ public class PriceConfiguration extends Window {
 
     private void createSaveButton(CTextField inputFields, ResourceBundle messages, String productName){
         this.productName = productName;
-        DashboardController dashboardController = new DashboardController(this, messages, inputFields, dbConnection);
+        DashboardController dashboardController = new DashboardController(this, messages, inputFields, dbConnection, userEmail);
         CButton saveCancelButton = new CButton(dashboardController, saveCancelButtonCount);
 
         String[] saveCancelButtonNames = {
@@ -145,4 +148,5 @@ public class PriceConfiguration extends Window {
     public int getInputFieldsCount(){
         return inputFieldsCount;
     }
+
 }

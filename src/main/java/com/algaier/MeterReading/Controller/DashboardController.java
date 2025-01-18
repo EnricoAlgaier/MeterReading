@@ -20,27 +20,31 @@ public class DashboardController implements ActionListener {
     private DBConnect dbConnection;
     private CTextField priceConfigurationFields;
     private PriceConfiguration priceConfiguration;
+    private String userEmail;
 
-    public DashboardController(Dashboard dashboard, ResourceBundle messages, DBConnect dbConnection) {
+    public DashboardController(Dashboard dashboard, ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         this.dashboard = dashboard;
         this.messages = messages;
         this.dbConnection = dbConnection;
+        this.userEmail = userEmail;
     }
 
     // PriceConfigurationGasWaterElectricity
-    public DashboardController(PriceConfiguration priceConfiguration, ResourceBundle messages, DBConnect dbConnection, CTextField priceConfigurationFields) {
+    public DashboardController(PriceConfiguration priceConfiguration, ResourceBundle messages, DBConnect dbConnection, CTextField priceConfigurationFields, String userEmail) {
         this.priceConfiguration = priceConfiguration;
         this.messages = messages;
         this.dbConnection = dbConnection;
         this.priceConfigurationFields = priceConfigurationFields;
+        this.userEmail = userEmail;
     }
 
     // PriceCOnfigurationGasWaterElectricitySaveFunction
-    public DashboardController(PriceConfiguration priceConfiguration, ResourceBundle messages, CTextField priceConfigurationFields, DBConnect dbConnection) {
+    public DashboardController(PriceConfiguration priceConfiguration, ResourceBundle messages, CTextField priceConfigurationFields, DBConnect dbConnection, String userEmail) {
         this.priceConfigurationFields = priceConfigurationFields;
         this.priceConfiguration = priceConfiguration;
         this.dbConnection = dbConnection;
         this.messages = messages;
+        this.userEmail = userEmail;
     }
 
     @Override
@@ -50,21 +54,21 @@ public class DashboardController implements ActionListener {
         switch (buttonID) {
             case "electricity":
                 dashboard.dispose();
-                new ElectricityWindow(messages, dbConnection);
+                new ElectricityWindow(messages, dbConnection, userEmail);
                 break;
 
             case "gas":
                 dashboard.dispose();
-                new GasWindow(messages, dbConnection);
+                new GasWindow(messages, dbConnection, userEmail);
                 break;
 
             case "water":
                 dashboard.dispose();
-                new WaterWindow(messages, dbConnection);
+                new WaterWindow(messages, dbConnection, userEmail);
                 break;
 
             case "setprice": // change to priceConfiguration
-                new PriceConfiguration(messages, dbConnection);
+                new PriceConfiguration(messages, dbConnection, userEmail);
                 dashboard.dispose();
                 break;
 
@@ -104,7 +108,7 @@ public class DashboardController implements ActionListener {
 
             case "back":
                 priceConfiguration.dispose();
-                new Dashboard(messages, dbConnection);
+                new Dashboard(messages, dbConnection, userEmail);
                 break;
 
             case "saveConfig":
@@ -119,7 +123,7 @@ public class DashboardController implements ActionListener {
                             messages.getString("attention"),
                             JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    savePriceInput.savePrice();
+                    savePriceInput.savePrice(userEmail);
                     if (savePriceInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(
                                 null,

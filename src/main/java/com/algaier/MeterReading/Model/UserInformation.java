@@ -37,9 +37,6 @@ public class UserInformation {
     @Column(name = "LastLoginTime")
     private LocalDateTime lastLoginTime;
 
-    @Column(name = "UserID")
-    private int userId;
-
     public UserInformation(){
 
     }
@@ -93,10 +90,6 @@ public class UserInformation {
         return lastLoginTime;
     }
 
-    public int getuserId() {
-        return userId;
-    }
-
     public void setUserGivenname(String userGivenname) {
         this.userGivenname = userGivenname;
     }
@@ -133,7 +126,4 @@ public class UserInformation {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }

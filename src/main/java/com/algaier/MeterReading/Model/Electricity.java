@@ -21,14 +21,14 @@ public class Electricity {
     @Column(name = "Created_At")
     private LocalDateTime createdAt;
 
-    @Column(name = "UserId")
-    private int userId;
+    @Column(name = "UserEmail")
+    private String userEmail;
 
-    public Electricity(double kwh, int price, LocalDateTime createdAt, int userId) {
+    public Electricity(double kwh, int price, LocalDateTime createdAt, String userEmail) {
         this.kwh = kwh;
         this.price = price;
         this.createdAt = createdAt;
-        this.userId = userId;
+        this.userEmail = userEmail;
     }
 
     public int getId() {
@@ -47,8 +47,8 @@ public class Electricity {
         return createdAt;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public void setId(int id) {
@@ -67,7 +67,7 @@ public class Electricity {
         this.createdAt = createdAt;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

@@ -13,31 +13,31 @@ import javax.persistence.Table;
 @Table(name = "Gas")
 public class Gas {
 
-    public Gas(double m3, int priceId, LocalDateTime createdAt, int userId) {
-        this.m3 = m3;
-        this.priceId = priceId;
-        this.createdAt = createdAt;
-        this.userId = userId;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private int id;
 
-    @Column(name = "M³", nullable = false)
+    @Column(name = "M³")
     private double m3;
 
-    @Column(name = "PriceId", nullable = false)
+    @Column(name = "PriceId")
     private int priceId;
 
-    @Column(name = "Created_At", nullable = false)
+    @Column(name = "Created_At")
     private LocalDateTime createdAt;
 
-    @Column(name = "UserID", nullable = false)
-    private int userId;
+    @Column(name = "UserEmail")
+    private String userEmail;
 
     public Gas() {
+    }
+
+    public Gas(double m3, int priceId, LocalDateTime createdAt, String userEmail) {
+        this.m3 = m3;
+        this.priceId = priceId;
+        this.createdAt = createdAt;
+        this.userEmail = userEmail;
     }
 
     public int getId() {
@@ -64,16 +64,16 @@ public class Gas {
         this.priceId = priceId;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {

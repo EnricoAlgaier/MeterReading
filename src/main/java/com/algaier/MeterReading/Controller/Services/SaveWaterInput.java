@@ -22,7 +22,7 @@ public class SaveWaterInput {
         this.dateField = dateField;
     }
 
-    public void saveWater(String waterType) {
+    public void saveWater(String waterType, String userEmail) {
         try {
             double cubic = Double.parseDouble(waterFields.get(0));
             String place = waterFields.get(1);
@@ -31,7 +31,7 @@ public class SaveWaterInput {
             LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
 
-            dbConnection.saveWaterTable(cubic, place, dateTime, waterType);
+            dbConnection.saveWaterTable(cubic, place, dateTime, waterType, userEmail);
 
             dbInputState = true;
 

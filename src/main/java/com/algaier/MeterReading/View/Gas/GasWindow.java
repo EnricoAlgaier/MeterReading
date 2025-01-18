@@ -25,9 +25,12 @@ public class GasWindow extends Window {
 
     private static final int BUTTON_COUNT = 4;
 
-    public GasWindow(ResourceBundle messages, DBConnect dbConnection) {
+    private final String userEmail;
+
+    public GasWindow(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
-        GasController gasController = new GasController(messages, dbConnection, this);
+        this.userEmail = userEmail;
+        GasController gasController = new GasController(messages, dbConnection, this, userEmail);
         CButton menuButton = new CButton(gasController, BUTTON_COUNT);
 
         String[] buttonNames = {
@@ -49,4 +52,5 @@ public class GasWindow extends Window {
     public static void closeWindow() {
         Window.closeWindow(dbConnection);
     }
+
 }

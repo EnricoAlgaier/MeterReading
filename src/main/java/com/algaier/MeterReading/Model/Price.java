@@ -7,14 +7,6 @@ import java.math.BigDecimal;
 @Table(name = "Price")
 public class Price {
 
-    public Price(BigDecimal price, String product, BigDecimal basicCost, BigDecimal abatement, int userId) {
-        this.price = price;
-        this.product = product;
-        this.basicCost = basicCost;
-        this.abatement = abatement;
-        this.userId = userId;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PriceId")
@@ -32,8 +24,17 @@ public class Price {
     @Column(name = "Abatement")
     private BigDecimal abatement;
 
-    @Column(name = "UserID")
-    private int userId;
+    @Column(name = "UserEmail")
+    private String userEmail;
+
+    public Price(BigDecimal price, String product, BigDecimal basicCost, BigDecimal abatement, String userEmail) {
+        this.price = price;
+        this.product = product;
+        this.basicCost = basicCost;
+        this.abatement = abatement;
+        this.userEmail = userEmail;
+    }
+
 
     public int getId() {
         return id;
@@ -55,8 +56,8 @@ public class Price {
         return abatement;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public void setId(int id) {
@@ -79,7 +80,7 @@ public class Price {
         this.abatement = abatement;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

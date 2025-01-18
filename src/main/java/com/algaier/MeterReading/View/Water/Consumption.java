@@ -28,14 +28,17 @@ public class Consumption extends Window {
     private DBConnect dbConnection;
     private final CLabel cubicFieldLabel = new CLabel(LABEL_COUNT);
 
-    public Consumption(ResourceBundle messages, DBConnect dbConnection) {
+    private final String userEmail;
+
+    public Consumption(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
         this.dbConnection = dbConnection;
+        this.userEmail = userEmail;
 
         cubicField = new CTextField(TEXT_FIELD_COUNT);
         dateField = new CTextField(DATE_FIELD_COUNT);
 
-        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection);
+        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection, userEmail);
 
 
         setVisible(true);
@@ -90,7 +93,7 @@ public class Consumption extends Window {
     }
 
     private void createSaveButton(CTextField inputFields, ResourceBundle messages, String waterType){
-        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection);
+        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection, userEmail);
         CButton saveCancelButton = new CButton(waterController, BUTTON_COUNT);
 
         String[] saveCancelButtonNames = {
@@ -124,4 +127,5 @@ public class Consumption extends Window {
     public CTextField getDateField() {
         return dateField;
     }
+
 }
