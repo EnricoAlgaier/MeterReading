@@ -17,7 +17,7 @@ public class Dashboard extends Window {
     public Dashboard(ResourceBundle messages, DBConnect dbConnection) {
         super(POS_X, POS_Y);
 
-        this.dbConnection = dbConnection;
+        Dashboard.dbConnection = dbConnection;
 
         String[] BUTTON_NAMES = {
                 messages.getString("electricity"),

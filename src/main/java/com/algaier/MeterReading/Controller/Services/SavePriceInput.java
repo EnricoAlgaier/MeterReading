@@ -28,8 +28,9 @@ public class SavePriceInput {
             BigDecimal basiscCosts = new BigDecimal(priceFields.get(1));
             BigDecimal abatement = new BigDecimal(priceFields.get(2));
             String product = priceFields.get(3);
+            int userId = 0;
 
-            dbConnection.savePriceTable(price, product, basiscCosts, abatement);
+            dbConnection.savePriceTable(price, product, basiscCosts, abatement, userId);
 
             dbInputState = true;
 

@@ -7,6 +7,13 @@ import java.time.LocalDateTime;
 @Table(name = "WaterHot")
 public class WaterHot {
 
+    public WaterHot(double m3, String place, int price, LocalDateTime createdAt) {
+        this.m3 = m3;
+        this.place = place;
+        this.price = price;
+        this.createdAt = createdAt;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
@@ -23,13 +30,6 @@ public class WaterHot {
 
     @Column(name = "Created_At", nullable = false)
     private LocalDateTime createdAt;
-
-    public WaterHot(double m3, String place, int price, LocalDateTime createdAt) {
-        this.m3 = m3;
-        this.place = place;
-        this.price = price;
-        this.createdAt = createdAt;
-    }
 
     public int getId() {
         return id;

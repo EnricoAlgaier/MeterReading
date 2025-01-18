@@ -31,7 +31,9 @@ public class SaveElectricityInput {
             LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
 
-            dbConnection.saveElectricityTable(cubic, dateTime);
+            int userId = 0;
+
+            dbConnection.saveElectricityTable(cubic, dateTime, userId);
 
             dbInputState = true;
 

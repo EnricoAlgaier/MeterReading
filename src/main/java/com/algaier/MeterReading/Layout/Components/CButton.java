@@ -1,9 +1,6 @@
 package com.algaier.MeterReading.Layout.Components;
 
-import com.algaier.MeterReading.Controller.DashboardController;
-import com.algaier.MeterReading.Controller.ElectricityController;
-import com.algaier.MeterReading.Controller.GasController;
-import com.algaier.MeterReading.Controller.WaterController;
+import com.algaier.MeterReading.Controller.*;
 import com.algaier.MeterReading.Layout.Design.CustomButtonRect;
 
 import java.awt.*;
@@ -20,6 +17,7 @@ public class CButton {
     private GasController gasController;
     private WaterController waterController;
     private ElectricityController electricityController;
+    private LoginController loginController;
 
     private final CustomButtonRect[] buttons;
     private int buttonCount;
@@ -48,6 +46,13 @@ public class CButton {
     // Electricity Button
     public CButton(ElectricityController electricityController, int buttonCount) {
         this.electricityController = electricityController;
+        this.buttonCount = buttonCount;
+        buttons = new CustomButtonRect[buttonCount];
+    }
+
+    // Login Button
+    public CButton(LoginController loginController, int buttonCount) {
+        this.loginController = loginController;
         this.buttonCount = buttonCount;
         buttons = new CustomButtonRect[buttonCount];
     }

@@ -13,6 +13,13 @@ import javax.persistence.Table;
 @Table(name = "Gas")
 public class Gas {
 
+    public Gas(double m3, int priceId, LocalDateTime createdAt, int userId) {
+        this.m3 = m3;
+        this.priceId = priceId;
+        this.createdAt = createdAt;
+        this.userId = userId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
@@ -27,13 +34,10 @@ public class Gas {
     @Column(name = "Created_At", nullable = false)
     private LocalDateTime createdAt;
 
-    public Gas() {
-    }
+    @Column(name = "UserID", nullable = false)
+    private int userId;
 
-    public Gas(double m3, int priceId, LocalDateTime createdAt) {
-        this.m3 = m3;
-        this.priceId = priceId;
-        this.createdAt = createdAt;
+    public Gas() {
     }
 
     public int getId() {
@@ -60,8 +64,16 @@ public class Gas {
         this.priceId = priceId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {

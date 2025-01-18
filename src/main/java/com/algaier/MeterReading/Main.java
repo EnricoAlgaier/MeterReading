@@ -3,6 +3,7 @@ package com.algaier.MeterReading;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.LanguageManager;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
+import com.algaier.MeterReading.View.Login.Login;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -14,8 +15,7 @@ public class Main {
 	private static final ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
 
 	// Window default size
-	private static final int WINDOW_POS_X = 500;
-	private static final int WINDOW_POS_Y = 600;
+
 
 	// TODO add logfile to all try-catch
 	// TODO error Log visibilty for users in an extra menu in the head
@@ -28,6 +28,7 @@ public class Main {
 		LanguageManager manager = new LanguageManager();
 		manager.setLanguage("GERMAN");
 
-		new Dashboard(messages, dbConnection);
+		new Login(messages, dbConnection);
+		//new Dashboard(messages, dbConnection);
 	}
 }

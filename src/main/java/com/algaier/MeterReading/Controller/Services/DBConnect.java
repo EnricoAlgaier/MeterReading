@@ -10,6 +10,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBConnect {
 	protected SessionFactory sessionFactory;
@@ -61,8 +63,8 @@ public class DBConnect {
 		System.out.println("dbConnection closed");
 	}
 
-	public void saveGasTable(double cubic, LocalDateTime dateTime){
-		Gas gas = new Gas(cubic, PriceId.GAS_ID.getId(), dateTime);
+	public void saveGasTable(double cubic, LocalDateTime dateTime, int userId){
+		Gas gas = new Gas(cubic, PriceId.GAS_ID.getId(), dateTime, userId);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -91,8 +93,8 @@ public class DBConnect {
 		}
 	}
 
-	public void saveElectricityTable(double cubic, LocalDateTime dateTime){
-		Electricity electricity = new Electricity(cubic, PriceId.ELECTRICITY_ID.getId(), dateTime);
+	public void saveElectricityTable(double cubic, LocalDateTime dateTime, int userId){
+		Electricity electricity = new Electricity(cubic, PriceId.ELECTRICITY_ID.getId(), dateTime, userId);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -101,13 +103,20 @@ public class DBConnect {
 		session.close();
 	}
 
-	public void savePriceTable(BigDecimal productPrice, String product, BigDecimal basicCosts, BigDecimal abatement){
-		Price price = new Price(productPrice, product, basicCosts, abatement);
+	public void savePriceTable(BigDecimal productPrice, String product, BigDecimal basicCosts, BigDecimal abatement, int userId){
+		Price price = new Price(productPrice, product, basicCosts, abatement, userId);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(price);
 		session.getTransaction().commit();
 		session.close();
+	}
+
+	public UserInformation getUserInformation(String email) {
+		Session session = sessionFactory.openSession();
+		UserInformation userInformation = session.get(UserInformation.class, email);
+		session.close();
+		return userInformation;
 	}
 }
