@@ -1,5 +1,6 @@
 package com.algaier.MeterReading;
 
+import com.algaier.MeterReading.Controller.Services.AutoUpdater;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.LanguageManager;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
@@ -22,6 +23,8 @@ public class Main {
 	// TODO implements a LogInWindow for DB, Username and Password
 
 	public static void main(String[] args) {
+		new AutoUpdater();
+
 		DBConnect dbConnection = new DBConnect();
 		dbConnection.createDbConnection();
 

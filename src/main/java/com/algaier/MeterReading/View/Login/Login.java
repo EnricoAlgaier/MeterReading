@@ -34,7 +34,7 @@ public class Login extends Window {
         CButton registerButton = new CButton(loginController, registerButtonCount);
 
         String[] buttonNames = {
-                messages.getString("save"),
+                messages.getString("login"),
                 messages.getString("cancel")};
 
         String[] registerButtonNames = {
@@ -42,7 +42,7 @@ public class Login extends Window {
         };
 
         String[] labeNames = {
-                messages.getString("login"),
+                messages.getString("email"),
                 messages.getString("password")
         };
 
