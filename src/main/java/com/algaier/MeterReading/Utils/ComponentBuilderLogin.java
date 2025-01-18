@@ -8,27 +8,27 @@ public final class ComponentBuilderLogin {
 
     // static constants login field
     public static final int LOGIN_FIELD_POS_X = 50;
-    public static final int LOGIN_FIELD_POS_Y = 200;
-    public static final int LOGIN_FIELD_WIDTH = 120;
+    public static final int LOGIN_FIELD_POS_Y = 110;
+    public static final int LOGIN_FIELD_WIDTH = 200;
     public static final int LOGIN_FIELD_HEIGHT = 40;
     public static final int LOGIN_FIELD_DISTANCE = 0;
     public static final String LOGIN_FIELD_POSITION = "";
 
     // static constants password field
-    public static final int PASSWORD_FIELD_POS_X = 180;
-    public static final int PASSWORD_FIELD_POS_Y = 200;
-    public static final int PASSWORD_FIELD_WIDTH = 120;
+    public static final int PASSWORD_FIELD_POS_X = 50;
+    public static final int PASSWORD_FIELD_POS_Y = 210;
+    public static final int PASSWORD_FIELD_WIDTH = 200;
     public static final int PASSWORD_FIELD_HEIGHT = 40;
     public static final int PASSWORD_FIELD_DISTANCE = 0;
     public static final String PASSWORD_FIELD_POSITION = "";
 
     // static constants label
     public static final int LABEL_POS_X = 50;
-    public static final int LABEL_POS_Y = 170;
+    public static final int LABEL_POS_Y = 80;
     public static final int LABEL_WIDTH = 120;
     public static final int LABEL_HEIGHT = 40;
-    public static final int LABEL_DISTANCE = 130;
-    public static final String LABEL_POSITION = "posX";
+    public static final int LABEL_DISTANCE = 100;
+    public static final String LABEL_POSITION = "posY";
 
     // static constants button for posY
     public static final int BUTTON_POS_X = 50;

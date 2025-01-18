@@ -7,7 +7,7 @@ public final class ComponentBuilderWater {
     }
 
     // static constants field for posY
-    public static final int FIELD_POS_X = 50;
+    public static final int FIELD_POS_X = 250;
     public static final int FIELD_POS_Y = 50;
     public static final int FIELD_WIDTH = 120;
     public static final int FIELD_HEIGHT = 40;
@@ -15,7 +15,7 @@ public final class ComponentBuilderWater {
     public static final String FIELD_POSITION = "posY";
 
     // static constants label
-    public static final int LABEL_POS_X = 50;
+    public static final int LABEL_POS_X = 250;
     public static final int LABEL_POS_Y = 30;
     public static final int LABEL_WIDTH = 100;
     public static final int LABEL_HEIGHT = 40;
@@ -23,7 +23,7 @@ public final class ComponentBuilderWater {
     public static final String LABEL_POSITION = "posY";
 
     // static constants date field
-    public static final int DATE_FIELD_POS_X = 50;
+    public static final int DATE_FIELD_POS_X = 250;
     public static final int DATE_FIELD_POS_Y = 190;
     public static final int DATE_FIELD_WIDTH = 120;
     public static final int DATE_FIELD_HEIGHT = 40;
@@ -31,9 +31,9 @@ public final class ComponentBuilderWater {
     public static final String DATE_FIELD_POSITION = "";
 
     // static constants button for posY
-    public static final int BUTTON_POS_X = 50;
+    public static final int BUTTON_POS_X = 20;
     public static final int BUTTON_POS_Y = 20;
-    public static final int BUTTON_WIDTH = 180;
+    public static final int BUTTON_WIDTH = 200;
     public static final int BUTTON_HEIGHT = 50;
     public static final int BUTTON_DISTANCE = 50;
     public static final String BUTTON_POSITION = "posY";
@@ -48,4 +48,5 @@ public final class ComponentBuilderWater {
 
     // buttonId's for Water View
     public static final String[] SAVE_CANCEL_BUTTON_IDS = {"save", "cancel"};
+    public static final String[] BUTTON_IDS = {"cold", "hot"};
 }

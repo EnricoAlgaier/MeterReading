@@ -2,6 +2,7 @@ package com.algaier.MeterReading.Controller;
 
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Controller.Services.SaveGasInput;
+import com.algaier.MeterReading.Controller.Services.SaveWaterInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
 
@@ -26,6 +27,7 @@ public class WaterController implements ActionListener {
         this.messages = messages;
         this.dbConnection = dbConnection;
         this.waterWindow = waterWindow;
+        this.userEmail = userEmail;
     }
 
     public WaterController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection, String userEmail) {
@@ -55,19 +57,21 @@ public class WaterController implements ActionListener {
                 break;
 
             case "save":
-                SaveGasInput saveTableInputToDB = new SaveGasInput(dbConnection, cubicField, dateField);
+                SaveWaterInput saveWaterInput = new SaveWaterInput(dbConnection, cubicField, dateField);
 
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
-                    saveTableInputToDB.setGasTextInput(1);
-                    saveTableInputToDB.setGasDateTextInput(1);
-                    saveTableInputToDB.saveGas(userEmail);
+                    saveWaterInput.setWaterTextInput(2);
+                    saveWaterInput.setWaterDateTextInput(1);
+                    saveWaterInput.saveWater(consumption.getWaterType(), userEmail);
 
-                    if (saveTableInputToDB.getDbInputState()) {
+                    if (saveWaterInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(
                                 null,
                                 "Erfolgreich eingetragen",
                                 "Erfolgreich",
                                 JOptionPane.INFORMATION_MESSAGE);
+
+                        consumption.dispose();
                     }
                 } else{
                     JOptionPane.showMessageDialog(
@@ -80,6 +84,20 @@ public class WaterController implements ActionListener {
 
             case "cancel":
                 consumption.dispose();
+                break;
+
+            case "cold":
+                consumption.removeComponentsToWindow();
+                consumption.createInputFields(cubicField, dateField, messages, "cold");
+                consumption.createLabels(messages);
+                consumption.repaint();
+                break;
+
+            case "hot":
+                consumption.removeComponentsToWindow();
+                consumption.createInputFields(cubicField, dateField, messages, "hot");
+                consumption.createLabels(messages);
+                consumption.repaint();
                 break;
 
             default:

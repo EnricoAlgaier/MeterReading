@@ -52,11 +52,8 @@ public class Consumption extends Window {
     private static final int LABEL_COUNT = 2;
     private static final int BUTTON_COUNT = 2;
 
-    private final String userEmail;
-
     public Consumption(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
-        this.userEmail = userEmail;
         cubicField = new CTextField(TEXT_FIELD_COUNT);
         dateField = new CTextField(TEXT_FIELD_COUNT);
         CLabel cubicFieldLabel = new CLabel(LABEL_COUNT);
