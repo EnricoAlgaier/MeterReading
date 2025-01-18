@@ -36,10 +36,11 @@ public class DashboardController implements ActionListener {
     }
 
     // PriceCOnfigurationGasWaterElectricitySaveFunction
-    public DashboardController(PriceConfiguration priceConfiguration, CTextField priceConfigurationFields, DBConnect dbConnection) {
+    public DashboardController(PriceConfiguration priceConfiguration, ResourceBundle messages, CTextField priceConfigurationFields, DBConnect dbConnection) {
         this.priceConfigurationFields = priceConfigurationFields;
         this.priceConfiguration = priceConfiguration;
         this.dbConnection = dbConnection;
+        this.messages = messages;
     }
 
     @Override
@@ -114,16 +115,16 @@ public class DashboardController implements ActionListener {
                 if (!savePriceInput.checkPriceFields()) {
                     JOptionPane.showMessageDialog(
                             null,
-                            "Nicht alle Felder sind ausgefüllt",
-                            "Achtung",
+                            messages.getString("userAttention"),
+                            messages.getString("attention"),
                             JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     savePriceInput.savePrice();
                     if (savePriceInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(
                                 null,
-                                "Erfolgreich eingetragen",
-                                "Erfolgreich",
+                                messages.getString("userSuccess"),
+                                messages.getString("success"),
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
                 }

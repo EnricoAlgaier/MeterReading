@@ -90,7 +90,7 @@ public class PriceConfiguration extends Window {
 
     private void createSaveButton(CTextField inputFields, ResourceBundle messages, String productName){
         this.productName = productName;
-        DashboardController dashboardController = new DashboardController(this, inputFields, dbConnection);
+        DashboardController dashboardController = new DashboardController(this, messages, inputFields, dbConnection);
         CButton saveCancelButton = new CButton(dashboardController, saveCancelButtonCount);
 
         String[] saveCancelButtonNames = {

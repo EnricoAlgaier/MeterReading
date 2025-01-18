@@ -49,8 +49,8 @@ public class LoginController implements ActionListener {
                     } else{
                         JOptionPane.showMessageDialog(
                                 null,
-                                "E-Mail oder Passwort falsch",
-                                "Fehler",
+                                messages.getString("loginWrong"),
+                                messages.getString("fail"),
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
 

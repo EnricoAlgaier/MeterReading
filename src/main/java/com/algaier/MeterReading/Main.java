@@ -3,7 +3,6 @@ package com.algaier.MeterReading;
 import com.algaier.MeterReading.Controller.Services.AutoUpdater;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.LanguageManager;
-import com.algaier.MeterReading.View.Dashboard.Dashboard;
 import com.algaier.MeterReading.View.Login.Login;
 
 import java.util.Locale;
@@ -14,9 +13,6 @@ public class Main {
 	private static final LanguageManager languageManager = new LanguageManager();
 	private static final Locale locale = languageManager.getLocaleLanguage();
 	private static final ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
-
-	// Window default size
-
 
 	// TODO add logfile to all try-catch
 	// TODO error Log visibilty for users in an extra menu in the head
