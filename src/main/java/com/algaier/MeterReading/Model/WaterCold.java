@@ -18,16 +18,16 @@ public class WaterCold {
     @Column(name = "Place")
     private String place;
 
-    @Column(name = "PriceId", nullable = false)
-    private int priceId;
+    @Column(name = "PriceId")
+    private String priceId;
 
-    @Column(name = "Created_At")
+    @Column(name = "CreatedAt")
     private LocalDateTime createdAt;
 
     @Column(name = "UserEmail")
     private String userEmail;
 
-    public WaterCold(double m3, String place, int priceId, LocalDateTime createdAt, String userEmail) {
+    public WaterCold(double m3, String place, String priceId, LocalDateTime createdAt, String userEmail) {
         this.m3 = m3;
         this.place = place;
         this.priceId = priceId;
@@ -47,7 +47,7 @@ public class WaterCold {
         return place;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return priceId;
     }
 
@@ -71,7 +71,7 @@ public class WaterCold {
         this.place = place;
     }
 
-    public void setPrice(int priceId) {
+    public void setPrice(String priceId) {
         this.priceId = priceId;
     }
 

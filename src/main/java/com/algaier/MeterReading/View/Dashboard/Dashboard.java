@@ -16,8 +16,6 @@ public class Dashboard extends Window {
 
     public Dashboard(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
-        System.out.println(userEmail);
-
         Dashboard.dbConnection = dbConnection;
 
         String[] BUTTON_NAMES = {
@@ -40,7 +38,6 @@ public class Dashboard extends Window {
                 dashboardController);
 
         addComponentsToWindow(menuButton.getButtons());
-
         setDbConnection(dbConnection);
         close();
         setVisible(true);

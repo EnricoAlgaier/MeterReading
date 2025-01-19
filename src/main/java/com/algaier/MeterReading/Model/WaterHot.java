@@ -19,15 +19,15 @@ public class WaterHot {
     private String place;
 
     @Column(name = "PriceID")
-    private int price;
+    private String price;
 
-    @Column(name = "Created_At")
+    @Column(name = "CreatedAt")
     private LocalDateTime createdAt;
 
     @Column(name = "UserEmail")
     private String userEmail;
 
-    public WaterHot(double m3, String place, int price, LocalDateTime createdAt, String userEmail) {
+    public WaterHot(double m3, String place, String price, LocalDateTime createdAt, String userEmail) {
         this.m3 = m3;
         this.place = place;
         this.price = price;
@@ -47,7 +47,7 @@ public class WaterHot {
         return place;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
@@ -71,7 +71,7 @@ public class WaterHot {
         this.place = place;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

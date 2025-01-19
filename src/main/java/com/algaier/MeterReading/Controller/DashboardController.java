@@ -16,11 +16,11 @@ import java.util.ResourceBundle;
 
 public class DashboardController implements ActionListener {
     private Dashboard dashboard;
-    private ResourceBundle messages;
-    private DBConnect dbConnection;
+    private final ResourceBundle messages;
+    private final DBConnect dbConnection;
     private CTextField priceConfigurationFields;
     private PriceConfiguration priceConfiguration;
-    private String userEmail;
+    private final String userEmail;
 
     public DashboardController(Dashboard dashboard, ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         this.dashboard = dashboard;
@@ -29,16 +29,7 @@ public class DashboardController implements ActionListener {
         this.userEmail = userEmail;
     }
 
-    // PriceConfigurationGasWaterElectricity
-    public DashboardController(PriceConfiguration priceConfiguration, ResourceBundle messages, DBConnect dbConnection, CTextField priceConfigurationFields, String userEmail) {
-        this.priceConfiguration = priceConfiguration;
-        this.messages = messages;
-        this.dbConnection = dbConnection;
-        this.priceConfigurationFields = priceConfigurationFields;
-        this.userEmail = userEmail;
-    }
-
-    // PriceCOnfigurationGasWaterElectricitySaveFunction
+    // PriceConfigurationGasWaterElectricitySaveFunction
     public DashboardController(PriceConfiguration priceConfiguration, ResourceBundle messages, CTextField priceConfigurationFields, DBConnect dbConnection, String userEmail) {
         this.priceConfigurationFields = priceConfigurationFields;
         this.priceConfiguration = priceConfiguration;
@@ -111,19 +102,13 @@ public class DashboardController implements ActionListener {
                 new Dashboard(messages, dbConnection, userEmail);
                 break;
 
-            case "saveConfig":
+            case "save":
                 SavePriceInput savePriceInput = new SavePriceInput(dbConnection, priceConfigurationFields);
                 savePriceInput.setPriceTextInput(priceConfiguration.getInputFieldsCount());
                 savePriceInput.setProductValueName(priceConfiguration.getProductName());
 
-                if (!savePriceInput.checkPriceFields()) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            messages.getString("userAttention"),
-                            messages.getString("attention"),
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    savePriceInput.savePrice(userEmail);
+                if (savePriceInput.checkPriceFields()) {
+                    savePriceInput.saveOrUpdatePrice(userEmail, priceConfiguration.getProductName());
                     if (savePriceInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(
                                 null,
@@ -131,6 +116,12 @@ public class DashboardController implements ActionListener {
                                 messages.getString("success"),
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
+                } else {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            messages.getString("userAttention"),
+                            messages.getString("attention"),
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
                 break;
 

@@ -22,9 +22,9 @@ public class Gas {
     private double m3;
 
     @Column(name = "PriceId")
-    private int priceId;
+    private String priceId;
 
-    @Column(name = "Created_At")
+    @Column(name = "CreatedAt")
     private LocalDateTime createdAt;
 
     @Column(name = "UserEmail")
@@ -33,7 +33,7 @@ public class Gas {
     public Gas() {
     }
 
-    public Gas(double m3, int priceId, LocalDateTime createdAt, String userEmail) {
+    public Gas(double m3, String priceId, LocalDateTime createdAt, String userEmail) {
         this.m3 = m3;
         this.priceId = priceId;
         this.createdAt = createdAt;
@@ -56,11 +56,11 @@ public class Gas {
         this.m3 = m3;
     }
 
-    public int getPriceId() {
+    public String getPriceId() {
         return priceId;
     }
 
-    public void setPriceId(int priceId) {
+    public void setPriceId(String priceId) {
         this.priceId = priceId;
     }
 

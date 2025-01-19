@@ -15,7 +15,7 @@ public class PriceConfiguration extends Window {
 
     private static final int WINDOW_POS_X = 1500;
     private static final int WINDOW_POS_Y = 800;
-
+    private final CTextField inputFields;
     private static final int buttonCounter = 4;
     private static final int saveCancelButtonCount = 1;
     private static final int inputFieldsCount = 3;
@@ -26,7 +26,6 @@ public class PriceConfiguration extends Window {
     private boolean isSave = false;
     private String productName;
     private final DBConnect dbConnection;
-    private DashboardController dashboardListener;
     private final String userEmail;
 
     public PriceConfiguration(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
@@ -34,8 +33,8 @@ public class PriceConfiguration extends Window {
         this.dbConnection = dbConnection;
         this.userEmail = userEmail;
 
-        CTextField inputFields = new CTextField(inputFieldsCount);
-        DashboardController dashboardListener = new DashboardController(this, messages, dbConnection, inputFields, userEmail);
+        inputFields = new CTextField(inputFieldsCount);
+        DashboardController dashboardListener = new DashboardController(this, messages, inputFields, dbConnection, userEmail);
         CButton menuButton = new CButton(dashboardListener, buttonCounter);
 
         String[] menuButtonNames = {
@@ -79,8 +78,8 @@ public class PriceConfiguration extends Window {
         addComponentsToWindow(inputFIeldLabel.getLabels());
     }
 
-    public void createFields(CTextField inputFields, ResourceBundle messages, String productName) {
-        inputFields.createTextFields(ComponentBuilderDashboard.FIELD_POS_X,
+    public void createFields(CTextField inputField, ResourceBundle messages, String productName) {
+        inputField.createTextFields(ComponentBuilderDashboard.FIELD_POS_X,
                 ComponentBuilderDashboard.FIELD_POS_Y,
                 ComponentBuilderDashboard.FIELD_WIDTH,
                 ComponentBuilderDashboard.FIELD_HEIGHT,
@@ -88,10 +87,10 @@ public class PriceConfiguration extends Window {
                 ComponentBuilderDashboard.FIELD_POSITION);
 
         addComponentsToWindow(inputFields.getFields());
-        createSaveButton(inputFields, messages, productName);
+        createSaveButton(inputField, messages, productName);
     }
 
-    private void createSaveButton(CTextField inputFields, ResourceBundle messages, String productName){
+    private void createSaveButton(CTextField inputField, ResourceBundle messages, String productName){
         this.productName = productName;
         DashboardController dashboardController = new DashboardController(this, messages, inputFields, dbConnection, userEmail);
         CButton saveCancelButton = new CButton(dashboardController, saveCancelButtonCount);
@@ -108,11 +107,9 @@ public class PriceConfiguration extends Window {
                 saveCancelButtonNames,
                 ComponentBuilderDashboard.BUTTON_SAVE_PRICE_CONFIGURATION_ID,
                 ComponentBuilderDashboard.BUTTON_SAVE_POSITION,
-                dashboardListener);
+                dashboardController);
 
         addComponentsToWindow(saveCancelButton.getButtons());
-
-        System.out.println(productName);
     }
 
     public void removeComponentsToWindow() {

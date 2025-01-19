@@ -47,5 +47,5 @@ public final class ComponentBuilderDashboard {
     public static final String[] BUTTON_PRICE_CONFIGURATION_ID = {"configuration_gas", "configuration_water", "configuration_electricity", "back"};
 
     // buttonId's for PriceConfiguration Save Cancel button
-    public static final String[] BUTTON_SAVE_PRICE_CONFIGURATION_ID = {"saveConfig"};
+    public static final String[] BUTTON_SAVE_PRICE_CONFIGURATION_ID = {"save"};
 }

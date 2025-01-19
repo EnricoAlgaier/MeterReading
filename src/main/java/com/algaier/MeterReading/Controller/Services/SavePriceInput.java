@@ -1,6 +1,7 @@
 package com.algaier.MeterReading.Controller.Services;
 
 import com.algaier.MeterReading.Layout.Components.CTextField;
+import com.algaier.MeterReading.Model.Price;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class SavePriceInput {
         this.priceConfigurationFields = priceConfigurationFields;
     }
 
-    public void savePrice(String userEmail) {
+    public void saveOrUpdatePrice(String userEmail, String productName) {
         try {
 
             BigDecimal price = new BigDecimal(priceFields.get(0));
@@ -29,7 +30,9 @@ public class SavePriceInput {
             BigDecimal abatement = new BigDecimal(priceFields.get(2));
             String product = priceFields.get(3);
 
-            dbConnection.savePriceTable(price, product, basiscCosts, abatement, userEmail);
+            dbConnection.readValues(userEmail, productName);
+            System.out.println(productName);
+            //dbConnection.savePriceTable(price, product, basiscCosts, abatement, userEmail);
 
             dbInputState = true;
 

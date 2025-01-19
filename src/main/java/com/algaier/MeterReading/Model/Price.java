@@ -9,7 +9,7 @@ public class Price {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PriceId")
+    @Column(name = "Id")
     private int id;
 
     @Column(name = "Price")
@@ -26,6 +26,10 @@ public class Price {
 
     @Column(name = "UserEmail")
     private String userEmail;
+
+    public Price(){
+
+    }
 
     public Price(BigDecimal price, String product, BigDecimal basicCost, BigDecimal abatement, String userEmail) {
         this.price = price;
