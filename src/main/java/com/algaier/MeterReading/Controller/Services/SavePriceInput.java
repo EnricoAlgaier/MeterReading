@@ -3,6 +3,7 @@ package com.algaier.MeterReading.Controller.Services;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.Model.Price;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SavePriceInput {
     private final DBConnect dbConnection;
@@ -30,9 +32,14 @@ public class SavePriceInput {
             BigDecimal abatement = new BigDecimal(priceFields.get(2));
             String product = priceFields.get(3);
 
-            dbConnection.readValues(userEmail, productName);
-            System.out.println(productName);
-            //dbConnection.savePriceTable(price, product, basiscCosts, abatement, userEmail);
+            boolean isValue = dbConnection.readValues(userEmail, productName);
+
+            if(!isValue){
+                dbConnection.savePriceTable(price, product, basiscCosts, abatement, userEmail);
+            }else{
+                dbConnection.updatePriceTable(price, product, basiscCosts, abatement, userEmail);
+            }
+
 
             dbInputState = true;
 
@@ -49,20 +56,20 @@ public class SavePriceInput {
 
     public boolean checkPriceFields() {
         int counter = 0;
+
         for (int i = 0; i < priceFields.size(); i++) {
-            if (priceFields.get(i) == "" || priceFields.get(i) == null) {
-                break;
-            } else {
-                if (counter == 3) {
-                    return true;
-                }
+            if (!priceFields.get(i).trim().isEmpty()) {
+                counter++;
             }
-            counter++;
+            if (counter == 4) {
+                return true;
+            }
         }
+
         return false;
     }
 
-    public void setProductValueName(String productName){
+    public void setProductValueName(String productName) {
         priceFields.add(productName);
     }
 

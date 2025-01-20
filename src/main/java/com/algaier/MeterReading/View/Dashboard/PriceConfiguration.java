@@ -15,18 +15,20 @@ public class PriceConfiguration extends Window {
 
     private static final int WINDOW_POS_X = 1500;
     private static final int WINDOW_POS_Y = 800;
-    private final CTextField inputFields;
+    private final CTextField inputFields ;
     private static final int buttonCounter = 4;
     private static final int saveCancelButtonCount = 1;
     private static final int inputFieldsCount = 3;
     private static final int inputLabelCount = 3;
 
     private final CLabel inputFIeldLabel = new CLabel(inputLabelCount);
+    private CButton saveCancelButton;
     private String[] labelPriceConfig;
     private boolean isSave = false;
     private String productName;
     private final DBConnect dbConnection;
     private final String userEmail;
+
 
     public PriceConfiguration(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(WINDOW_POS_X, WINDOW_POS_Y);
@@ -116,6 +118,11 @@ public class PriceConfiguration extends Window {
         for (JLabel label : inputFIeldLabel.getLabels()) {
             if (label != null) {
                 remove(label);
+            }
+        }
+        for (JTextField field : inputFields.getFields()) {
+            if (field != null) {
+                remove(field);
             }
         }
     }

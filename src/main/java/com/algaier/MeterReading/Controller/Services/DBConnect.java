@@ -4,12 +4,14 @@ import com.algaier.MeterReading.Model.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -102,6 +104,40 @@ public class DBConnect {
         session.close();
     }
 
+    public void updatePriceTable(BigDecimal productPrice, String product, BigDecimal basicCosts, BigDecimal abatement, String userEmail) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaUpdate<Price> update = builder.createCriteriaUpdate(Price.class);
+            Root<Price> root = update.from(Price.class);
+
+            update.set("price", productPrice)
+                    .set("basicCost", basicCosts)
+                    .set("abatement", abatement)
+                    .where(
+                            builder.and(
+                                    builder.equal(root.get("userEmail"), userEmail),
+                                    builder.equal(root.get("product"), product)
+                            )
+                    );
+
+            session.createQuery(update).executeUpdate();
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
     public UserInformation getUserInformation(String email) {
         Session session = sessionFactory.openSession();
         UserInformation userInformation = session.get(UserInformation.class, email);
@@ -109,21 +145,22 @@ public class DBConnect {
         return userInformation;
     }
 
-    public void readValues(String email, String productName) {
+    public boolean readValues(String email, String productName) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Price> criteria = builder.createQuery(Price.class);
         Root<Price> root = criteria.from(Price.class);
 
         criteria.select(root)
-                .where(builder.equal(root.get("userEmail"), email));
+                .where(
+                        builder.and(
+                                builder.equal(root.get("userEmail"), email),
+                                builder.equal(root.get("product"), productName)
+                        )
+                );
 
         Price result = session.createQuery(criteria).uniqueResult();
 
-        if (result.getUserEmail() == null && (result.getProduct().equals(productName))) {
-
-
-        }
-
+        return result != null;
     }
 }

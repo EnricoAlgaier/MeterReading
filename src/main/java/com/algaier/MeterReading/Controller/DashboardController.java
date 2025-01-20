@@ -116,6 +116,10 @@ public class DashboardController implements ActionListener {
                                 messages.getString("success"),
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
+                    priceConfiguration.removeComponentsToWindow();
+                    priceConfiguration.createFields(priceConfigurationFields, messages, priceConfiguration.getProductName());
+                    priceConfiguration.createLabels(messages);
+                    priceConfiguration.repaint();
                 } else {
                     JOptionPane.showMessageDialog(
                             null,
