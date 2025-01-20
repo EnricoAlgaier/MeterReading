@@ -32,7 +32,7 @@ public class SavePriceInput {
             BigDecimal abatement = new BigDecimal(priceFields.get(2));
             String product = priceFields.get(3);
 
-            boolean isValue = dbConnection.readValues(userEmail, productName);
+            boolean isValue = dbConnection.readPriceValues(userEmail, productName);
 
             if(!isValue){
                 dbConnection.savePriceTable(price, product, basiscCosts, abatement, userEmail);

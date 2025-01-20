@@ -10,8 +10,12 @@ import com.algaier.MeterReading.View.Gas.GasWindow;
 import com.algaier.MeterReading.View.Water.WaterWindow;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DashboardController implements ActionListener {
@@ -76,6 +80,7 @@ public class DashboardController implements ActionListener {
                 priceConfiguration.setLabelPriceConfig(labelPriceConfigNameGas);
                 priceConfiguration.createFields(priceConfigurationFields, messages, "gas");
                 priceConfiguration.createLabels(messages);
+                loadPriceTable(priceConfiguration, dbConnection, priceConfigurationFields, userEmail, priceConfiguration.getProductName());
                 priceConfiguration.repaint();
                 break;
 
@@ -85,6 +90,7 @@ public class DashboardController implements ActionListener {
                 priceConfiguration.setLabelPriceConfig(labelPriceConfigNameWater);
                 priceConfiguration.createFields(priceConfigurationFields, messages, "water");
                 priceConfiguration.createLabels(messages);
+                loadPriceTable(priceConfiguration, dbConnection, priceConfigurationFields, userEmail, priceConfiguration.getProductName());
                 priceConfiguration.repaint();
                 break;
 
@@ -94,6 +100,7 @@ public class DashboardController implements ActionListener {
                 priceConfiguration.setLabelPriceConfig(labelPriceConfigNameElectricity);
                 priceConfiguration.createFields(priceConfigurationFields, messages, "electricity");
                 priceConfiguration.createLabels(messages);
+                loadPriceTable(priceConfiguration, dbConnection, priceConfigurationFields, userEmail, priceConfiguration.getProductName());
                 priceConfiguration.repaint();
                 break;
 
@@ -131,6 +138,26 @@ public class DashboardController implements ActionListener {
 
             default:
                 break;
+        }
+    }
+
+    private void loadPriceTable(PriceConfiguration priceConfiguration, DBConnect dbConnect, CTextField input, String userMail, String productName) {
+        dbConnect.readPriceValues(userMail, productName);
+        List<BigDecimal> priceList = dbConnect.getPriceList();
+        List<String> stringList = new ArrayList<>();
+
+        for (BigDecimal bigDecimal : priceList) {
+            stringList.add(bigDecimal.toPlainString());
+            if (stringList.size() == 3) {
+                priceConfiguration.setPriceToInputFields(input, stringList);
+                stringList.clear();
+            }
+        }
+
+        if (!stringList.isEmpty()) {
+            priceConfiguration.setPriceToInputFields(input, stringList);
+        } else {
+            System.out.println("d");
         }
     }
 }

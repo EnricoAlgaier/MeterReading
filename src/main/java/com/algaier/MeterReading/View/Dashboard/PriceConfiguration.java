@@ -9,6 +9,7 @@ import com.algaier.MeterReading.Layout.Window;
 import com.algaier.MeterReading.Utils.ComponentBuilderDashboard;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PriceConfiguration extends Window {
@@ -135,6 +136,15 @@ public class PriceConfiguration extends Window {
 
     public void setLabelPriceConfig(String[] labelPriceConfig) {
         this.labelPriceConfig = labelPriceConfig;
+    }
+
+    public void setPriceToInputFields(CTextField input, List<String> priceList){
+        if (input != null && priceList != null && !priceList.isEmpty()) {
+            JTextField[] fields = input.getFields();
+            for (int i = 0; i < fields.length && i < priceList.size(); i++) {
+                fields[i].setText(priceList.get(i));
+            }
+        }
     }
 
     public boolean getIsSave(){

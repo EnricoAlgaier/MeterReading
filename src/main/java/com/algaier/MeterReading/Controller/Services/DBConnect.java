@@ -20,6 +20,7 @@ import java.util.List;
 
 public class DBConnect {
     protected SessionFactory sessionFactory;
+    private List<BigDecimal> priceList;
 
     public void createDbConnection() {
         StandardServiceRegistry registry = null;
@@ -138,18 +139,12 @@ public class DBConnect {
         }
     }
 
-    public UserInformation getUserInformation(String email) {
-        Session session = sessionFactory.openSession();
-        UserInformation userInformation = session.get(UserInformation.class, email);
-        session.close();
-        return userInformation;
-    }
-
-    public boolean readValues(String email, String productName) {
+    public boolean readPriceValues(String email, String productName) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Price> criteria = builder.createQuery(Price.class);
         Root<Price> root = criteria.from(Price.class);
+        priceList = new ArrayList<>();
 
         criteria.select(root)
                 .where(
@@ -161,6 +156,24 @@ public class DBConnect {
 
         Price result = session.createQuery(criteria).uniqueResult();
 
+        if(result != null){
+            priceList.add(result.getPrice());
+            priceList.add(result.getBasicCost());
+            priceList.add(result.getAbatement());
+        }
+
+
         return result != null;
+    }
+
+    public UserInformation getUserInformation(String email) {
+        Session session = sessionFactory.openSession();
+        UserInformation userInformation = session.get(UserInformation.class, email);
+        session.close();
+        return userInformation;
+    }
+
+    public List<BigDecimal> getPriceList(){
+        return priceList;
     }
 }
