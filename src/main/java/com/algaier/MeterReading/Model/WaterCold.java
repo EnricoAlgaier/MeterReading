@@ -2,6 +2,8 @@ package com.algaier.MeterReading.Model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "WaterCold")
@@ -81,5 +83,14 @@ public class WaterCold {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public List<String> waterColdList() {
+        List<String> stringList = new ArrayList<>();
+        stringList.add(String.valueOf(id));
+        stringList.add(String.valueOf(m3));
+        stringList.add(priceId);
+        stringList.add(createdAt.toString());
+        return stringList;
     }
 }

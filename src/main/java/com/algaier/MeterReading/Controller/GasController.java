@@ -3,6 +3,7 @@ package com.algaier.MeterReading.Controller;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Controller.Services.SaveGasInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
+import com.algaier.MeterReading.Model.Price;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
 import com.algaier.MeterReading.View.Gas.Consumption;
 import com.algaier.MeterReading.View.Gas.GasWindow;
@@ -10,6 +11,8 @@ import com.algaier.MeterReading.View.Gas.GasWindow;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GasController implements ActionListener {
@@ -47,6 +50,18 @@ public class GasController implements ActionListener {
                 break;
 
             case "overview":
+                List<String> gasList = dbConnection.readGasValues(userEmail);
+                Price gasPriceValue = dbConnection.readPriceValue(userEmail, "gas");
+                double totalCubic = Double.parseDouble(gasList.get(1));
+
+                BigDecimal cubicValue = BigDecimal.valueOf(totalCubic);
+                BigDecimal gasPrice = gasPriceValue.getPrice();
+                BigDecimal result = cubicValue.multiply(gasPrice);
+
+                for(String en : gasList){
+                    System.out.println(en);
+                }
+System.out.println(result);
                 break;
 
             case "back":

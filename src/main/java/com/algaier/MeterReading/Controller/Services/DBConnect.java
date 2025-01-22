@@ -156,14 +156,109 @@ public class DBConnect {
 
         Price result = session.createQuery(criteria).uniqueResult();
 
-        if(result != null){
+        if (result != null) {
             priceList.add(result.getPrice());
             priceList.add(result.getBasicCost());
             priceList.add(result.getAbatement());
         }
-
-
         return result != null;
+    }
+
+    public Price readPriceValue(String email, String productName) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Price> criteria = builder.createQuery(Price.class);
+        Root<Price> root = criteria.from(Price.class);
+
+        criteria.select(root)
+                .where(
+                        builder.and(
+                                builder.equal(root.get("userEmail"), email),
+                                builder.equal(root.get("product"), productName)
+                        )
+                );
+
+        Price result = session.createQuery(criteria).uniqueResult();
+
+        return result;
+    }
+
+    public List<String> readGasValues(String email) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Gas> criteria = builder.createQuery(Gas.class);
+        Root<Gas> root = criteria.from(Gas.class);
+
+        criteria.select(root)
+                .where(
+                        builder.and(
+                                builder.equal(root.get("userEmail"), email)
+                        )
+                );
+
+        Gas result = session.createQuery(criteria).uniqueResult();
+
+
+        assert result != null;
+        return result.gasList();
+    }
+
+    public List<String> readWaterColdValues(String email) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<WaterCold> criteria = builder.createQuery(WaterCold.class);
+        Root<WaterCold> root = criteria.from(WaterCold.class);
+
+        criteria.select(root)
+                .where(
+                        builder.and(
+                                builder.equal(root.get("userEmail"), email)
+                        )
+                );
+
+        WaterCold result = session.createQuery(criteria).uniqueResult();
+
+        assert result != null;
+        return result.waterColdList();
+    }
+
+    public List<String> readWaterHotValues(String email) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<WaterHot> criteria = builder.createQuery(WaterHot.class);
+        Root<WaterHot> root = criteria.from(WaterHot.class);
+
+        criteria.select(root)
+                .where(
+                        builder.and(
+                                builder.equal(root.get("userEmail"), email)
+                        )
+                );
+
+        WaterHot result = session.createQuery(criteria).uniqueResult();
+
+        assert result != null;
+        return result.waterHotList();
+    }
+
+
+    public List<String> readElectricityValues(String email) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Electricity> criteria = builder.createQuery(Electricity.class);
+        Root<Electricity> root = criteria.from(Electricity.class);
+
+        criteria.select(root)
+                .where(
+                        builder.and(
+                                builder.equal(root.get("userEmail"), email)
+                        )
+                );
+
+        Electricity result = session.createQuery(criteria).uniqueResult();
+
+        assert result != null;
+        return result.electricitylist();
     }
 
     public UserInformation getUserInformation(String email) {
@@ -173,7 +268,7 @@ public class DBConnect {
         return userInformation;
     }
 
-    public List<BigDecimal> getPriceList(){
+    public List<BigDecimal> getPriceList() {
         return priceList;
     }
 }

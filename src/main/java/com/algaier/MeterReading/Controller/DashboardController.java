@@ -62,7 +62,7 @@ public class DashboardController implements ActionListener {
                 new WaterWindow(messages, dbConnection, userEmail);
                 break;
 
-            case "setprice": // change to priceConfiguration
+            case "setprice":
                 new PriceConfiguration(messages, dbConnection, userEmail);
                 dashboard.dispose();
                 break;
@@ -75,33 +75,18 @@ public class DashboardController implements ActionListener {
                 break;
 
             case "configuration_gas":
-                priceConfiguration.removeComponentsToWindow();
-                String[] labelPriceConfigNameGas = new String[]{"price", "gas_basiscCosts"};
-                priceConfiguration.setLabelPriceConfig(labelPriceConfigNameGas);
-                priceConfiguration.createFields(priceConfigurationFields, messages, "gas");
-                priceConfiguration.createLabels(messages);
-                loadPriceTable(priceConfiguration, dbConnection, priceConfigurationFields, userEmail, priceConfiguration.getProductName());
-                priceConfiguration.repaint();
+                createInputFieldButtonLabel(priceConfiguration, "price", "gas_basiscCosts", messages, dbConnection,
+                        "water", userEmail);
                 break;
 
             case "configuration_water":
-                priceConfiguration.removeComponentsToWindow();
-                String[] labelPriceConfigNameWater = new String[]{"price", "water_basiscCosts"};
-                priceConfiguration.setLabelPriceConfig(labelPriceConfigNameWater);
-                priceConfiguration.createFields(priceConfigurationFields, messages, "water");
-                priceConfiguration.createLabels(messages);
-                loadPriceTable(priceConfiguration, dbConnection, priceConfigurationFields, userEmail, priceConfiguration.getProductName());
-                priceConfiguration.repaint();
+                createInputFieldButtonLabel(priceConfiguration, "price", "water_basiscCosts", messages, dbConnection,
+                        "water", userEmail);
                 break;
 
             case "configuration_electricity":
-                priceConfiguration.removeComponentsToWindow();
-                String[] labelPriceConfigNameElectricity = new String[]{"electricity_price", "electricity_basiscCosts"};
-                priceConfiguration.setLabelPriceConfig(labelPriceConfigNameElectricity);
-                priceConfiguration.createFields(priceConfigurationFields, messages, "electricity");
-                priceConfiguration.createLabels(messages);
-                loadPriceTable(priceConfiguration, dbConnection, priceConfigurationFields, userEmail, priceConfiguration.getProductName());
-                priceConfiguration.repaint();
+                createInputFieldButtonLabel(priceConfiguration, "electricity_price", "electricity_basiscCosts", messages, dbConnection,
+                        "electricity", userEmail);
                 break;
 
             case "back":
@@ -139,6 +124,17 @@ public class DashboardController implements ActionListener {
             default:
                 break;
         }
+    }
+
+    private void createInputFieldButtonLabel(PriceConfiguration priceConfiguration, String labelName1, String labelName2, ResourceBundle messages, DBConnect dbConnect,
+                                             String productName, String userEmail){
+        priceConfiguration.removeComponentsToWindow();
+        String[] labelPriceConfigNameElectricity = new String[]{labelName1, labelName2};
+        priceConfiguration.setLabelPriceConfig(labelPriceConfigNameElectricity);
+        priceConfiguration.createFields(priceConfigurationFields, messages, productName);
+        priceConfiguration.createLabels(messages);
+        loadPriceTable(priceConfiguration, dbConnection, priceConfigurationFields, userEmail, priceConfiguration.getProductName());
+        priceConfiguration.repaint();
     }
 
     private void loadPriceTable(PriceConfiguration priceConfiguration, DBConnect dbConnect, CTextField input, String userMail, String productName) {

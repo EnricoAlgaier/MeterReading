@@ -1,7 +1,6 @@
 package com.algaier.MeterReading.Controller;
 
 import com.algaier.MeterReading.Controller.Services.DBConnect;
-import com.algaier.MeterReading.Controller.Services.SaveGasInput;
 import com.algaier.MeterReading.Controller.Services.SaveWaterInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;

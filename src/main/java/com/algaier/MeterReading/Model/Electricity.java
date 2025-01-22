@@ -2,6 +2,8 @@ package com.algaier.MeterReading.Model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Electricity")
@@ -16,7 +18,7 @@ public class Electricity {
     private double kwh;
 
     @Column(name = "PriceID", nullable = false)
-    private String price;
+    private String priceId;
 
     @Column(name = "CreatedAt")
     private LocalDateTime createdAt;
@@ -24,9 +26,9 @@ public class Electricity {
     @Column(name = "UserEmail")
     private String userEmail;
 
-    public Electricity(double kwh, String price, LocalDateTime createdAt, String userEmail) {
+    public Electricity(double kwh, String priceId, LocalDateTime createdAt, String userEmail) {
         this.kwh = kwh;
-        this.price = price;
+        this.priceId = priceId;
         this.createdAt = createdAt;
         this.userEmail = userEmail;
     }
@@ -40,7 +42,7 @@ public class Electricity {
     }
 
     public String getPrice() {
-        return price;
+        return priceId;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -59,8 +61,8 @@ public class Electricity {
         this.kwh = kwh;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setPrice(String priceId) {
+        this.priceId = priceId;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
@@ -69,5 +71,14 @@ public class Electricity {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public List<String> electricitylist() {
+        List<String> stringList = new ArrayList<>();
+        stringList.add(String.valueOf(id));
+        stringList.add(String.valueOf(kwh));
+        stringList.add(priceId);
+        stringList.add(createdAt.toString());
+        return stringList;
     }
 }

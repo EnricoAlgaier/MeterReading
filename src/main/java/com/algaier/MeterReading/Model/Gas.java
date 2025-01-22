@@ -1,6 +1,8 @@
 package com.algaier.MeterReading.Model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -78,5 +80,14 @@ public class Gas {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<String> gasList() {
+        List<String> stringList = new ArrayList<>();
+        stringList.add(String.valueOf(id));
+        stringList.add(String.valueOf(m3));
+        stringList.add(priceId);
+        stringList.add(createdAt.toString());
+        return stringList;
     }
 }
