@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +55,8 @@ public class DBConnect {
         System.out.println("dbConnection closed");
     }
 
-    public void saveGasTable(double cubic, LocalDateTime dateTime, String userEmail) {
-        Gas gas = new Gas(cubic, "gas", dateTime, userEmail);
+    public void saveGasTable(double cubic, LocalDateTime dateTime, String userEmail, double totalMonthValue) {
+        Gas gas = new Gas(cubic, "gas", dateTime, userEmail, totalMonthValue);
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -65,9 +66,9 @@ public class DBConnect {
     }
 
     // TODO Session Facotry in function auslagern
-    public void saveWaterTable(double cubic, String place, LocalDateTime dateTime, String waterType, String userEmail) {
+    public void saveWaterTable(double cubic, String place, LocalDateTime dateTime, String waterType, String userEmail, double totalMonthValue) {
         if (waterType.equals("cold")) {
-            WaterCold waterCold = new WaterCold(cubic, place, "waterCold", dateTime, userEmail);
+            WaterCold waterCold = new WaterCold(cubic, place, "waterCold", dateTime, userEmail, totalMonthValue);
 
             Session session = sessionFactory.openSession();
             session.beginTransaction();
@@ -75,7 +76,7 @@ public class DBConnect {
             session.getTransaction().commit();
             session.close();
         } else {
-            WaterHot waterHot = new WaterHot(cubic, place, "waterHot", dateTime, userEmail);
+            WaterHot waterHot = new WaterHot(cubic, place, "waterHot", dateTime, userEmail, totalMonthValue);
 
             Session session = sessionFactory.openSession();
             session.beginTransaction();
@@ -85,8 +86,8 @@ public class DBConnect {
         }
     }
 
-    public void saveElectricityTable(double cubic, LocalDateTime dateTime, String userEmail) {
-        Electricity electricity = new Electricity(cubic, "electricity", dateTime, userEmail);
+    public void saveElectricityTable(double cubic, LocalDateTime dateTime, String userEmail, double totalMonthValue) {
+        Electricity electricity = new Electricity(cubic, "electricity", dateTime, userEmail, totalMonthValue);
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -241,7 +242,6 @@ public class DBConnect {
         return result.waterHotList();
     }
 
-
     public List<String> readElectricityValues(String email) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -255,10 +255,36 @@ public class DBConnect {
                         )
                 );
 
-        Electricity result = session.createQuery(criteria).uniqueResult();
+        List<Electricity> results = session.createQuery(criteria).getResultList();
 
-        assert result != null;
-        return result.electricitylist();
+        List<String> electricityValues = new ArrayList<>();
+        for (Electricity electricity : results) {
+            electricityValues.addAll(electricity.electricitylist());
+        }
+
+        session.close();
+        return electricityValues;
+    }
+
+    public Electricity readElectricity(String email, LocalDateTime currentDate) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Electricity> criteria = builder.createQuery(Electricity.class);
+            Root<Electricity> root = criteria.from(Electricity.class);
+
+            criteria.select(root);
+            criteria.where(
+                    builder.and(
+                            builder.equal(root.get("userEmail"), email),
+                            builder.lessThan(root.get("createdAt"), currentDate)
+                    )
+            );
+            criteria.orderBy(builder.desc(root.get("createdAt")));
+
+            return session.createQuery(criteria)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }
     }
 
     public UserInformation getUserInformation(String email) {

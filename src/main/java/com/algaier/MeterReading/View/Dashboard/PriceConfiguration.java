@@ -17,7 +17,6 @@ public class PriceConfiguration extends Window {
     private static final int WINDOW_POS_X = 1500;
     private static final int WINDOW_POS_Y = 800;
     private final CTextField inputFields ;
-    private static final int buttonCounter = 4;
     private static final int saveCancelButtonCount = 1;
     private static final int inputFieldsCount = 3;
     private static final int inputLabelCount = 3;
@@ -37,14 +36,23 @@ public class PriceConfiguration extends Window {
         this.userEmail = userEmail;
 
         inputFields = new CTextField(inputFieldsCount);
+        int switchButtonCounter = 2;
+        int buttonCounter = 4;
+
         DashboardController dashboardListener = new DashboardController(this, messages, inputFields, dbConnection, userEmail);
         CButton menuButton = new CButton(dashboardListener, buttonCounter);
+        CButton switchButton = new CButton(dashboardListener, switchButtonCounter);
 
         String[] menuButtonNames = {
                 messages.getString("gas_cost"),
                 messages.getString("water_cost"),
                 messages.getString("electricity_cost"),
                 messages.getString("back")};
+
+        String[] switchButtonNames = {
+                messages.getString("coldButton"),
+                messages.getString("hotButton")
+        };
 
         menuButton.createButtons(ComponentBuilderDashboard.BUTTON_POS_X,
                 ComponentBuilderDashboard.BUTTON_POS_Y,
@@ -55,6 +63,18 @@ public class PriceConfiguration extends Window {
                 ComponentBuilderDashboard.BUTTON_PRICE_CONFIGURATION_ID,
                 ComponentBuilderDashboard.BUTTON_POSITION,
                 dashboardListener);
+
+        switchButton.createButtons(ComponentBuilderDashboard.BUTTON_SWITCH_POS_X,
+                ComponentBuilderDashboard.BUTTON_SWITCH_POS_Y,
+                ComponentBuilderDashboard.BUTTON_SWITCH_WIDTH,
+                ComponentBuilderDashboard.BUTTON_SWITCH_HEIGHT,
+                ComponentBuilderDashboard.BUTTON_SWITCH_DISTANCE,
+                switchButtonNames,
+                ComponentBuilderDashboard.BUTTON_SWITCH_PRICE_DASHBOARD_ID,
+                ComponentBuilderDashboard.BUTTON_SWITCH_POSITION,
+                dashboardListener);
+
+        addComponentsToWindow(switchButton.getButtons());
 
         addComponentsToWindow(menuButton.getButtons());
 
@@ -110,6 +130,29 @@ public class PriceConfiguration extends Window {
                 saveCancelButtonNames,
                 ComponentBuilderDashboard.BUTTON_SAVE_PRICE_CONFIGURATION_ID,
                 ComponentBuilderDashboard.BUTTON_SAVE_POSITION,
+                dashboardController);
+
+        addComponentsToWindow(saveCancelButton.getButtons());
+    }
+
+    private void switchWaterColdHotButton(CTextField inputField, ResourceBundle messages, String productName){
+        this.productName = productName;
+        DashboardController dashboardController = new DashboardController(this, messages, inputFields, dbConnection, userEmail);
+        CButton saveCancelButton = new CButton(dashboardController, saveCancelButtonCount);
+
+        String[] saveCancelButtonNames = {
+                messages.getString("coldButton"),
+                messages.getString("hotButton")
+        };
+
+        saveCancelButton.createButtons(ComponentBuilderDashboard.BUTTON_SWITCH_POS_X,
+                ComponentBuilderDashboard.BUTTON_SWITCH_POS_Y,
+                ComponentBuilderDashboard.BUTTON_SWITCH_WIDTH,
+                ComponentBuilderDashboard.BUTTON_SWITCH_HEIGHT,
+                ComponentBuilderDashboard.BUTTON_SWITCH_DISTANCE,
+                saveCancelButtonNames,
+                ComponentBuilderDashboard.BUTTON_SWITCH_PRICE_DASHBOARD_ID,
+                ComponentBuilderDashboard.BUTTON_SWITCH_POSITION,
                 dashboardController);
 
         addComponentsToWindow(saveCancelButton.getButtons());

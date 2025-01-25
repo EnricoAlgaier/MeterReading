@@ -58,10 +58,10 @@ public class GasController implements ActionListener {
                 BigDecimal gasPrice = gasPriceValue.getPrice();
                 BigDecimal result = cubicValue.multiply(gasPrice);
 
-                for(String en : gasList){
+                for (String en : gasList) {
                     System.out.println(en);
                 }
-System.out.println(result);
+                System.out.println(result);
                 break;
 
             case "back":
@@ -71,11 +71,11 @@ System.out.println(result);
 
             case "save":
                 SaveGasInput saveTableInputToDB = new SaveGasInput(dbConnection, cubicField, dateField);
-
+                double totalMonthValue = 0;
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
                     saveTableInputToDB.setGasTextInput(1);
                     saveTableInputToDB.setGasDateTextInput(1);
-                    saveTableInputToDB.saveGas(userEmail);
+                    saveTableInputToDB.saveGas(userEmail, totalMonthValue);
 
                     if (saveTableInputToDB.getDbInputState()) {
                         JOptionPane.showMessageDialog(
@@ -85,7 +85,7 @@ System.out.println(result);
                                 JOptionPane.INFORMATION_MESSAGE);
                         consumption.dispose();
                     }
-                } else{
+                } else {
                     JOptionPane.showMessageDialog(
                             null,
                             "Nicht alle Felder sind ausgefüllt",

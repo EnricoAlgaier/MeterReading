@@ -19,6 +19,23 @@ public class SavePriceInput {
     private List<String> priceFields, dateFields;
     private boolean dbInputState = false;
 
+    public enum ListValues {
+        PRICE(0),
+        BASIC_COST(1),
+        ABATEMENT(2),
+        PRODUCT(3);
+
+        private final int value;
+
+        ListValues(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
     public SavePriceInput(DBConnect dbConnection, CTextField priceConfigurationFields) {
         this.dbConnection = dbConnection;
         this.priceConfigurationFields = priceConfigurationFields;
@@ -27,10 +44,10 @@ public class SavePriceInput {
     public void saveOrUpdatePrice(String userEmail, String productName) {
         try {
 
-            BigDecimal price = new BigDecimal(priceFields.get(0));
-            BigDecimal basiscCosts = new BigDecimal(priceFields.get(1));
-            BigDecimal abatement = new BigDecimal(priceFields.get(2));
-            String product = priceFields.get(3);
+            BigDecimal price = new BigDecimal(priceFields.get(ListValues.PRICE.getValue()));
+            BigDecimal basiscCosts = new BigDecimal(priceFields.get(ListValues.BASIC_COST.getValue()));
+            BigDecimal abatement = new BigDecimal(priceFields.get(ListValues.ABATEMENT.getValue()));
+            String product = priceFields.get(ListValues.PRODUCT.getValue());
 
             boolean isValue = dbConnection.readPriceValues(userEmail, productName);
 

@@ -59,9 +59,10 @@ public class WaterController implements ActionListener {
                 SaveWaterInput saveWaterInput = new SaveWaterInput(dbConnection, cubicField, dateField);
 
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
+                    double totalMonthValue = 0;
                     saveWaterInput.setWaterTextInput(2);
                     saveWaterInput.setWaterDateTextInput(1);
-                    saveWaterInput.saveWater(consumption.getWaterType(), userEmail);
+                    saveWaterInput.saveWater(consumption.getWaterType(), userEmail, totalMonthValue);
 
                     if (saveWaterInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(

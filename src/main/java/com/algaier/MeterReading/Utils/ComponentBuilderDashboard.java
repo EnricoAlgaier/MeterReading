@@ -32,6 +32,14 @@ public final class ComponentBuilderDashboard {
     public static final int BUTTON_DISTANCE = 50;
     public static final String BUTTON_POSITION = "posY";
 
+    // static constants cold hot water button for posY
+    public static final int BUTTON_SWITCH_POS_X = 600;
+    public static final int BUTTON_SWITCH_POS_Y = 20;
+    public static final int BUTTON_SWITCH_WIDTH = 180;
+    public static final int BUTTON_SWITCH_HEIGHT = 50;
+    public static final int BUTTON_SWITCH_DISTANCE = 50;
+    public static final String BUTTON_SWITCH_POSITION = "posY";
+
     // static constants save button for posX
     public static final int BUTTON_SAVE_POS_X = 250;
     public static final int BUTTON_SAVE_POS_Y = 350;
@@ -42,6 +50,9 @@ public final class ComponentBuilderDashboard {
 
     // buttonId's for Dashboard View
     public static final String[] BUTTON_DASHBOARD_ID = {"electricity", "gas", "water", "setprice", "close"};
+
+    // buttonId's for Dashboard View
+    public static final String[] BUTTON_SWITCH_PRICE_DASHBOARD_ID = {"water_cold", "water_hot"};
 
     // buttonId's for PriceConfiguration View
     public static final String[] BUTTON_PRICE_CONFIGURATION_ID = {"configuration_gas", "configuration_water", "configuration_electricity", "back"};

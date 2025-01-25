@@ -32,14 +32,18 @@ public class Gas {
     @Column(name = "UserEmail")
     private String userEmail;
 
+    @Column(name = "TotalMonthValue")
+    private double totalMonthValue;
+
     public Gas() {
     }
 
-    public Gas(double m3, String priceId, LocalDateTime createdAt, String userEmail) {
+    public Gas(double m3, String priceId, LocalDateTime createdAt, String userEmail, double totalMonthValue) {
         this.m3 = m3;
         this.priceId = priceId;
         this.createdAt = createdAt;
         this.userEmail = userEmail;
+        this.totalMonthValue = totalMonthValue;
     }
 
     public int getId() {
@@ -74,6 +78,10 @@ public class Gas {
         return createdAt;
     }
 
+    public double getTotalMonthValue() {
+        return totalMonthValue;
+    }
+
     public void setUserId(String userEmail) {
         this.userEmail = userEmail;
     }
@@ -82,12 +90,17 @@ public class Gas {
         this.createdAt = createdAt;
     }
 
+    public void setTotalMonthValue(double totalMonthValue) {
+        this.totalMonthValue = totalMonthValue;
+    }
+
     public List<String> gasList() {
         List<String> stringList = new ArrayList<>();
         stringList.add(String.valueOf(id));
         stringList.add(String.valueOf(m3));
         stringList.add(priceId);
         stringList.add(createdAt.toString());
+        stringList.add(String.valueOf(totalMonthValue));
         return stringList;
     }
 }

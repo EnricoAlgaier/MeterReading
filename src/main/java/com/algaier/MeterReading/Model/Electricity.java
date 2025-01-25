@@ -26,11 +26,19 @@ public class Electricity {
     @Column(name = "UserEmail")
     private String userEmail;
 
-    public Electricity(double kwh, String priceId, LocalDateTime createdAt, String userEmail) {
+    @Column(name = "TotalMonthValue")
+    private Double totalMonthValue;
+
+    public Electricity(){
+
+    }
+
+    public Electricity(double kwh, String priceId, LocalDateTime createdAt, String userEmail, Double totalMonthValue) {
         this.kwh = kwh;
         this.priceId = priceId;
         this.createdAt = createdAt;
         this.userEmail = userEmail;
+        this.totalMonthValue = totalMonthValue;
     }
 
     public int getId() {
@@ -53,6 +61,10 @@ public class Electricity {
         return userEmail;
     }
 
+    public Double getTotalMonthValue() {
+        return totalMonthValue;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -73,12 +85,17 @@ public class Electricity {
         this.userEmail = userEmail;
     }
 
+    public void setTotalMonthValue(Double totalMonthValue) {
+        this.totalMonthValue = totalMonthValue;
+    }
+
     public List<String> electricitylist() {
         List<String> stringList = new ArrayList<>();
         stringList.add(String.valueOf(id));
         stringList.add(String.valueOf(kwh));
         stringList.add(priceId);
         stringList.add(createdAt.toString());
+        stringList.add(String.valueOf(totalMonthValue));
         return stringList;
     }
 }

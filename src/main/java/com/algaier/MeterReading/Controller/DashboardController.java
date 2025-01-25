@@ -76,12 +76,17 @@ public class DashboardController implements ActionListener {
 
             case "configuration_gas":
                 createInputFieldButtonLabel(priceConfiguration, "price", "gas_basiscCosts", messages, dbConnection,
-                        "water", userEmail);
+                        "gas", userEmail);
                 break;
 
-            case "configuration_water":
+            case "water_cold":
                 createInputFieldButtonLabel(priceConfiguration, "price", "water_basiscCosts", messages, dbConnection,
-                        "water", userEmail);
+                        "waterCold", userEmail);
+                break;
+
+            case "water_hot":
+                createInputFieldButtonLabel(priceConfiguration, "price", "water_basiscCosts", messages, dbConnection,
+                        "waterHot", userEmail);
                 break;
 
             case "configuration_electricity":
@@ -112,6 +117,7 @@ public class DashboardController implements ActionListener {
                     priceConfiguration.createFields(priceConfigurationFields, messages, priceConfiguration.getProductName());
                     priceConfiguration.createLabels(messages);
                     priceConfiguration.repaint();
+
                 } else {
                     JOptionPane.showMessageDialog(
                             null,

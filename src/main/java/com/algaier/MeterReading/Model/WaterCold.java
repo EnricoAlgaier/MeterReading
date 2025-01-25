@@ -29,12 +29,16 @@ public class WaterCold {
     @Column(name = "UserEmail")
     private String userEmail;
 
-    public WaterCold(double m3, String place, String priceId, LocalDateTime createdAt, String userEmail) {
+    @Column(name = "TotalMonthValue")
+    private double totalMonthValue;
+
+    public WaterCold(double m3, String place, String priceId, LocalDateTime createdAt, String userEmail, double totalMonthValue) {
         this.m3 = m3;
         this.place = place;
         this.priceId = priceId;
         this.createdAt = createdAt;
         this.userEmail = userEmail;
+        this.totalMonthValue = totalMonthValue;
     }
 
     public int getId() {
@@ -61,6 +65,10 @@ public class WaterCold {
         return userEmail;
     }
 
+    public double getTotalMonthValue() {
+        return totalMonthValue;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -85,12 +93,17 @@ public class WaterCold {
         this.userEmail = userEmail;
     }
 
+    public void setTotalMonthValue(double totalMonthValue) {
+        this.totalMonthValue = totalMonthValue;
+    }
+
     public List<String> waterColdList() {
         List<String> stringList = new ArrayList<>();
         stringList.add(String.valueOf(id));
         stringList.add(String.valueOf(m3));
         stringList.add(priceId);
         stringList.add(createdAt.toString());
+        stringList.add(String.valueOf(totalMonthValue));
         return stringList;
     }
 }
