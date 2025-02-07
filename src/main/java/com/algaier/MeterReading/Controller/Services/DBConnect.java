@@ -240,8 +240,7 @@ public class DBConnect {
         assert result != null;
         return result.waterHotList();
     }
-
-
+    
     public List<String> readElectricityValues(String email) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

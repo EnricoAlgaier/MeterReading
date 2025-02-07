@@ -16,6 +16,7 @@ public class Main {
 
 	// TODO add logfile to all try-catch
 	// TODO error Log visibilty for users in an extra menu in the head
+	// TODO Session Facotry in function auslagern
 
 	public static void main(String[] args) {
 		new AutoUpdater();
@@ -27,6 +28,5 @@ public class Main {
 		manager.setLanguage("GERMAN");
 
 		new Login(messages, dbConnection);
-		//new Dashboard(messages, dbConnection);
 	}
 }

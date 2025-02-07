@@ -11,21 +11,20 @@ import java.util.List;
 
 public class SaveElectricityInput {
     private final DBConnect dbConnection;
-    private final CTextField eletricityField;
+    private final CTextField electricityField;
     private final CTextField dateField;
-    private List<String> eletricityFields, dateFields;
+    private List<String> electricityFields, dateFields;
     private boolean dbInputState = false;
 
-    public SaveElectricityInput(DBConnect dbConnection, CTextField eletricityField, CTextField dateField) {
+    public SaveElectricityInput(DBConnect dbConnection, CTextField electricityField, CTextField dateField) {
         this.dbConnection = dbConnection;
-        this.eletricityField = eletricityField;
+        this.electricityField = electricityField;
         this.dateField = dateField;
     }
 
     public void saveElectricity(String userEmail) {
-
         try {
-            double cubic = Double.parseDouble(eletricityFields.get(0));
+            double cubic = Double.parseDouble(electricityFields.get(0));
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
@@ -41,9 +40,9 @@ public class SaveElectricityInput {
     }
 
     public void setElectricityTextInput(int fieldCounter) {
-        eletricityField.textInput(fieldCounter);
-        eletricityFields = new ArrayList<>();
-        eletricityFields = eletricityField.getText();
+        electricityField.textInput(fieldCounter);
+        electricityFields = new ArrayList<>();
+        electricityFields = electricityField.getText();
     }
 
     public void setElectricityDateTextInput(int fieldCounter) {
