@@ -17,6 +17,7 @@ public class SaveElectricityInput {
     private List<String> electricityFields, dateFields;
     private boolean dbInputState = false;
 
+<<<<<<< HEAD
     public enum ListValues {
         VALUE_ZERO(0);
 
@@ -31,14 +32,23 @@ public class SaveElectricityInput {
         }
     }
 
+=======
+>>>>>>> main
     public SaveElectricityInput(DBConnect dbConnection, CTextField electricityField, CTextField dateField) {
         this.dbConnection = dbConnection;
         this.electricityField = electricityField;
         this.dateField = dateField;
     }
 
+<<<<<<< HEAD
     public void saveElectricity(String userEmail, double totalMonthValue, double kwh) {
         try {
+=======
+    public void saveElectricity(String userEmail) {
+        try {
+            double cubic = Double.parseDouble(electricityFields.get(0));
+
+>>>>>>> main
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(dateFields.get(ListValues.VALUE_ZERO.getValue()), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
