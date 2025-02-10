@@ -37,15 +37,13 @@ public class SaveElectricityInput {
         this.dateField = dateField;
     }
 
-    public void saveElectricity(String userEmail, double totalMonthValue, double cubic) {
+    public void saveElectricity(String userEmail, double totalMonthValue, double kwh) {
         try {
-
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(dateFields.get(ListValues.VALUE_ZERO.getValue()), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
 
-            dbConnection.saveElectricityTable(cubic, dateTime, userEmail, totalMonthValue);
+            dbConnection.saveElectricityTable(kwh, dateTime, userEmail, totalMonthValue);
 
             dbInputState = true;
 
@@ -56,7 +54,7 @@ public class SaveElectricityInput {
 
     public void checkTotalMonth(String userEmail){
         double resultKwh;
-        double cubic = Double.parseDouble(electricityFields.get(ListValues.VALUE_ZERO.getValue()));
+        double kwh = Double.parseDouble(electricityFields.get(ListValues.VALUE_ZERO.getValue()));
         String inputDate = dateFields.get(ListValues.VALUE_ZERO.getValue());
         String currentKwhString = electricityFields.get(ListValues.VALUE_ZERO.getValue());
         double currentKwh = Double.parseDouble(currentKwhString);
@@ -71,7 +69,7 @@ public class SaveElectricityInput {
         } else{
             resultKwh = currentKwh - electricity.getKwh();
         }
-        saveElectricity(userEmail, resultKwh, cubic);
+        saveElectricity(userEmail, resultKwh, kwh);
     }
 
     public void setElectricityTextInput(int fieldCounter) {

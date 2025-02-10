@@ -60,7 +60,7 @@ public class ElectricityController implements ActionListener {
 
             case "save":
                 int defaultMonthValue = 0;
-                double cubicValueNewMeterReader = 0.0;
+                double newConsumptionValue = 0.0;
                 SaveElectricityInput saveElectricityInput = new SaveElectricityInput(dbConnection, cubicField, dateField);
 
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
@@ -86,7 +86,7 @@ public class ElectricityController implements ActionListener {
                 if (newMeterCheck.isCheckBoxSelected()) {
                     saveElectricityInput.setElectricityTextInput(consumption.getFieldCount());
                     saveElectricityInput.setElectricityDateTextInput(consumption.getFieldCount());
-                    saveElectricityInput.saveElectricity(userEmail, defaultMonthValue, cubicValueNewMeterReader);
+                    saveElectricityInput.saveElectricity(userEmail, defaultMonthValue, newConsumptionValue);
                 }
                 break;
 

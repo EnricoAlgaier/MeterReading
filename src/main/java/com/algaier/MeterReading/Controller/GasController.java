@@ -70,12 +70,16 @@ public class GasController implements ActionListener {
                 break;
 
             case "save":
+                int defaultMonthValue = 0;
+                double newConsumptionValue = 0.0;
+
                 SaveGasInput saveTableInputToDB = new SaveGasInput(dbConnection, cubicField, dateField);
                 double totalMonthValue = 0;
+
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
                     saveTableInputToDB.setGasTextInput(1);
                     saveTableInputToDB.setGasDateTextInput(1);
-                    saveTableInputToDB.saveGas(userEmail, totalMonthValue);
+                    saveTableInputToDB.checkTotalMonth(userEmail);
 
                     if (saveTableInputToDB.getDbInputState()) {
                         JOptionPane.showMessageDialog(
@@ -92,6 +96,12 @@ public class GasController implements ActionListener {
                             "Achtung",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
+
+                /*if (newMeterCheck.isCheckBoxSelected()) {
+                    saveElectricityInput.setElectricityTextInput(consumption.getFieldCount());
+                    saveElectricityInput.setElectricityDateTextInput(consumption.getFieldCount());
+                    saveElectricityInput.saveElectricity(userEmail, defaultMonthValue, newConsumptionValue);
+                }*/
                 break;
 
             case "cancel":

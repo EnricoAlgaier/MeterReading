@@ -86,8 +86,8 @@ public class DBConnect {
         }
     }
 
-    public void saveElectricityTable(double cubic, LocalDateTime dateTime, String userEmail, double totalMonthValue) {
-        Electricity electricity = new Electricity(cubic, "electricity", dateTime, userEmail, totalMonthValue);
+    public void saveElectricityTable(double kwh, LocalDateTime dateTime, String userEmail, double totalMonthValue) {
+        Electricity electricity = new Electricity(kwh, "electricity", dateTime, userEmail, totalMonthValue);
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
