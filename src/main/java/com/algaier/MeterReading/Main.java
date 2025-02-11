@@ -28,9 +28,6 @@ public class Main {
 		manager.setLanguage("GERMAN");
 
 		new Login(messages, dbConnection);
-<<<<<<< HEAD
 
-=======
->>>>>>> main
 	}
 }
