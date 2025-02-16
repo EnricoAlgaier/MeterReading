@@ -3,9 +3,12 @@ package com.algaier.MeterReading.View.Gas;
 import com.algaier.MeterReading.Controller.GasController;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.Components.CButton;
+import com.algaier.MeterReading.Layout.Components.CCheckBox;
 import com.algaier.MeterReading.Layout.Components.CLabel;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.Layout.Window;
+import com.algaier.MeterReading.Utils.ComponentBuilderElectricity;
+import com.algaier.MeterReading.Utils.ComponentBuilderGas;
 
 import javax.swing.*;
 import java.time.LocalDateTime;
@@ -18,46 +21,22 @@ public class Consumption extends Window {
 
     private static final int POS_X = 500;
     private static final int POS_Y = 500;
-
-    private static final int CUBIC_FIELD_POS_X = 50;
-    private static final int CUBIC_FIELD_POS_Y = 50;
-    private static final int CUBIC_FIELD_WIDTH = 30;
-    private static final int CUBIC_FIELD_HEIGHT = 40;
-    private static final int CUBIC_FIELD_DISTANCE = 0;
-    private static final String CUBIC_FIELD_POSITION = "";
-
-    private static final int CUBIC_FIELD_LABEL_POS_X = 50;
-    private static final int CUBIC_FIELD_LABEL_POS_Y = 30;
-    private static final int CUBIC_FIELD_LABEL_WIDTH = 100;
-    private static final int CUBIC_FIELD_LABEL_HEIGHT = 40;
-    private static final int CUBIC_FIELD_LABEL_DISTANCE = 70;
-    private static final String CUBIC_FIELD_LABEL_POSITION = "posY";
-
-    private static final int DATE_FIELD_POS_X = 50;
-    private static final int DATE_FIELD_POS_Y = 120;
-    private static final int DATE_FIELD_WIDTH = 120;
-    private static final int DATE_FIELD_HEIGHT = 40;
-    private static final int DATE_FIELD_DISTANCE = 0;
-    private static final String DATE_FIELD_POSITION = "";
-
-    private static final int SAVE_CANCEL_BUTTON_POS_X = 50;
-    private static final int SAVE_CANCEL_BUTTON_POS_Y = 380;
-    private static final int SAVE_CANCEL_BUTTON_WIDTH = 140;
-    private static final int SAVE_CANCEL_BUTTON_HEIGHT = 40;
-    private static final int SAVE_CANCEL_BUTTON_DISTANCE = 150;
-    private static final String SAVE_CANCEL_BUTTON_POSITION = "posX";
-    private static final String[] SAVE_CANCEL_BUTTON_IDS = {"save", "cancel"};
-
-    private static final int TEXT_FIELD_COUNT = 1;
-    private static final int LABEL_COUNT = 2;
-    private static final int BUTTON_COUNT = 2;
+private final  int textFieldCount = 1;
 
     public Consumption(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
-        cubicField = new CTextField(TEXT_FIELD_COUNT);
-        dateField = new CTextField(TEXT_FIELD_COUNT);
+
+        int LABEL_COUNT = 2;
+        int BUTTON_COUNT = 2;
+        int newMeterReaderLabelCount = 1;
+
+        cubicField = new CTextField(textFieldCount);
+        dateField = new CTextField(textFieldCount);
+
         CLabel cubicFieldLabel = new CLabel(LABEL_COUNT);
-        GasController gasController = new GasController(messages, this, cubicField, dateField, dbConnection, userEmail);
+        CCheckBox newMeterReaderCheck = new CCheckBox();
+        GasController gasController = new GasController(messages, this, cubicField, dateField, dbConnection, userEmail, newMeterReaderCheck);
+        CLabel newMeterReaderLabel = new CLabel(newMeterReaderLabelCount);
         CButton saveCancelButton = new CButton(gasController, BUTTON_COUNT);
 
         String[] cubicLabelNames = {
@@ -68,13 +47,38 @@ public class Consumption extends Window {
                 messages.getString("save"),
                 messages.getString("cancel")};
 
-        cubicField.createTextFields(CUBIC_FIELD_POS_X, CUBIC_FIELD_POS_Y, CUBIC_FIELD_WIDTH, CUBIC_FIELD_HEIGHT, CUBIC_FIELD_DISTANCE, CUBIC_FIELD_POSITION);
-        cubicFieldLabel.createLabels(CUBIC_FIELD_LABEL_POS_X, CUBIC_FIELD_LABEL_POS_Y, CUBIC_FIELD_LABEL_WIDTH, CUBIC_FIELD_LABEL_HEIGHT, CUBIC_FIELD_LABEL_DISTANCE, CUBIC_FIELD_LABEL_POSITION, cubicLabelNames);
+        String[] newMeterReaderLabelNames = {
+                messages.getString("newMeterReaderLabel")
+        };
+
+        cubicField.createTextFields(
+                ComponentBuilderGas.CUBIC_FIELD_POS_X,
+                ComponentBuilderGas.CUBIC_FIELD_POS_Y,
+                ComponentBuilderGas.CUBIC_FIELD_WIDTH,
+                ComponentBuilderGas.CUBIC_FIELD_HEIGHT,
+                ComponentBuilderGas.CUBIC_FIELD_DISTANCE,
+                ComponentBuilderGas.CUBIC_FIELD_POSITION);
+
+        cubicFieldLabel.createLabels(
+                ComponentBuilderGas.CUBIC_FIELD_LABEL_POS_X,
+                ComponentBuilderGas.CUBIC_FIELD_LABEL_POS_Y,
+                ComponentBuilderGas.CUBIC_FIELD_LABEL_WIDTH,
+                ComponentBuilderGas.CUBIC_FIELD_LABEL_HEIGHT,
+                ComponentBuilderGas.CUBIC_FIELD_LABEL_DISTANCE,
+                ComponentBuilderGas.CUBIC_FIELD_LABEL_POSITION,
+                 cubicLabelNames);
 
         addComponentsToWindow(cubicField.getFields());
         addComponentsToWindow(cubicFieldLabel.getLabels());
 
-        dateField.createTextFields(DATE_FIELD_POS_X, DATE_FIELD_POS_Y, DATE_FIELD_WIDTH, DATE_FIELD_HEIGHT, DATE_FIELD_DISTANCE, DATE_FIELD_POSITION);
+        dateField.createTextFields(
+                ComponentBuilderGas.DATE_FIELD_POS_X,
+                ComponentBuilderGas.DATE_FIELD_POS_Y,
+                ComponentBuilderGas.DATE_FIELD_WIDTH,
+                ComponentBuilderGas.DATE_FIELD_HEIGHT,
+                ComponentBuilderGas.DATE_FIELD_DISTANCE,
+                ComponentBuilderGas.DATE_FIELD_POSITION);
+
         for (JTextField field : dateField.getFields()) {
             add(field);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -83,9 +87,36 @@ public class Consumption extends Window {
             field.setText(formattedDate);
         }
 
-        saveCancelButton.createButtons(SAVE_CANCEL_BUTTON_POS_X, SAVE_CANCEL_BUTTON_POS_Y, SAVE_CANCEL_BUTTON_WIDTH, SAVE_CANCEL_BUTTON_HEIGHT, SAVE_CANCEL_BUTTON_DISTANCE, saveCancelButtonNames, SAVE_CANCEL_BUTTON_IDS, SAVE_CANCEL_BUTTON_POSITION, gasController);
+        saveCancelButton.createButtons(
+                ComponentBuilderGas.SAVE_CANCEL_BUTTON_POS_X,
+                ComponentBuilderGas.SAVE_CANCEL_BUTTON_POS_Y,
+                ComponentBuilderGas.SAVE_CANCEL_BUTTON_WIDTH,
+                ComponentBuilderGas.SAVE_CANCEL_BUTTON_HEIGHT,
+                ComponentBuilderGas.SAVE_CANCEL_BUTTON_DISTANCE,
+                saveCancelButtonNames,
+                ComponentBuilderGas.SAVE_CANCEL_BUTTON_IDS,
+                ComponentBuilderGas.SAVE_CANCEL_BUTTON_POSITION,
+                gasController);
 
         addComponentsToWindow(saveCancelButton.getButtons());
+
+        newMeterReaderCheck.createCCheckBox(
+                ComponentBuilderElectricity.NEW_METER_CHECK_POS_X,
+                ComponentBuilderElectricity.NEW_METER_CHECK_POS_Y,
+                ComponentBuilderElectricity.NEW_METER_CHECK_WIDTH,
+                ComponentBuilderElectricity.NEW_METER_CHECK_HEIGHT);
+
+        newMeterReaderLabel.createLabels(
+                ComponentBuilderElectricity.NEW_METER_LABEL_POS_X,
+                ComponentBuilderElectricity.NEW_METER_LABEL_POS_Y,
+                ComponentBuilderElectricity.NEW_METER_LABEL_WIDTH,
+                ComponentBuilderElectricity.NEW_METER_LABEL_HEIGHT,
+                ComponentBuilderElectricity.NEW_METER_LABEL_DISTANCE,
+                ComponentBuilderElectricity.NEW_METER_LABEL_POSITION,
+                newMeterReaderLabelNames);
+
+        addComponentsToWindow(newMeterReaderCheck.getCCheckBox());
+        addComponentsToWindow(newMeterReaderLabel.getLabels());
 
         setVisible(true);
     }
@@ -98,6 +129,10 @@ public class Consumption extends Window {
 
     public CTextField getCubicField(){
         return cubicField;
+    }
+
+    public int getFieldCount(){
+        return textFieldCount;
     }
 
     public CTextField getDateField(){

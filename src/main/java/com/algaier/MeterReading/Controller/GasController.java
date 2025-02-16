@@ -2,6 +2,7 @@ package com.algaier.MeterReading.Controller;
 
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Controller.Services.SaveGasInput;
+import com.algaier.MeterReading.Layout.Components.CCheckBox;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.Model.Price;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
@@ -23,6 +24,7 @@ public class GasController implements ActionListener {
     private final DBConnect dbConnection;
     private Consumption consumption;
     private final String userEmail;
+    private CCheckBox newMeterCheck;
 
     public GasController(ResourceBundle messages, DBConnect dbConnection, GasWindow gasWindow, String userEmail) {
         this.messages = messages;
@@ -31,13 +33,14 @@ public class GasController implements ActionListener {
         this.userEmail = userEmail;
     }
 
-    public GasController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection, String userEmail) {
+    public GasController(ResourceBundle messages, Consumption consumption, CTextField cubicField, CTextField dateField, DBConnect dbConnection, String userEmail, CCheckBox newMeterCheck) {
         this.messages = messages;
         this.consumption = consumption;
         this.cubicField = cubicField;
         this.dateField = dateField;
         this.dbConnection = dbConnection;
         this.userEmail = userEmail;
+        this.newMeterCheck = newMeterCheck;
     }
 
     @Override
@@ -70,7 +73,7 @@ public class GasController implements ActionListener {
                 break;
 
             case "save":
-                int defaultMonthValue = 0;
+                double defaultMonthValue = 0.0;
                 double newConsumptionValue = 0.0;
 
                 SaveGasInput saveTableInputToDB = new SaveGasInput(dbConnection, cubicField, dateField);
@@ -97,11 +100,11 @@ public class GasController implements ActionListener {
                             JOptionPane.INFORMATION_MESSAGE);
                 }
 
-                /*if (newMeterCheck.isCheckBoxSelected()) {
-                    saveElectricityInput.setElectricityTextInput(consumption.getFieldCount());
-                    saveElectricityInput.setElectricityDateTextInput(consumption.getFieldCount());
-                    saveElectricityInput.saveElectricity(userEmail, defaultMonthValue, newConsumptionValue);
-                }*/
+                if (newMeterCheck.isCheckBoxSelected()) {
+                    saveTableInputToDB.setGasTextInput(consumption.getFieldCount());
+                    saveTableInputToDB.setGasDateTextInput(consumption.getFieldCount());
+                    saveTableInputToDB.saveGas(userEmail, defaultMonthValue, newConsumptionValue);
+                }
                 break;
 
             case "cancel":

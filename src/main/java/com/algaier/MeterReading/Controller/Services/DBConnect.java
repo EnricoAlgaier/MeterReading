@@ -287,6 +287,27 @@ public class DBConnect {
         }
     }
 
+    public Gas readGas(String email, LocalDateTime currentDate) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Gas> criteria = builder.createQuery(Gas.class);
+            Root<Gas> root = criteria.from(Gas.class);
+
+            criteria.select(root);
+            criteria.where(
+                    builder.and(
+                            builder.equal(root.get("userEmail"), email),
+                            builder.lessThan(root.get("createdAt"), currentDate)
+                    )
+            );
+            criteria.orderBy(builder.desc(root.get("createdAt")));
+
+            return session.createQuery(criteria)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }
+    }
+
     public UserInformation getUserInformation(String email) {
         Session session = sessionFactory.openSession();
         UserInformation userInformation = session.get(UserInformation.class, email);
