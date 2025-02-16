@@ -66,7 +66,7 @@ public class DBConnect {
     }
 
     // TODO Session Facotry in function auslagern
-    public void saveWaterTable(double cubic, String place, LocalDateTime dateTime, String waterType, String userEmail, double totalMonthValue) {
+    public void saveWaterTable(double cubic, String place, LocalDateTime dateTime, String waterType, String userEmail, Double totalMonthValue) {
         if (waterType.equals("cold")) {
             WaterCold waterCold = new WaterCold(cubic, place, "waterCold", dateTime, userEmail, totalMonthValue);
 
@@ -292,6 +292,48 @@ public class DBConnect {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Gas> criteria = builder.createQuery(Gas.class);
             Root<Gas> root = criteria.from(Gas.class);
+
+            criteria.select(root);
+            criteria.where(
+                    builder.and(
+                            builder.equal(root.get("userEmail"), email),
+                            builder.lessThan(root.get("createdAt"), currentDate)
+                    )
+            );
+            criteria.orderBy(builder.desc(root.get("createdAt")));
+
+            return session.createQuery(criteria)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }
+    }
+
+    public WaterCold readWaterCold(String email, LocalDateTime currentDate) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<WaterCold> criteria = builder.createQuery(WaterCold.class);
+            Root<WaterCold> root = criteria.from(WaterCold.class);
+
+            criteria.select(root);
+            criteria.where(
+                    builder.and(
+                            builder.equal(root.get("userEmail"), email),
+                            builder.lessThan(root.get("createdAt"), currentDate)
+                    )
+            );
+            criteria.orderBy(builder.desc(root.get("createdAt")));
+
+            return session.createQuery(criteria)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }
+    }
+
+    public WaterHot readWaterHot(String email, LocalDateTime currentDate) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<WaterHot> criteria = builder.createQuery(WaterHot.class);
+            Root<WaterHot> root = criteria.from(WaterHot.class);
 
             criteria.select(root);
             criteria.where(

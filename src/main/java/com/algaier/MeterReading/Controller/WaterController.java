@@ -1,6 +1,7 @@
 package com.algaier.MeterReading.Controller;
 
 import com.algaier.MeterReading.Controller.Services.DBConnect;
+import com.algaier.MeterReading.Controller.Services.SaveGasInput;
 import com.algaier.MeterReading.Controller.Services.SaveWaterInput;
 import com.algaier.MeterReading.Layout.Components.CTextField;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
@@ -56,13 +57,16 @@ public class WaterController implements ActionListener {
                 break;
 
             case "save":
+                double defaultMonthValue = 0.0;
+                double newConsumptionValue = 0.0;
+
                 SaveWaterInput saveWaterInput = new SaveWaterInput(dbConnection, cubicField, dateField);
+                double totalMonthValue = 0;
 
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
-                    double totalMonthValue = 0;
                     saveWaterInput.setWaterTextInput(2);
                     saveWaterInput.setWaterDateTextInput(1);
-                    saveWaterInput.saveWater(consumption.getWaterType(), userEmail, totalMonthValue);
+                    saveWaterInput.checkTotalMonth(userEmail, consumption.getWaterType());
 
                     if (saveWaterInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(
@@ -70,16 +74,21 @@ public class WaterController implements ActionListener {
                                 "Erfolgreich eingetragen",
                                 "Erfolgreich",
                                 JOptionPane.INFORMATION_MESSAGE);
-
                         consumption.dispose();
                     }
-                } else{
+                } else {
                     JOptionPane.showMessageDialog(
                             null,
                             "Nicht alle Felder sind ausgefüllt",
                             "Achtung",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
+
+                /*if (newMeterCheck.isCheckBoxSelected()) {
+                    saveWaterInput.setWaterTextInput(consumption.getFieldCount());
+                    saveWaterInput.setWaterDateTextInput(consumption.getFieldCount());
+                    saveWaterInput.saveWater(userEmail, defaultMonthValue, newConsumptionValue);
+                }*/
                 break;
 
             case "cancel":

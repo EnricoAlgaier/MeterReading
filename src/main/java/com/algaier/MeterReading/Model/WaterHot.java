@@ -30,15 +30,18 @@ public class WaterHot {
     private String userEmail;
 
     @Column(name = "TotalMonthValue")
-    private double totalMonthValue;
+    private Double totalMonthValue;
 
-    public WaterHot(double m3, String place, String priceId, LocalDateTime createdAt, String userEmail, double totalMonthValue) {
+    public WaterHot(double m3, String place, String priceId, LocalDateTime createdAt, String userEmail, Double totalMonthValue) {
         this.m3 = m3;
         this.place = place;
         this.priceId = priceId;
         this.createdAt = createdAt;
         this.userEmail = userEmail;
         this.totalMonthValue = totalMonthValue;
+    }
+
+    public WaterHot() {
     }
 
     public int getId() {
@@ -65,7 +68,7 @@ public class WaterHot {
         return userEmail;
     }
 
-    public double getTotalMonthValue() {
+    public Double getTotalMonthValue() {
         return totalMonthValue;
     }
 
@@ -93,7 +96,7 @@ public class WaterHot {
         this.userEmail = userEmail;
     }
 
-    public void setTotalMonthValue(double totalMonthValue) {
+    public void setTotalMonthValue(Double totalMonthValue) {
         this.totalMonthValue = totalMonthValue;
     }
 

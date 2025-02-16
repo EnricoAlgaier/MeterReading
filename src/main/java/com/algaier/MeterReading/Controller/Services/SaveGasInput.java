@@ -41,8 +41,6 @@ public class SaveGasInput {
     public void saveGas(String userEmail, Double totalMonthValue,  double cubic) {
 
         try {
-            //double cubic = Double.parseDouble(gasFields.get(0));
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
