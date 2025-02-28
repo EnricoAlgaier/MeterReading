@@ -5,6 +5,7 @@ import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.Components.CButton;
 import com.algaier.MeterReading.Layout.Window;
 import com.algaier.MeterReading.Utils.ComponentBuilderDashboard;
+import com.algaier.MeterReading.View.Electricity.Overview;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -17,7 +18,7 @@ public class Dashboard extends Window {
     public Dashboard(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
         Dashboard.dbConnection = dbConnection;
-
+        new Overview(dbConnection, userEmail);
         String[] BUTTON_NAMES = {
                 messages.getString("electricity"),
                 messages.getString("gas"),

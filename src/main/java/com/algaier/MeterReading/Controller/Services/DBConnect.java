@@ -204,66 +204,26 @@ public class DBConnect {
         return result.gasList();
     }
 
-    public List<String> readWaterColdValues(String email) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<WaterCold> criteria = builder.createQuery(WaterCold.class);
-        Root<WaterCold> root = criteria.from(WaterCold.class);
 
-        criteria.select(root)
-                .where(
-                        builder.and(
-                                builder.equal(root.get("userEmail"), email)
-                        )
-                );
+    public List<Electricity> readAllElectricityValues(String email, LocalDateTime currentDate, int counter) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Electricity> criteria = builder.createQuery(Electricity.class);
+            Root<Electricity> root = criteria.from(Electricity.class);
 
-        WaterCold result = session.createQuery(criteria).uniqueResult();
+            criteria.select(root);
+            criteria.where(
+                    builder.and(
+                            builder.equal(root.get("userEmail"), email),
+                            builder.lessThan(root.get("createdAt"), currentDate)
+                    )
+            );
+            criteria.orderBy(builder.desc(root.get("createdAt")));
 
-        assert result != null;
-        return result.waterColdList();
-    }
-
-    public List<String> readWaterHotValues(String email) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<WaterHot> criteria = builder.createQuery(WaterHot.class);
-        Root<WaterHot> root = criteria.from(WaterHot.class);
-
-        criteria.select(root)
-                .where(
-                        builder.and(
-                                builder.equal(root.get("userEmail"), email)
-                        )
-                );
-
-        WaterHot result = session.createQuery(criteria).uniqueResult();
-
-        assert result != null;
-        return result.waterHotList();
-    }
-
-    public List<String> readElectricityValues(String email) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Electricity> criteria = builder.createQuery(Electricity.class);
-        Root<Electricity> root = criteria.from(Electricity.class);
-
-        criteria.select(root)
-                .where(
-                        builder.and(
-                                builder.equal(root.get("userEmail"), email)
-                        )
-                );
-
-        List<Electricity> results = session.createQuery(criteria).getResultList();
-
-        List<String> electricityValues = new ArrayList<>();
-        for (Electricity electricity : results) {
-            electricityValues.addAll(electricity.electricitylist());
+            return session.createQuery(criteria)
+                    .setMaxResults(counter)
+                    .getResultList();
         }
-
-        session.close();
-        return electricityValues;
     }
 
     public Electricity readElectricity(String email, LocalDateTime currentDate) {

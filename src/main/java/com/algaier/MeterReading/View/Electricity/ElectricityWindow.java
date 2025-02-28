@@ -2,10 +2,11 @@ package com.algaier.MeterReading.View.Electricity;
 
 import com.algaier.MeterReading.Controller.DashboardController;
 import com.algaier.MeterReading.Controller.ElectricityController;
-import com.algaier.MeterReading.Controller.GasController;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Layout.Components.CButton;
+import com.algaier.MeterReading.Layout.Components.CLabel;
 import com.algaier.MeterReading.Layout.Window;
+import com.algaier.MeterReading.Utils.ComponentBuilderElectricity;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -15,24 +16,12 @@ public class ElectricityWindow extends Window {
     private static final int POS_Y = 800;
     private DashboardController dashboardListener;
     private static DBConnect dbConnection;
-
-    private static final int MENU_BUTTON_POS_X = 50;
-    private static final int MENU_BUTTON_POS_Y = 50;
-    private static final int MENU_BUTTON_POS_WIDTH = 180;
-    private static final int MENU_BUTTON_POS_HEIGHT = 50;
-    private static final int MENU_BUTTON_POS_DISTANCE = 50;
-    private static final String MENU_BUTTON_POS_POSITION = "posY";
-    private static final String[] MENU_BUTTON_IDS = {"consumption", "overview", "statistics", "back"};
-
-    private static final int BUTTON_COUNT = 4;
-
-    private final String userEmail;
-
     public ElectricityWindow(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);
-        this.userEmail = userEmail;
+        int buttonCount = 4;
+
         ElectricityController electricityController = new ElectricityController(messages, dbConnection, this, userEmail);
-        CButton menuButton = new CButton(electricityController, BUTTON_COUNT);
+        CButton menuButton = new CButton(electricityController, buttonCount);
 
         String[] buttonNames = {
                 messages.getString("new_consumption"),
@@ -40,14 +29,43 @@ public class ElectricityWindow extends Window {
                 messages.getString("statistics"),
                 messages.getString("back")};
 
-        menuButton.createButtons(MENU_BUTTON_POS_X, MENU_BUTTON_POS_Y, MENU_BUTTON_POS_WIDTH, MENU_BUTTON_POS_HEIGHT, MENU_BUTTON_POS_DISTANCE, buttonNames, MENU_BUTTON_IDS, MENU_BUTTON_POS_POSITION, electricityController);
-        for(JButton button : menuButton.getButtons()){
-            add(button);
-        }
+        menuButton.createButtons(
+                ComponentBuilderElectricity.MENU_BUTTON_POS_X,
+                ComponentBuilderElectricity.MENU_BUTTON_POS_Y,
+                ComponentBuilderElectricity.MENU_BUTTON_POS_WIDTH,
+                ComponentBuilderElectricity.MENU_BUTTON_POS_HEIGHT,
+                ComponentBuilderElectricity.MENU_BUTTON_POS_DISTANCE,
+                buttonNames,
+                ComponentBuilderElectricity.MENU_BUTTON_IDS,
+                ComponentBuilderElectricity.MENU_BUTTON_POS_POSITION,
+                electricityController);
+
+        addComponentsToWindow(menuButton.getButtons());
 
         setDbConnection(dbConnection);
         close();
         setVisible(true);
+    }
+
+    public void setLastThreeValueLabel(int count, String[] labelNames){
+        CLabel overviewLabel = new CLabel(count);
+
+        overviewLabel.createLabels(
+                ComponentBuilderElectricity.OVERVIEW_LABEL_POS_X,
+                ComponentBuilderElectricity.OVERVIEW_LABEL_POS_Y,
+                ComponentBuilderElectricity.OVERVIEW_LABEL_POS_WIDTH,
+                ComponentBuilderElectricity.OVERVIEW_LABEL_POS_HEIGHT,
+                ComponentBuilderElectricity.OVERVIEW_LABEL_POS_DISTANCE,
+                ComponentBuilderElectricity.OVERVIEW_LABEL_POS_POSITION,
+                labelNames
+        );
+        addComponentsToWindow(overviewLabel.getLabels());
+    }
+
+    private void addComponentsToWindow(JComponent... components) {
+        for (JComponent component : components) {
+            add(component);
+        }
     }
 
     public static void closeWindow() {

@@ -52,6 +52,25 @@ public final class ComponentBuilderElectricity {
     public static final int NEW_METER_LABEL_DISTANCE = 150;
     public static final String NEW_METER_LABEL_POSITION = "";
 
+    // static constants electricityWindow menuButton for posY
+    public static final int MENU_BUTTON_POS_X = 50;
+    public static final int MENU_BUTTON_POS_Y = 50;
+    public static final int MENU_BUTTON_POS_WIDTH = 180;
+    public static final int MENU_BUTTON_POS_HEIGHT = 50;
+    public static final int MENU_BUTTON_POS_DISTANCE = 50;
+    public static final String MENU_BUTTON_POS_POSITION = "posY";
+
+    // static constants electricityWindow overviewLabel for posY
+    public static final int OVERVIEW_LABEL_POS_X = 350;
+    public static final int OVERVIEW_LABEL_POS_Y = 50;
+    public static final int OVERVIEW_LABEL_POS_WIDTH = 180;
+    public static final int OVERVIEW_LABEL_POS_HEIGHT = 50;
+    public static final int OVERVIEW_LABEL_POS_DISTANCE = 50;
+    public static final String OVERVIEW_LABEL_POS_POSITION = "posY";
+
     // buttonId's for Consumption View
     public static final String[] SAVE_CANCEL_BUTTON_IDS = {"save", "cancel"};
+
+    // buttonId's fpr electricityWindow
+    public static final String[] MENU_BUTTON_IDS = {"consumption", "overview", "statistics", "back"};
 }

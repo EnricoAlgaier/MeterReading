@@ -31,7 +31,7 @@ public class CustomButtonRect extends JButton {
     private boolean pressed;
     private float pressedSize;
     private float sizeSpeed = 15f;
-    private float alphaPressed = 0.5f;
+    private float alphaPressed = 0.0f; // Animated Speed Time when clicked
 
     public CustomButtonRect(String colorNumber1, String colorNumber2, String buttonName) {
         this.colorNumber1 = colorNumber1;
@@ -55,7 +55,7 @@ public class CustomButtonRect extends JButton {
             @Override
             public void mousePressed(MouseEvent e) {
                 pressedSize = 0;
-                alphaPressed = 0.5f;
+                alphaPressed = 0.3f; //click visibility
                 pressed = true;
                 pressedLocation = e.getPoint();
                 timerPressed.setDelay(0);

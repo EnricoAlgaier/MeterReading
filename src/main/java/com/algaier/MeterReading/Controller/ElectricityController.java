@@ -4,14 +4,17 @@ import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Controller.Services.SaveElectricityInput;
 import com.algaier.MeterReading.Layout.Components.CCheckBox;
 import com.algaier.MeterReading.Layout.Components.CTextField;
+import com.algaier.MeterReading.Model.Electricity;
 import com.algaier.MeterReading.View.Dashboard.Dashboard;
 import com.algaier.MeterReading.View.Electricity.Consumption;
 import com.algaier.MeterReading.View.Electricity.ElectricityWindow;
+import com.algaier.MeterReading.View.Electricity.Overview;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ElectricityController implements ActionListener {
@@ -51,6 +54,19 @@ public class ElectricityController implements ActionListener {
                 break;
 
             case "overview":
+                Overview overview = new Overview(dbConnection, userEmail);
+                List<Electricity> overviewValues = overview.getDbValue(userEmail);
+
+System.out.println(overviewValues.size());
+
+
+                for(Electricity value : overviewValues){
+                    String[] val = {String.valueOf(value.getKwh()), String.valueOf(value.getCreatedAt())};
+                    System.out.println(val);
+
+                    electricityWindow.setLastThreeValueLabel(2, val);
+                }
+                electricityWindow.repaint();
                 break;
 
             case "back":
