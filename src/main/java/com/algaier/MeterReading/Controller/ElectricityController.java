@@ -13,7 +13,6 @@ import com.algaier.MeterReading.View.Electricity.Overview;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -56,9 +55,6 @@ public class ElectricityController implements ActionListener {
             case "overview":
                 Overview overview = new Overview(dbConnection, userEmail);
                 List<Electricity> overviewValues = overview.getDbValue(userEmail);
-
-System.out.println(overviewValues.size());
-
 
                 for(Electricity value : overviewValues){
                     String[] val = {String.valueOf(value.getKwh()), String.valueOf(value.getCreatedAt())};

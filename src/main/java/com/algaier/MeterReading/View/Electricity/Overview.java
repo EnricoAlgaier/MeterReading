@@ -4,7 +4,6 @@ import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Model.Electricity;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Overview {
