@@ -39,7 +39,7 @@ public class SaveWaterInput {
         this.dateField = dateField;
     }
 
-    public void saveWater(String waterType, String userEmail, Double totalMonthValue, double cubic) {
+    public void saveWater(String waterType, String userEmail, double totalMonthValue, double cubic) {
         try {
             String place = waterFields.get(1);
 

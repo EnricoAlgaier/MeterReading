@@ -15,7 +15,6 @@ public class CButton {
 
     // Dashboard Button
     public CButton(DashboardController dashboardListener, int buttonCount) {
-        // Controller
         this.buttonCount = buttonCount;
         buttons = new CustomButtonRect[buttonCount];
     }
@@ -30,6 +29,8 @@ public class CButton {
     public CButton(WaterController waterController, int buttonCount) {
         this.buttonCount = buttonCount;
         buttons = new CustomButtonRect[buttonCount];
+
+
     }
 
     // Electricity Button

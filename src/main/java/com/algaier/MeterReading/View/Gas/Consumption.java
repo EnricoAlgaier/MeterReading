@@ -21,7 +21,7 @@ public class Consumption extends Window {
 
     private static final int POS_X = 500;
     private static final int POS_Y = 500;
-private final  int textFieldCount = 1;
+    private final  int textFieldCount = 1;
 
     public Consumption(ResourceBundle messages, DBConnect dbConnection, String userEmail) {
         super(POS_X, POS_Y);

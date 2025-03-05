@@ -1,11 +1,11 @@
 package com.algaier.MeterReading.View.Water;
 
+import com.algaier.MeterReading.Controller.LocationRadioButtonListener;
 import com.algaier.MeterReading.Controller.Services.DBConnect;
 import com.algaier.MeterReading.Controller.WaterController;
-import com.algaier.MeterReading.Layout.Components.CButton;
-import com.algaier.MeterReading.Layout.Components.CLabel;
-import com.algaier.MeterReading.Layout.Components.CTextField;
+import com.algaier.MeterReading.Layout.Components.*;
 import com.algaier.MeterReading.Layout.Window;
+import com.algaier.MeterReading.Utils.ComponentBuilderElectricity;
 import com.algaier.MeterReading.Utils.ComponentBuilderWater;
 
 import javax.swing.*;
@@ -20,13 +20,16 @@ public class Consumption extends Window {
     private static final int POS_X = 800;
     private static final int POS_Y = 500;
 
-    private static final int TEXT_FIELD_COUNT = 2;
+    private static final int TEXT_FIELD_COUNT = 1;
     private static final int DATE_FIELD_COUNT = 1;
-    private static final int LABEL_COUNT = 3;
+    private static final int LABEL_COUNT = 2;
+    private static final int LOCATION_LABEL_COUNT = 1;
     private static final int BUTTON_COUNT = 2;
 
-    private DBConnect dbConnection;
+    private final DBConnect dbConnection;
     private final CLabel cubicFieldLabel = new CLabel(LABEL_COUNT);
+    private final CLabel meterLocationLabel = new CLabel(LOCATION_LABEL_COUNT);
+    private final CCheckBox newMeterReaderCheck = new CCheckBox();
 
     private final String userEmail;
     private String waterType;
@@ -38,7 +41,8 @@ public class Consumption extends Window {
 
         cubicField = new CTextField(TEXT_FIELD_COUNT);
         dateField = new CTextField(DATE_FIELD_COUNT);
-        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection, userEmail);
+
+        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection, userEmail, newMeterReaderCheck);
         CButton coldOrHot = new CButton(waterController, BUTTON_COUNT);
 
         String[] coldOrHotButtonNames = {
@@ -64,8 +68,10 @@ public class Consumption extends Window {
     public void createLabels(ResourceBundle messages) {
         String[] cubicLabelNames = {
                 messages.getString("cubic"),
-                messages.getString("place"),
                 messages.getString("date")};
+
+        String[] locationLabelNames = {
+                messages.getString("place")};
 
         cubicFieldLabel.createLabels(
                 ComponentBuilderWater.LABEL_POS_X,
@@ -76,8 +82,18 @@ public class Consumption extends Window {
                 ComponentBuilderWater.LABEL_POSITION,
                 cubicLabelNames);
 
+        meterLocationLabel.createLabels(
+                ComponentBuilderWater.METER_READER_LOCATION_LABEL_POS_X,
+                ComponentBuilderWater.METER_READER_LOCATION_LABEL_POS_Y,
+                ComponentBuilderWater.METER_READER_LOCATION_LABEL_WIDTH,
+                ComponentBuilderWater.METER_READER_LOCATION_LABEL_HEIGHT,
+                ComponentBuilderWater.METER_READER_LOCATION_LABEL_DISTANCE,
+                ComponentBuilderWater.METER_LOCATION_LABEL_POSITION,
+                locationLabelNames);
+
 
         addComponentsToWindow(cubicFieldLabel.getLabels());
+        addComponentsToWindow(meterLocationLabel.getLabels());
     }
 
     public void createInputFields(CTextField inputFields, CTextField inputFields2, ResourceBundle messages, String waterType) {
@@ -108,10 +124,77 @@ public class Consumption extends Window {
         }
 
         createSaveButton(inputFields, inputFields2, messages);
+        createNewMeterReaderCheckbox(messages);
+        createLocationButton(messages);
+    }
+
+    private void createNewMeterReaderCheckbox(ResourceBundle messages){
+        int newMeterReaderLabelCount = 1;
+        CLabel newMeterReaderLabel = new CLabel(newMeterReaderLabelCount);
+
+        String[] newMeterReaderLabelNames = {
+                messages.getString("newMeterReaderLabel")
+        };
+
+        newMeterReaderCheck.createCCheckBox(
+                ComponentBuilderWater.NEW_METER_CHECK_POS_X,
+                ComponentBuilderWater.NEW_METER_CHECK_POS_Y,
+                ComponentBuilderWater.NEW_METER_CHECK_WIDTH,
+                ComponentBuilderWater.NEW_METER_CHECK_HEIGHT);
+
+        newMeterReaderLabel.createLabels(
+                ComponentBuilderWater.NEW_METER_LABEL_POS_X,
+                ComponentBuilderWater.NEW_METER_LABEL_POS_Y,
+                ComponentBuilderWater.NEW_METER_LABEL_WIDTH,
+                ComponentBuilderWater.NEW_METER_LABEL_HEIGHT,
+                ComponentBuilderWater.NEW_METER_LABEL_DISTANCE,
+                ComponentBuilderWater.NEW_METER_LABEL_POSITION,
+                newMeterReaderLabelNames);
+
+        addComponentsToWindow(newMeterReaderCheck.getCCheckBox());
+        addComponentsToWindow(newMeterReaderLabel.getLabels());
+    }
+
+    private void createLocationButton(ResourceBundle messages){
+        LocationRadioButtonListener locationRadioButtonListener = new LocationRadioButtonListener();
+        int radioCounter = 5;
+
+        String[] locationNames = {
+                messages.getString("kitchen"),
+                messages.getString("laundryRoom"),
+                messages.getString("garden"),
+                messages.getString("basement"),
+                messages.getString("centralMeter")};
+
+        CRadioButton waterLocationRadioButton = new CRadioButton(this, radioCounter);
+        waterLocationRadioButton.createRadioButtons(
+                ComponentBuilderWater.METER_READER_LOCATION_POS_X,
+                ComponentBuilderWater.METER_READER_LOCATION_POS_Y,
+                ComponentBuilderWater.METER_READER_LOCATION_WIDTH,
+                ComponentBuilderWater.METER_READER_LOCATION_HEIGHT,
+                ComponentBuilderWater.METER_READER_LOCATION_DISTANCE,
+                ComponentBuilderWater.METER_READER_LOCATION_LABEL_POSITION,
+                ComponentBuilderWater.LOCATION_BUTTON_IDS,
+                locationRadioButtonListener
+        );
+
+        CLabel locationLabel = new CLabel(radioCounter);
+        locationLabel.createLabels(
+                ComponentBuilderWater.METER_READER_LABEL_LOCATION_POS_X,
+                ComponentBuilderWater.METER_READER_LABEL_LOCATION_POS_Y,
+                ComponentBuilderWater.METER_READER_LABEL_LOCATION_WIDTH,
+                ComponentBuilderWater.METER_READER_LABEL_LOCATION_HEIGHT,
+                ComponentBuilderWater.METER_READER_LABEL_LOCATION_DISTANCE,
+                ComponentBuilderWater.METER_READER_LABEL_LOCATION_LABEL_POSITION,
+                locationNames
+        );
+
+        addComponentsToWindow(waterLocationRadioButton.getRadioButtons());
+        addComponentsToWindow(locationLabel.getLabels());
     }
 
     private void createSaveButton(CTextField inputFields, CTextField inputFields2, ResourceBundle messages){
-        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection, userEmail);
+        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection, userEmail, newMeterReaderCheck);
         CButton saveCancelButton = new CButton(waterController, BUTTON_COUNT);
 
         String[] saveCancelButtonNames = {
@@ -166,5 +249,13 @@ public class Consumption extends Window {
 
     public String getWaterType(){
         return waterType;
+    }
+
+    public int getTextFieldCount(){
+        return TEXT_FIELD_COUNT;
+    }
+
+    public int getDateFieldCount(){
+        return DATE_FIELD_COUNT;
     }
 }
