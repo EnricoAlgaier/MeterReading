@@ -70,7 +70,7 @@ public class WaterController implements ActionListener {
                 if (consumption.getCubicField().getText() != null && consumption.getDateField().getText() != null) {
                     saveWaterInput.setWaterTextInput(1);
                     saveWaterInput.setWaterDateTextInput(1);
-                    saveWaterInput.checkTotalMonth(userEmail, consumption.getWaterType());
+                    saveWaterInput.checkTotalMonth(userEmail, consumption.getWaterType(), waterLocation);
 
                     if (saveWaterInput.getDbInputState()) {
                         JOptionPane.showMessageDialog(
@@ -91,7 +91,7 @@ public class WaterController implements ActionListener {
                 if (newMeterCheck.isCheckBoxSelected()) {
                     saveWaterInput.setWaterTextInput(consumption.getTextFieldCount());
                     saveWaterInput.setWaterDateTextInput(consumption.getDateFieldCount());
-                    saveWaterInput.saveWater(consumption.getWaterType(), userEmail, defaultMonthValue, newConsumptionValue);
+                    saveWaterInput.saveWater(consumption.getWaterType(), userEmail, defaultMonthValue, newConsumptionValue, waterLocation);
                 }
                 break;
 
@@ -120,5 +120,6 @@ public class WaterController implements ActionListener {
 
     public void setWaterLocation(String waterLocation){
         this.waterLocation = waterLocation;
+        System.out.println(waterLocation);
     }
 }

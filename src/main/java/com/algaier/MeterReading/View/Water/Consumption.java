@@ -123,9 +123,8 @@ public class Consumption extends Window {
             field.setText(formattedDate);
         }
 
-        createSaveButton(inputFields, inputFields2, messages);
+        createSaveButton(messages);
         createNewMeterReaderCheckbox(messages);
-        createLocationButton(messages);
     }
 
     private void createNewMeterReaderCheckbox(ResourceBundle messages){
@@ -155,12 +154,36 @@ public class Consumption extends Window {
         addComponentsToWindow(newMeterReaderLabel.getLabels());
     }
 
-    private void createLocationButton(ResourceBundle messages){
-        LocationRadioButtonListener locationRadioButtonListener = new LocationRadioButtonListener();
-        int radioCounter = 5;
+    private void createSaveButton(ResourceBundle messages){
+        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection, userEmail, newMeterReaderCheck);
+        CButton saveCancelButton = new CButton(waterController, BUTTON_COUNT);
+
+        String[] saveCancelButtonNames = {
+                messages.getString("save"),
+                messages.getString("cancel")};
+
+        saveCancelButton.createButtons(
+                ComponentBuilderWater.BUTTON_SAVE_POS_X,
+                ComponentBuilderWater.BUTTON_SAVE_POS_Y,
+                ComponentBuilderWater.BUTTON_SAVE_WIDTH,
+                ComponentBuilderWater.BUTTON_SAVE_HEIGHT,
+                ComponentBuilderWater.BUTTON_SAVE_DISTANCE,
+                saveCancelButtonNames,
+                ComponentBuilderWater.SAVE_CANCEL_BUTTON_IDS,
+                ComponentBuilderWater.BUTTON_SAVE_POSITION,
+                waterController);
+
+        addComponentsToWindow(saveCancelButton.getButtons());
+        createLocationButton(messages, waterController);
+    }
+
+    private void createLocationButton(ResourceBundle messages, WaterController waterController){
+        LocationRadioButtonListener locationRadioButtonListener = new LocationRadioButtonListener(waterController, messages);
+        int radioCounter = 6;
 
         String[] locationNames = {
                 messages.getString("kitchen"),
+                messages.getString("bathroom"),
                 messages.getString("laundryRoom"),
                 messages.getString("garden"),
                 messages.getString("basement"),
@@ -191,28 +214,6 @@ public class Consumption extends Window {
 
         addComponentsToWindow(waterLocationRadioButton.getRadioButtons());
         addComponentsToWindow(locationLabel.getLabels());
-    }
-
-    private void createSaveButton(CTextField inputFields, CTextField inputFields2, ResourceBundle messages){
-        WaterController waterController = new WaterController(messages, this, cubicField, dateField, dbConnection, userEmail, newMeterReaderCheck);
-        CButton saveCancelButton = new CButton(waterController, BUTTON_COUNT);
-
-        String[] saveCancelButtonNames = {
-                messages.getString("save"),
-                messages.getString("cancel")};
-
-        saveCancelButton.createButtons(
-                ComponentBuilderWater.BUTTON_SAVE_POS_X,
-                ComponentBuilderWater.BUTTON_SAVE_POS_Y,
-                ComponentBuilderWater.BUTTON_SAVE_WIDTH,
-                ComponentBuilderWater.BUTTON_SAVE_HEIGHT,
-                ComponentBuilderWater.BUTTON_SAVE_DISTANCE,
-                saveCancelButtonNames,
-                ComponentBuilderWater.SAVE_CANCEL_BUTTON_IDS,
-                ComponentBuilderWater.BUTTON_SAVE_POSITION,
-                waterController);
-
-        addComponentsToWindow(saveCancelButton.getButtons());
     }
 
     private void addComponentsToWindow(JComponent... components) {

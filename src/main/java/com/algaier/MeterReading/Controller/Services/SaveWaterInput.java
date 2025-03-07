@@ -39,10 +39,8 @@ public class SaveWaterInput {
         this.dateField = dateField;
     }
 
-    public void saveWater(String waterType, String userEmail, double totalMonthValue, double cubic) {
+    public void saveWater(String waterType, String userEmail, double totalMonthValue, double cubic, String place) {
         try {
-            String place = waterFields.get(1);
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(dateFields.get(0), formatter);
             LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.now());
@@ -56,7 +54,7 @@ public class SaveWaterInput {
         }
     }
 
-    public void checkTotalMonth(String userEmail, String waterType){
+    public void checkTotalMonth(String userEmail, String waterType, String place){
         double resultCubic;
         double cubic = Double.parseDouble(waterFields.get(ListValues.VALUE_ZERO.getValue()));
         String inputDate = dateFields.get(ListValues.VALUE_ZERO.getValue());
@@ -74,7 +72,7 @@ public class SaveWaterInput {
             } else{
                 resultCubic = currentCubic - waterHot.getM3();
             }
-            saveWater(waterType, userEmail, resultCubic, cubic);
+            saveWater(waterType, userEmail, resultCubic, cubic, place);
 
         } else if(waterType.equals("cold")){
             WaterCold waterCold = dbConnection.readWaterCold(userEmail, LocalDateTime.parse(formattedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
@@ -84,7 +82,7 @@ public class SaveWaterInput {
             } else{
                 resultCubic = currentCubic - waterCold.getM3();
             }
-            saveWater(waterType, userEmail, resultCubic, cubic);
+            saveWater(waterType, userEmail, resultCubic, cubic, place);
         }
     }
 

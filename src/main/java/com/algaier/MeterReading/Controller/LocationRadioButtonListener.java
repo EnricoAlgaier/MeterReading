@@ -3,35 +3,50 @@ package com.algaier.MeterReading.Controller;
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ResourceBundle;
 
 public class LocationRadioButtonListener implements ItemListener {
+    public final WaterController waterController;
+    public final ResourceBundle messages;
+
+    public  LocationRadioButtonListener(WaterController waterController, ResourceBundle messages){
+     this.waterController = waterController;
+     this.messages = messages;
+    }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        String radioButtonID = ((JRadioButton) e.getSource()).getActionCommand();
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            String radioButtonID = ((JRadioButton) e.getSource()).getActionCommand();
 
-       switch(radioButtonID){
-           case "kitchen":
-               System.out.println("küche");
-               break;
+            switch (radioButtonID) {
+                case "kitchen":
+                    waterController.setWaterLocation(messages.getString("kitchen"));
+                    break;
 
-           case "bathroom":
-               break;
+                case "bathroom":
+                    waterController.setWaterLocation(messages.getString("bathroom"));
+                    break;
 
-           case "laundryRoom":
-               break;
+                case "laundryRoom":
+                    waterController.setWaterLocation(messages.getString("laundryRoom"));
+                    break;
 
-           case "garden":
-               break;
+                case "garden":
+                    waterController.setWaterLocation(messages.getString("garden"));
+                    break;
 
-           case "basement":
-               break;
+                case "basement":
+                    waterController.setWaterLocation(messages.getString("basement"));
+                    break;
 
-           case "centralMeter":
-               break;
+                case "centralMeter":
+                    waterController.setWaterLocation(messages.getString("centralMeter"));
+                    break;
 
-           default:
-               break;
-       }
+                default:
+                    break;
+            }
+        }
     }
 }
