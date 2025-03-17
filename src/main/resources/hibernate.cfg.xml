@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<session-factory>
+		<!-- JDBC-DB connection -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+		<property name="hibernate.connection.url">
+			${DB_URL}
+		</property>
+
+		<property name="hibernate.connection.username">${DB_USER}</property>
+		<property name="hibernate.connection.password">${DB_PASSWORD}</property>
+
+		<!-- SQL Logging -->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+
+		<!-- Schema Management (in Produktion besser 'validate' oder 'none') -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- Mappings -->
+		<mapping class="com.algaier.MeterReading.Model.Gas"/>
+		<mapping class="com.algaier.MeterReading.Model.Price"/>
+		<mapping class="com.algaier.MeterReading.Model.Electricity"/>
+		<mapping class="com.algaier.MeterReading.Model.WaterHot"/>
+		<mapping class="com.algaier.MeterReading.Model.WaterCold"/>
+		<mapping class="com.algaier.MeterReading.Model.UserInformation"/>
+	</session-factory>
+
+</hibernate-configuration>
